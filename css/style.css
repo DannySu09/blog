@@ -27,7 +27,11 @@
   content: ''; }
 
 .u-hightLightText {
-  color: #2845ce; }
+  color: #2845ce !important; }
+
+.u-centerBlock {
+  margin-left: auto !important;
+  margin-right: auto !important; }
 
 /*!
  *  Font Awesome 4.3.0 by @davegandy - http://fontawesome.io - @fontawesome
@@ -1806,6 +1810,10 @@ a:hover {
   margin-bottom: 200px; }
   .article.is-articleFull {
     margin-bottom: 80px; }
+  .article.is-articleMeta {
+    margin-bottom: 60px; }
+    .article.is-articleMeta .article-title {
+      font-size: 1.38889em; }
 
 .article-head {
   margin-bottom: 30px; }
