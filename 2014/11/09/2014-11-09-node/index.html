@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
+
+<meta name="description" content="这里放着我的个人文章"/>
+
+<link rel="shortcut icon" href= "/favicon.png"/>
+<link rel="stylesheet" href="/css/style.css"/>
+<link rel="stylesheet" href="/css/prism.css"/>
+    <title> Node, Document, Element </title>
+</head>
+<body>
+    <header class="head u-cf">
+        <a class="head-flag" href="/">
+    <img class="head-flag-img" src="/image/logo.png" alt="sunaiwen 个人博客"/>
+</a>
+<div class="head-search">
+    <form action="//google.com/search" method="get" accept-charset="utf-8">
+        <input class="head-search-input" type="search" name="q" placeholder="搜索本站文章..."/>
+    </form>
+</div>
+<nav class="head-nav">
+    <a class="head-nav-item" href="/home">首页</a>
+    <a class="head-nav-item" href="/archive">归档</a>
+    <a class="head-nav-item" href="/tags">标签</a>
+    <a class="head-nav-item" href="/about">关于我</a>
+</nav>
+    </header>
+    <main class="main u-cf block">
+        
+    <section class="main-article">
+        
+<article class="article  is-articleFull ">
+    <header class="article-head">
+        
+            <h1 class="article-title">Node, Document, Element</h1>
+        
+        <ul class="article-meta">
+            <li class="article-meta-item">
+                <i class="fa fa-clock-o ami-icon"></i>
+                <span class="ami-text">2014-11-09</span>
+            </li>
+            <li class="article-meta-item">
+                
+                    <i class="fa fa-book ami-icon"></i>
+                    
+                        
+                            <a class="ami-text" href="categories/JavaScript/">JavaScript</a>
+                        
+                    
+                
+            </li>
+            <li class="article-meta-item">
+                
+                    <i class="fa fa-tags ami-icon"></i>
+                    
+                        
+                            <a class="ami-text" href="tags/DOM/">DOM</a>
+                        
+                    
+                
+            </li>
+        </ul>
+    </header>
+    
+        <div class="article-content essay"><p>前段时间写码时感觉到自己<code>DOM</code>方面的知识有所欠缺，所以趁着两天周末时间温习了一遍红宝书里的 <em>DOM</em> 这一章。</p>
+<h2 id="Node">Node</h2><p><code>Node</code>是最上层的一种类型。所以，<code>Document（文档）</code>是一种Node，<code>Element（元素）</code>也是一种Node。作为<code>Node</code>类型的实例，它们都有一些共同的属性，比如<code>nodeType</code>、<code>nodeName</code>、<code>nodeValue</code>，<code>parentNode</code>等等。<a href="https://developer.mozilla.org/en-US/docs/Web/API/Node" target="_blank" rel="external">点击查看更详细的属性</a></p>
+<p>所以，<code>Document</code>和<code>Element</code>之间并不是继承关系，而应该是兄弟关系。</p>
+<a id="more"></a>
+<h2 id="Document">Document</h2><p>我们都知道，在浏览器环境的全局变量是<code>window</code>，而它下面还有一个<code>document</code>对象。这个对象是<code>HTMLDocument</code>的实例。而<code>HTMLDocument</code>又是继承于<code>Document</code>的。它表示的是<strong>整个文档</strong>。里面有一些直接指向文档内部的属性：</p>
+<pre>
+    <code class="language-javascript">
+        var html = document.documentElement; // => html元素
+        var body = document.body;  // => body元素
+    </code>
+</pre>
+
+<p><code>Document</code>自带有两个查找元素的方法：<code>Document.getElementsByTagName</code>和<code>Document.getElementById</code>。</p>
+<p><code>HTMLDocument</code>在继承了这两个方法的基础上，还自己也带着一个方法：<code>HTMLDocument.getElementsByName</code>。但是我在 <em>Chrome 33</em> 中的<code>HTMLDocument.prototype</code>上没有看到这个方法，却在<code>Document.prototype</code>上找到了这个方法。所以这个方法的归属还存在疑点。我觉得也没必要在此纠结，反正有的用就行了。</p>
+<p>这三个方法除了<code>Document.getElementById</code>因为是返回的是用ID标识的唯一的<code>HTMLElement</code>对象外。其他两个都是返回一种叫做<code>HTMLCollection</code>的类<code>NodeList</code>的类数组对象。这话有点绕。其实就是，第一，和<code>NodeList</code>对象很像；第二，两种都存在<code>Length</code>属性，而且可以按下标位置来访问属性。</p>
+<p>这两种类数组对象都是动态的。怎么说？它们里面装着取到的元素对象，而这个元素对象的集合会根据DOM树的变化而更新。比如，原来DOM树里有5个DIV元素。那取得的集合里，既然有5个DIV的元素对象。但在某时刻，如果在DOM树中新插入一个DIV对象。这时再去看那个集合，发现里面也同步更新了，里面放着6个DIV元素对象。</p>
+<hr>
+<blockquote>
+<p>在上面讨论<code>Document</code>的时候，提到过的<code>HTMLElement</code>外，还提到<code>HTMLCollection</code>。可能你已经注意到了。虽然<code>HTMLCollection</code>和<code>NodeList</code>的关系不明了，但<code>HTMLCollection</code>是HTML专有的。另外，<code>Document</code>有HTML专用的<code>HTMLDocument</code>。所以<code>Element</code>自然也有HTML专用的<code>HTMLElement</code>。</p>
+</blockquote>
+<hr>
+<h2 id="Element">Element</h2><p>元素是指HTML里的元素（不讨论XML）。如上所说，HTML元素都是HTMLElement的实例的实例。为什么这么说呢？比如<code>div</code>元素所对应的对象虽然是<code>HTMLElement</code>的一个实例，但是更详细的是<code>HTMLDivElement</code>的一个实例。不仅<code>Div</code>元素是这样，其他元素也都是像<code>HTML**Element</code>这样的实例。</p>
+<p>那么，平时我们也很顺溜的用着的<code>Element.getElementsByTagName</code>方法从哪儿来的？当时用这方法的时候我也挺疑惑。但是没有理会，还是很开心的用着。在这里搞清楚它。</p>
+<p><code>HTMLDocument</code>上存在三个查找元素的方法：<code>Document.getElementsByTagName</code>, <code>Document.getElementById</code>, <code>HTMLDocument.getElementsByName</code>。</p>
+<p>而<code>HTMLElement</code>上只存在<code>Element.getElementsByTagName</code>一个方法。</p>
+<p>然后在上面第一部分说过，<code>Document</code>和<code>Element</code>是兄弟关系。在这里就可以证明了大半部分了。如果是继承关系，那<code>Element</code>上没理由只有<code>getElementsByTagName</code>一个方法而已。</p>
+<p>那么，<code>Element.getElementsByTagName</code>到底从哪儿来？可以肯定的是这个方法不是从别去继承来的，而是本身就定义在<code>Element.prototype</code>上的。那既然和<code>Document.getElementsByTagName</code>是分别定义的，那有何不同呢？</p>
+<p><code>Document.getElementsByTagName</code>的查找范围是整个文档，而<code>Element.getElementsByTagName</code>的查找范围是自己的子元素（不包括自身），详见<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element.getElementsByTagName" target="_blank" rel="external">这里</a>。这里是我提在Stack Overflow上的<a href="http://stackoverflow.com/questions/26826108/what-is-the-relationship-between-document-and-element-why-does-a-parent-element" target="_blank" rel="external">相关问题</a>。</p>
+<p>同理，<code>querySelector</code>和<code>querySelectorAll</code>也是同样分别定义，其间区别也是同上面提到的一样。</p>
+<p>但是需要注意的是<code>querySelector</code>和<code>querySelectorAll</code>返回的虽然是一个<code>NodeList</code>对象，但是并没有实时更新的功能，所以在这点上很疑惑，为什么书上还说是<code>NodeList</code>对象？应该在前面加个<strong>伪</strong>才是。</p>
+<h2 id="Attr">Attr</h2><p>我们平时看到的元素上的属性其实也算是DOM中的一种节点。但是我不想这么讨论。因为不同的元素又会带有不一样的节点。比如Div只会有<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes" target="_blank" rel="external">global atrribute</a>，但是Input元素在此之外，还会有<code>name</code>等其他属性。</p>
+<p>虽然可以通过直接赋值给元素上自带的属性，来调整这些属性的值，但是如果<code>div.name = &#39;str&#39;</code>就不会有效，因为如前面所说的，Div元素并没有自带有<code>name</code>属性。所以给Div设置name属性是无效的。</p>
+<p>所以通过直接给自带属性赋值的方式来调整元素的属性值，就意味着要去记哪些元素自带有哪些属性。这肯定不科学啊。</p>
+<p>好在<code>Element</code>上有一组方法：<code>Element.getAttribute</code>、<code>Element.setAttribute</code>、<code>Element.removeAttribute</code>，来分别获取、设置、删除属性。对无论是自带属性还是自定义属性都适用。有了它们，还有什么理由去记那些自带属性？直接用这几个方法不就好了！</p>
+<h2 id="结束">结束</h2><p>本文是对这两天温习DOM的梳理和记忆加强。以后发现有遗漏再随时补充！</p>
+</div>
+    
+</article>
+
+    </section>
+
+        <aside class="main-aside">
+    <section class="main-aside-section aside">
+        <h1 class="aside-title">分类</h1>
+        <ul class="aside-list">
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/JavaScript/">JavaScript&nbsp;<span class="ali-count u-hightLightText">10</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/用户体验/">用户体验&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/说说/">说说&nbsp;<span class="ali-count u-hightLightText">7</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/英语透析阅读/">英语透析阅读&nbsp;<span class="ali-count u-hightLightText">4</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/Web-基础/">Web 基础&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/CSS/">CSS&nbsp;<span class="ali-count u-hightLightText">3</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/读后感/">读后感&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/Git/">Git&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/设计/">设计&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+        </ul>
+    </section>
+    <section class="main-aside-section aside">
+        <h1 class="aside-title">标签</h1>
+        <ul class="aside-list">
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/Angular/">Angular&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/英文小说/">英文小说&nbsp;<span class="ali-count u-hightLightText">4</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/DOM/">DOM&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/RequireJS/">RequireJS&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/Zepto/">Zepto&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/自控力/">自控力&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/上班/">上班&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/Sketch/">Sketch&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/足球/">足球&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/世界杯/">世界杯&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/租房/">租房&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+        </ul>
+    </section>
+</aside>
+    </main>
+    <div class="bg-global" style="background-image: url('image/bg-default.jpg')"></div>
+    <footer class="foot">
+        <p class="foot-text">sunaiwen 2015</p>
+    </footer>
+    <script src="/js/prism.js"></script>
+</body>
+</html>

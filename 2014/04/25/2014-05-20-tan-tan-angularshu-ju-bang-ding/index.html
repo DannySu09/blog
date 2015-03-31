@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
+
+<meta name="description" content="这里放着我的个人文章"/>
+
+<link rel="shortcut icon" href= "/favicon.png"/>
+<link rel="stylesheet" href="/css/style.css"/>
+<link rel="stylesheet" href="/css/prism.css"/>
+    <title> 浅谈AngularJs的数据绑定 </title>
+</head>
+<body>
+    <header class="head u-cf">
+        <a class="head-flag" href="/">
+    <img class="head-flag-img" src="/image/logo.png" alt="sunaiwen 个人博客"/>
+</a>
+<div class="head-search">
+    <form action="//google.com/search" method="get" accept-charset="utf-8">
+        <input class="head-search-input" type="search" name="q" placeholder="搜索本站文章..."/>
+    </form>
+</div>
+<nav class="head-nav">
+    <a class="head-nav-item" href="/home">首页</a>
+    <a class="head-nav-item" href="/archive">归档</a>
+    <a class="head-nav-item" href="/tags">标签</a>
+    <a class="head-nav-item" href="/about">关于我</a>
+</nav>
+    </header>
+    <main class="main u-cf block">
+        
+    <section class="main-article">
+        
+<article class="article  is-articleFull ">
+    <header class="article-head">
+        
+            <h1 class="article-title">浅谈AngularJs的数据绑定</h1>
+        
+        <ul class="article-meta">
+            <li class="article-meta-item">
+                <i class="fa fa-clock-o ami-icon"></i>
+                <span class="ami-text">2014-04-25</span>
+            </li>
+            <li class="article-meta-item">
+                
+                    <i class="fa fa-book ami-icon"></i>
+                    
+                        
+                            <a class="ami-text" href="categories/JavaScript/">JavaScript</a>
+                        
+                    
+                
+            </li>
+            <li class="article-meta-item">
+                
+                    <i class="fa fa-tags ami-icon"></i>
+                    
+                        
+                            <a class="ami-text" href="tags/Angular/">Angular</a>
+                        
+                    
+                
+            </li>
+        </ul>
+    </header>
+    
+        <div class="article-content essay"><p>本文不是谈如何实现AngularJs的数据双向绑定的。只是简单的关注一下AngularJs如何监控model和view的数据，又如何去更新她们，她们的结构和机制到底是怎样的？</p>
+<a id="more"></a>
+<p>首先，假设我们都知道<code>scope</code>是<code>controller</code>、<code>directive</code>和<code>view</code>之间数据交流的桥梁。要实现数据双向绑定，首先要在<code>template</code>上绑定一个数据，然后在<code>controller</code>或者<code>directive</code>的<code>link</code>方法中的<code>scope</code>对象上绑定。</p>
+<p>其实，在这个过程中，AngularJs会给这一组绑定（我们可以帮这想像为一条数据传输的路径）绑定一个<code>watcher</code>，中文姑且叫做观察者。但不会只有一个watcher的，多少条数据传输路径就会有多少个<code>watcher</code>。这些<code>watcher</code>被AngularJs添加到一个队列中。</p>
+<p>当某个<code>watcher</code>中的值改变了，又会触发一次<code>$digest</code>函数的执行，结果就是，以上提到的那个<code>watcher</code>队列和当前<code>scope</code>的子<code>scope</code>们中的<code>watcher</code>队列都会被检查一次。但是，当一个watcher中的值改变了，<code>$digest</code>函数执行，如果她的<code>listener</code>方法中又改变另外一个<code>wathcher</code>中观察的值，<code>$digest</code>又一次执行，这样岂不是导致<code>watcher</code>队列被无数次的检查了吗？所以AngularJs做了一个防御措施，这样连续翻了十次后就不管了。（这只是参照官方文档，想更深入的理解应该去读下源代码）</p>
+<p>你可能要问，那个<code>listener函数</code>是什么玩意儿？其实那是自定义的<code>watcher</code>观测到值变化后会调用的一个函数。她是<code>$watch</code>函数的第二个参数。什么？<code>watcher</code>还能自定义，别急，下面讲有。</p>
+<p>那检查<code>watcher</code>的值是否变化的依据是什么呢？<code>dirty check</code>。何为<code>dirty check</code>？其实是<code>angular.equals</code>比较两个数据时所遵从的一种规则，也可以说是Angular中对判断两个数据是否相等的自己的一套规则，请移步<a href="https://docs.angularjs.org/api/ng/function/angular.equals" target="_blank" rel="external">这里</a>去了解。</p>
+<p>其实我们也可以自己来添加一个watcher。一个简单的demo，如下：</p>
+<pre>
+<code class="language-javascript">
+$scope.name = 'su';
+    $scope.isolate = 0;
+
+    $scope.$watch('name', function(newValue, oldValue){
+        if(newValue === oldValue) return;
+        $scope.isolate += 1;
+        console.log($scope.isolate);
+    });
+</code>
+</pre>
+
+<p>当<code>name</code>改变的时候，<code>$watch</code>函数中的<code>listener</code>函数就会执行，<code>$scope.isolate</code>就会加1。而且，这个是我们自己绑定的一个<code>watcher</code>，并不要求view上也绑定才会让这个<code>watcher</code>生效。但是，如果view上绑定了，而且数据也改变了，同样会让这个<code>watcher</code>的<code>listener</code>函数执行。当然，手动去改变<code>watch</code>的值，也会让<code>listener</code>函数执行。</p>
+<p>还有一个比较坑的地方。每次给一个数据传输路径绑定一个<code>watcher</code>，Angular都会有一个初始化<code>watcher</code>的过程，这会导致<code>watcher</code>的<code>listener</code>函数被执行。而往往<code>listener</code>函数是我们打算在观察的值发生改变时才执行的。所以，这个时候我们就要给<code>listener</code>函数传入两个参数，分为是<code>newValue</code>和<code>oldValue</code>，也就是我们正在观察的值的新值和就值，以比较他们来判断<code>watcher</code>是不是正被初始化（如果是初始化，那这两个值会相等）。</p>
+<p>注意看上面那一段代码，第二个参数，也就是<code>listener</code>方法中的两个参数，起的就是这个作用。</p>
+<h2 id="结论">结论</h2><p>Angular通过<code>dirty check</code>来判断<code>watcher</code>观察的值是否发生变化。如果发生变化，就会触发一次<code>$digest</code>函数，导致当前<code>scope</code>以及其子<code>scope</code>的<code>watcher</code>队列都被检查一次。但为了防止死循环，会把这种反复检查的次数限制为<strong>10</strong>次。</p>
+</div>
+    
+</article>
+
+    </section>
+
+        <aside class="main-aside">
+    <section class="main-aside-section aside">
+        <h1 class="aside-title">分类</h1>
+        <ul class="aside-list">
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/JavaScript/">JavaScript&nbsp;<span class="ali-count u-hightLightText">10</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/用户体验/">用户体验&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/说说/">说说&nbsp;<span class="ali-count u-hightLightText">7</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/英语透析阅读/">英语透析阅读&nbsp;<span class="ali-count u-hightLightText">4</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/Web-基础/">Web 基础&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/CSS/">CSS&nbsp;<span class="ali-count u-hightLightText">3</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/读后感/">读后感&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/Git/">Git&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/设计/">设计&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+        </ul>
+    </section>
+    <section class="main-aside-section aside">
+        <h1 class="aside-title">标签</h1>
+        <ul class="aside-list">
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/Angular/">Angular&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/英文小说/">英文小说&nbsp;<span class="ali-count u-hightLightText">4</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/DOM/">DOM&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/RequireJS/">RequireJS&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/Zepto/">Zepto&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/自控力/">自控力&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/上班/">上班&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/Sketch/">Sketch&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/足球/">足球&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/世界杯/">世界杯&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/租房/">租房&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+        </ul>
+    </section>
+</aside>
+    </main>
+    <div class="bg-global" style="background-image: url('image/bg-default.jpg')"></div>
+    <footer class="foot">
+        <p class="foot-text">sunaiwen 2015</p>
+    </footer>
+    <script src="/js/prism.js"></script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
+
+<meta name="description" content="这里放着我的个人文章"/>
+
+<link rel="shortcut icon" href= "/favicon.png"/>
+<link rel="stylesheet" href="/css/style.css"/>
+<link rel="stylesheet" href="/css/prism.css"/>
+    <title> r.js打包requirejs模块要注意的一个地方 </title>
+</head>
+<body>
+    <header class="head u-cf">
+        <a class="head-flag" href="/">
+    <img class="head-flag-img" src="/image/logo.png" alt="sunaiwen 个人博客"/>
+</a>
+<div class="head-search">
+    <form action="//google.com/search" method="get" accept-charset="utf-8">
+        <input class="head-search-input" type="search" name="q" placeholder="搜索本站文章..."/>
+    </form>
+</div>
+<nav class="head-nav">
+    <a class="head-nav-item" href="/home">首页</a>
+    <a class="head-nav-item" href="/archive">归档</a>
+    <a class="head-nav-item" href="/tags">标签</a>
+    <a class="head-nav-item" href="/about">关于我</a>
+</nav>
+    </header>
+    <main class="main u-cf block">
+        
+    <section class="main-article">
+        
+<article class="article  is-articleFull ">
+    <header class="article-head">
+        
+            <h1 class="article-title">r.js打包requirejs模块要注意的一个地方</h1>
+        
+        <ul class="article-meta">
+            <li class="article-meta-item">
+                <i class="fa fa-clock-o ami-icon"></i>
+                <span class="ami-text">2014-10-20</span>
+            </li>
+            <li class="article-meta-item">
+                
+                    <i class="fa fa-book ami-icon"></i>
+                    
+                        
+                            <a class="ami-text" href="categories/JavaScript/">JavaScript</a>
+                        
+                    
+                
+            </li>
+            <li class="article-meta-item">
+                
+                    <i class="fa fa-tags ami-icon"></i>
+                    
+                        
+                            <a class="ami-text" href="tags/RequireJS/">RequireJS</a>
+                        
+                    
+                
+            </li>
+        </ul>
+    </header>
+    
+        <div class="article-content essay"><h2 id="window-define的写法导致mismatch错误">window.define的写法导致<code>mismatch</code>错误</h2><p>第一次用<a href="http://requirejs.org/" target="_blank" rel="external">RequireJS</a>，今天把所有模块及其依赖用<a href="https://github.com/jrburke/r.js" target="_blank" rel="external">r.js</a>打包后，RequireJS一直在抛<a href="http://requirejs.org/docs/errors.html#mismatch" target="_blank" rel="external">mismatched的错误</a>。盯着打包后的代码看了一会儿，终于找到了问题。</p>
+<p>假设有一个模块叫做<code>Countdown</code>，返回的是变量名为<code>Countdown</code>的构造函数，然后就有了如下的代码：</p>
+<pre>
+    <code class="language-javascript">
+    if(window.define != null) {
+        window.define(function(){
+            return Countdown;
+        });
+    }
+    </code>
+</pre>
+
+<a id="more"></a>
+<p>代码用意很简单，就是判断有没有<code>define</code>这个变量存在在全局环境中，如果存在，那就说明在使用<code>RequireJS</code>（此处不严谨，因为seaJS也有全局的<code>define</code>方法）。但先不管这点，只需暂时明白这里是为了判断是否存在<code>RequireJS</code>就可以了。</p>
+<p>构建后，会看到包裹了<code>Countdown</code>模板的<a href="http://snwin.co/blog/2014/09/27/iifehe-ta-men-qian-mian-de-fen-hao/" target="_blank" rel="external">IIFE函数</a>后面，<code>r.js</code>打包时加了如下代码：</p>
+<pre>
+    <code class="language-javascript">
+    define("Countdown", function(){});
+    </code>
+</pre>
+
+<p>可以看到<code>r.js</code>给这个非命名的模板起了<code>Countdown</code>这个名字。但却是在真正的<code>Countdown</code>代码后面加了这一行，打包后的完整代码大概如下：</p>
+<pre>
+    <code class="language-javascript">
+    (function(){
+        var Countdown = function(){};
+        if(window.define != null) {
+            window.define(function(){
+                return Countdown;
+            });
+        }
+    })();
+
+// 这一行是 r.js 打包时所加
+    define('Countdown', function(){});
+    </code>
+</pre>
+
+<p>但是纵然如此，应该也是返回<code>undefine</code>才对。但真实情况却是，如上面说的，抛出了<code>mismatch</code>的错误。翻了翻官方文档，也没有找到可以给出解释的地方。</p>
+<p>问题很容易重现，可以写个简单的模块，比如：</p>
+<pre>
+    <code class="language-javascript">
+    (function(){
+        function abc(){alert('abc')};
+        if(window.define != null) {
+            window.define('abc', function(){
+                return abc;
+            });
+        }
+    })();
+    </code>
+</pre>
+
+<p>然后用<code>r.js</code>打包一下，你就能看到刚才所说的情况了。</p>
+<h2 id="正确的写法">正确的写法</h2><p>啰嗦了大半天，直接给个正确写法不就行了嘛。如下：</p>
+<pre>
+    <code class="language-javascript">
+    if(window.define != null) {
+        define(function(){
+            return Countdown;
+        });
+    }
+    </code>
+</pre>
+
+<p>其实就是不要在定义一个模块时还<code>window.define(function(){})</code>这样写，直接写<code>define</code>就好了。</p>
+<p>那在<code>if</code>判断那里又为什么写<code>window.define</code>呢？确保在没有<code>RequireJS</code>这些加载器时，还能正常使用啊。因为没有加载器，<code>define</code>就是未声明变量，所以这样写会抛<code>ReferenceError: 变量未声明</code> 的错误。</p>
+</div>
+    
+</article>
+
+    </section>
+
+        <aside class="main-aside">
+    <section class="main-aside-section aside">
+        <h1 class="aside-title">分类</h1>
+        <ul class="aside-list">
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/JavaScript/">JavaScript&nbsp;<span class="ali-count u-hightLightText">10</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/用户体验/">用户体验&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/说说/">说说&nbsp;<span class="ali-count u-hightLightText">7</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/英语透析阅读/">英语透析阅读&nbsp;<span class="ali-count u-hightLightText">4</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/Web-基础/">Web 基础&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/CSS/">CSS&nbsp;<span class="ali-count u-hightLightText">3</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/读后感/">读后感&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/Git/">Git&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/设计/">设计&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+        </ul>
+    </section>
+    <section class="main-aside-section aside">
+        <h1 class="aside-title">标签</h1>
+        <ul class="aside-list">
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/Angular/">Angular&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/英文小说/">英文小说&nbsp;<span class="ali-count u-hightLightText">4</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/DOM/">DOM&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/RequireJS/">RequireJS&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/Zepto/">Zepto&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/自控力/">自控力&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/上班/">上班&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/Sketch/">Sketch&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/足球/">足球&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/世界杯/">世界杯&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/租房/">租房&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+        </ul>
+    </section>
+</aside>
+    </main>
+    <div class="bg-global" style="background-image: url('image/bg-default.jpg')"></div>
+    <footer class="foot">
+        <p class="foot-text">sunaiwen 2015</p>
+    </footer>
+    <script src="/js/prism.js"></script>
+</body>
+</html>
