@@ -1912,6 +1912,8 @@ a:hover {
 .pagination-item {
   display: block;
   color: #a7a7a7; }
+  .is-inPage .pagination-item {
+    display: inline-block; }
   .pagination-item:first-of-type {
     margin-left: -10em; }
   .pagination-item:last-of-type {
