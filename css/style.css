@@ -1927,6 +1927,15 @@ img {
     .pagination--post .pagination-item:last-of-type {
       float: right; }
 
+#ds-thread #ds-reset .ds-highlight {
+  color: #2845ce !important; }
+
+#ds-thread #ds-reset .ds-comment-body p {
+  color: #333333; }
+
+.ds-post-button {
+  background-color: #333333 !important; }
+
 .essay pre, .essay code, .essay span {
   text-shadow: none !important;
   -webkit-text-shadow: none !important;
