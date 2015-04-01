@@ -1900,7 +1900,6 @@ img {
 .foot {
   padding-top: 20px;
   padding-bottom: 20px;
-  border-top: 1px solid #ededed;
   margin-top: 100px;
   line-height: 30px;
   font-family: menlo, monaco, monospace;
@@ -1912,6 +1911,7 @@ img {
   padding-top: 20px;
   padding-bottom: 20px;
   border-top: 1px solid #ededed;
+  border-bottom: 1px solid #ededed;
   text-align: center;
   clear: left; }
   .pagination.is-onlyOnePage {
