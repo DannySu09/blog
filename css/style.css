@@ -16,7 +16,7 @@
 .article-title, .aside-title {
   padding-bottom: 10px;
   border-bottom: 1px solid #ededed;
-  font-size: 1.77778em;
+  font-size: 1.94444em;
   font-weight: bold;
   line-height: 1.2;
   color: #333333; }
@@ -1713,10 +1713,10 @@ h5,
 h6,
 ul,
 ol,
-p {
+p,
+blockquote {
   padding-left: 0;
-  margin-top: 0;
-  margin-bottom: 0; }
+  margin: 0; }
 
 h1 {
   font-size: 1.42857em; }
@@ -1902,7 +1902,6 @@ a:hover {
   text-align: center; }
 
 .pagination {
-  position: relative;
   padding-top: 20px;
   padding-bottom: 20px;
   border-top: 1px solid #ededed;
@@ -1912,12 +1911,6 @@ a:hover {
 .pagination-item {
   display: block;
   color: #a7a7a7; }
-  .is-inPage .pagination-item {
-    display: inline-block; }
-  .pagination-item:first-of-type {
-    margin-left: -10em; }
-  .pagination-item:last-of-type {
-    margin-right: -10em; }
 
 .essay pre, .essay code, .essay span {
   text-shadow: none !important;
@@ -1928,14 +1921,30 @@ a:hover {
   font-size: 1.05556em;
   line-height: 1.9;
   letter-spacing: .01em; }
-  .essay h2 {
+  .essay h1, .essay h2, .essay h3, .essay h4 {
     margin-top: 3em; }
-  .essay p {
+  .essay h1 {
+    font-size: 1.6em; }
+  .essay h2 {
+    font-size: 1.4em; }
+  .essay h3 {
+    font-size: 1.2em; }
+  .essay h4 {
+    font-size: 1.1em; }
+  .essay > p {
     margin-top: 2.5em; }
-    .essay p:last-of-type {
+    .essay > p:last-of-type {
       margin-bottom: 2.5em; }
-    h2 + p {
+    h1 + P, h2 + p {
       margin-top: 1em !important; }
+  .essay blockquote {
+    position: relative;
+    margin: 1.5em 0 1.5em .2em;
+    padding: 1em;
+    border-left: 6px solid #333333;
+    font-size: .8em;
+    color: #444444;
+    background-color: #ededed; }
   .essay pre {
     width: 100%;
     overflow: auto;

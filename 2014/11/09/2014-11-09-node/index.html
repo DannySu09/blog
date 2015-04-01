@@ -83,11 +83,9 @@
 <p><code>HTMLDocument</code>在继承了这两个方法的基础上，还自己也带着一个方法：<code>HTMLDocument.getElementsByName</code>。但是我在 <em>Chrome 33</em> 中的<code>HTMLDocument.prototype</code>上没有看到这个方法，却在<code>Document.prototype</code>上找到了这个方法。所以这个方法的归属还存在疑点。我觉得也没必要在此纠结，反正有的用就行了。</p>
 <p>这三个方法除了<code>Document.getElementById</code>因为是返回的是用ID标识的唯一的<code>HTMLElement</code>对象外。其他两个都是返回一种叫做<code>HTMLCollection</code>的类<code>NodeList</code>的类数组对象。这话有点绕。其实就是，第一，和<code>NodeList</code>对象很像；第二，两种都存在<code>Length</code>属性，而且可以按下标位置来访问属性。</p>
 <p>这两种类数组对象都是动态的。怎么说？它们里面装着取到的元素对象，而这个元素对象的集合会根据DOM树的变化而更新。比如，原来DOM树里有5个DIV元素。那取得的集合里，既然有5个DIV的元素对象。但在某时刻，如果在DOM树中新插入一个DIV对象。这时再去看那个集合，发现里面也同步更新了，里面放着6个DIV元素对象。</p>
-<hr>
 <blockquote>
 <p>在上面讨论<code>Document</code>的时候，提到过的<code>HTMLElement</code>外，还提到<code>HTMLCollection</code>。可能你已经注意到了。虽然<code>HTMLCollection</code>和<code>NodeList</code>的关系不明了，但<code>HTMLCollection</code>是HTML专有的。另外，<code>Document</code>有HTML专用的<code>HTMLDocument</code>。所以<code>Element</code>自然也有HTML专用的<code>HTMLElement</code>。</p>
 </blockquote>
-<hr>
 <h2 id="Element">Element</h2><p>元素是指HTML里的元素（不讨论XML）。如上所说，HTML元素都是HTMLElement的实例的实例。为什么这么说呢？比如<code>div</code>元素所对应的对象虽然是<code>HTMLElement</code>的一个实例，但是更详细的是<code>HTMLDivElement</code>的一个实例。不仅<code>Div</code>元素是这样，其他元素也都是像<code>HTML**Element</code>这样的实例。</p>
 <p>那么，平时我们也很顺溜的用着的<code>Element.getElementsByTagName</code>方法从哪儿来的？当时用这方法的时候我也挺疑惑。但是没有理会，还是很开心的用着。在这里搞清楚它。</p>
 <p><code>HTMLDocument</code>上存在三个查找元素的方法：<code>Document.getElementsByTagName</code>, <code>Document.getElementById</code>, <code>HTMLDocument.getElementsByName</code>。</p>

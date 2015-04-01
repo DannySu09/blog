@@ -60,7 +60,7 @@
         </ul>
     </header>
     
-        <div class="article-content essay"><h1 id="起因">起因</h1><p>今天同事碰到了一个奇怪的问题，使用了<code>position: fixed</code>的元素居然不以<code>viewport</code>为 containing block，而是以它的父元素为 containing block。原因是因为在设置了<code>fixed</code>的元素的父元素上，用了<code>transform: translate3d()</code>;</p>
+        <div class="article-content essay"><h2 id="起因">起因</h2><p>今天同事碰到了一个奇怪的问题，使用了<code>position: fixed</code>的元素居然不以<code>viewport</code>为 containing block，而是以它的父元素为 containing block。原因是因为在设置了<code>fixed</code>的元素的父元素上，用了<code>transform: translate3d()</code>;</p>
 <p>后来Google了一番，看到 MDN 上列出的几个会生成 stacking context 的原因，其中就有它。我记得以前在<a href="http://www.qianduan.net/" target="_blank" rel="external">前端观察</a>看过这篇<a href="http://www.qianduan.net/that-thing-on-the-z-index.html" target="_blank" rel="external">关于z-index的那些事儿</a>，其中列出了几个会形成 stacking context 的条件：</p>
 <ul>
 <li>当一个元素是文档的根元素时（<html>元素）</html></li>
@@ -73,7 +73,7 @@
 </ul>
 <a id="more"></a>
 <p>这个在 MDN 的这篇<a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Understanding_z_index/The_stacking_context" target="_blank" rel="external">文章</a>上说得更为清楚。</p>
-<h1 id="事情还没完">事情还没完</h1><p>刚才说过，那个<code>position: fixed</code>的元素居然以设置了<code>transform: translate3d()</code>的父元素为 containing block，其实在MDN中的关于<code>transform</code>的文档也着重写了这一点，如下：</p>
+<h2 id="事情还没完">事情还没完</h2><p>刚才说过，那个<code>position: fixed</code>的元素居然以设置了<code>transform: translate3d()</code>的父元素为 containing block，其实在MDN中的关于<code>transform</code>的文档也着重写了这一点，如下：</p>
 <blockquote>
 <p>If the property has a value different than none, a stacking context will be created. In that case the object will act as a containing block for position: fixed elements that it contains.</p>
 </blockquote>

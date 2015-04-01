@@ -60,7 +60,7 @@
         </ul>
     </header>
     
-        <div class="article-content essay"><h1 id="为何有这个困惑">为何有这个困惑</h1><p>今天看<code>browserify</code>的文档，看到exports的两种写法，不禁起了困惑。</p>
+        <div class="article-content essay"><h2 id="为何有这个困惑">为何有这个困惑</h2><p>今天看<code>browserify</code>的文档，看到exports的两种写法，不禁起了困惑。</p>
 <p>其文档是这么说的，当只需要导出单独的一样东西，可以这么写：</p>
 <pre class="language-javascript">
     <code>
@@ -99,7 +99,7 @@
     </code>
 </pre>
 
-<h2 id="吗？">吗？</h2><h1 id="解惑">解惑</h1><p>有疑问就翻书啊。有疑问，还有书！这就是财富啊，这就是迎娶白富美的资本啊。然后翻开 <em>《JavaScript高级程序设计》</em> , Zakas说了，<strong>ECMAScript中所有函数的参数都是按值传递的</strong>。</p>
+<h2 id="吗？">吗？</h2><h2 id="解惑">解惑</h2><p>有疑问就翻书啊。有疑问，还有书！这就是财富啊，这就是迎娶白富美的资本啊。然后翻开 <em>《JavaScript高级程序设计》</em> , Zakas说了，<strong>ECMAScript中所有函数的参数都是按值传递的</strong>。</p>
 <p>之后，需要明白的是，把函数外部的值，传递给函数内部的参数，就和把一个变量的值复制到另外一个变量上是一样的。</p>
 <p>再然后，需要明白，当把一个对象赋值给一个变量后，那个变量里装的是啥？是指向那个对象的指针。</p>
 <p>所以，综上，把一个对象或者其他的引用类型传递给一个函数时，其实就是把这个对象的指针值复制一份，然后赋值给函数内部的参数。</p>

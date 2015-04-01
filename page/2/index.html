@@ -113,7 +113,7 @@
         </ul>
     </header>
     
-        <div class="article-content essay"><h1 id="起因">起因</h1><p>今天同事碰到了一个奇怪的问题，使用了<code>position: fixed</code>的元素居然不以<code>viewport</code>为 containing block，而是以它的父元素为 containing block。原因是因为在设置了<code>fixed</code>的元素的父元素上，用了<code>transform: translate3d()</code>;</p>
+        <div class="article-content essay"><h2 id="起因">起因</h2><p>今天同事碰到了一个奇怪的问题，使用了<code>position: fixed</code>的元素居然不以<code>viewport</code>为 containing block，而是以它的父元素为 containing block。原因是因为在设置了<code>fixed</code>的元素的父元素上，用了<code>transform: translate3d()</code>;</p>
 <p>后来Google了一番，看到 MDN 上列出的几个会生成 stacking context 的原因，其中就有它。我记得以前在<a href="http://www.qianduan.net/">前端观察</a>看过这篇<a href="http://www.qianduan.net/that-thing-on-the-z-index.html">关于z-index的那些事儿</a>，其中列出了几个会形成 stacking context 的条件：</p>
 <ul>
 <li>当一个元素是文档的根元素时（<html>元素）</li>
@@ -158,7 +158,7 @@
         </ul>
     </header>
     
-        <div class="article-content essay"><h1 id="为何有这个困惑">为何有这个困惑</h1><p>今天看<code>browserify</code>的文档，看到exports的两种写法，不禁起了困惑。</p>
+        <div class="article-content essay"><h2 id="为何有这个困惑">为何有这个困惑</h2><p>今天看<code>browserify</code>的文档，看到exports的两种写法，不禁起了困惑。</p>
 <p>其文档是这么说的，当只需要导出单独的一样东西，可以这么写：</p>
 <pre class="language-javascript">
     <code>
@@ -386,7 +386,8 @@
         </ul>
     </header>
     
-        <div class="article-content essay"><h3 id="再把广州天河棠德花苑租屋里的这张床睡上一个晚上，就22岁了。不要忘了人生方向啊骚年！！">再把广州天河棠德花苑租屋里的这张床睡上一个晚上，就22岁了。不要忘了人生方向啊骚年！！</h3><p><img src="http://sunaiwenblogimage.qiniudn.com/22yearsold.jpg" alt="22岁啦"></p></div>
+        <div class="article-content essay"><p>再把广州天河棠德花苑租屋里的这张床睡上一个晚上，就22岁了。不要忘了人生方向啊骚年！！</p>
+<p><img src="http://sunaiwenblogimage.qiniudn.com/22yearsold.jpg" alt="22岁啦"></p></div>
         <footer class="article-footer">
             <a class="article-footer-readFurther" href="/2014/09/19/2014-09-19-22sui-la/">继续阅读</a>
         </footer>
