@@ -79,7 +79,7 @@
 <h2 id="this">this</h2><p>在全局环境执行时，指向<code>window</code>对象。<br>作为某对象的一个方法执行时，执行那个对象。<br>当一个匿名函数执行时，其this指向<code>window</code>。<br>当一个闭包执行时，this同样指向<code>window</code>。</p>
 <p>最让人觉得好用的，是<code>apply</code>和<code>call</code>方法。这两个<code>Function</code>类自带的方法，能指定this的指向。</p>
 <p>比如：</p>
-<p><pre><br><code class="language-javascript"><br>var a = function(){console.log(this.a)};<br>var o = {a:100};<br>a.apply(o, arguments);  =&gt; 100;<br></code><br></pre>&gt;</p>
+<p><pre><br><code class="language-javascript"><br>    var a = function(){console.log(this.a)};<br>    var o = {a:100};<br>    a.apply(o, arguments);  =&gt; 100;<br></code><br></pre>&gt;</p>
 <p>这时，this已经指向了对象<code>o</code>。想象下，如果<code>o</code>对象中自带有一大票有用的属性和方法，那当前函数的作用域就相当于夸大了，把<code>o</code>给包含进去了。</p>
 <p><code>apply</code>和<code>call</code>方法仅是穿参数的方式不一样。具体自行查询吧。</p>
 </div>

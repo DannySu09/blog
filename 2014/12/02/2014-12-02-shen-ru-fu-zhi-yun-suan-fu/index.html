@@ -63,13 +63,13 @@
         <div class="article-content essay"><p>昨天在微博上看到有人在At各位大大，想解答一个关于赋值运算符的问题，其实这个问题我在阅读《JavaScript 高级程序设计》的过程中也被难住了，一直没有解决，问题如下：</p>
 <pre>
     <code class="language-javascript">
-        var o = {
-            a: function(){
-                console.log(this === o);
-            }
+    var o = {
+        a: function(){
+            console.log(this === o);
         }
-        o.a(); //=> true
-        (o.a = o.a)(); //=> false, the value of 'this' is equal with the window object now
+    }
+    o.a(); //=> true
+    (o.a = o.a)(); //=> false, the value of 'this' is equal with the window object now
     </code>
 </pre>
 
@@ -89,68 +89,68 @@
 <p>可以试着去运行：</p>
 <pre>
     <code class="language-javascript">
-        var a, b=1;
-        alert(a = b);
+      var a, b=1;
+      alert(a = b);
     </code>
 </pre>
 
 <p>会弹窗显示<code>1</code>。</p>
 <p>再运行下：</p>
 <pre>
-    <code class="language-javascript">
-        var o = {
-            a: function(){
-                console.log(this === o);
-            }
-        }
+  <code class="language-javascript">
+    var o = {
+      a: function(){
+        console.log(this === o);
+      }
+    }
 
-        o.a(); //=> true
-        console.log(o.a = o.a);
-    </code>
+    o.a(); //=> true
+    console.log(o.a = o.a);
+  </code>
 </pre>
 
 <p>会在控制台打出：</p>
 <pre>
-    <code class="language-javascript">
-        function(){
-            console.log(this === o);
-        }
-    </code>
+  <code class="language-javascript">
+    function(){
+      console.log(this === o);
+    }
+  </code>
 </pre>
 
 
 <p>说明赋值运算的返回值就是等号右边部分经过<code>GetValue</code>方法取到的值。</p>
 <h2 id="GetValue方法">GetValue方法</h2><p>接着看<a href="http://www.ecma-international.org/ecma-262/5.1/#sec-8.7.1" target="_blank" rel="external">文档</a>，得知，<code>GetValue</code>方法接受的参数是一个对象的时候，又会涉及到如何决定取到的值的<code>Base</code>的问题。其中有一条，是当取不到<code>Base</code>时，那就把<code>Environment Records</code>给当做<code>Base</code>，可以试着运行下面代码：</p>
 <pre>
-    <code class="language-javascript">
-        var mark = 'I am outside';
-        var a = {
-            mark: 'I am inside',
-            b: function(){
-                console.log(this.mark);
-            }
-        };
-        a.b(); // => I am inside
-        (a.b = a.b)(); // => I am outside
-    </code>
+  <code class="language-javascript">
+    var mark = 'I am outside';
+    var a = {
+      mark: 'I am inside',
+      b: function(){
+        console.log(this.mark);
+      }
+    };
+    a.b(); // => I am inside
+    (a.b = a.b)(); // => I am outside
+  </code>
 </pre>
 
 <p>然后再包一层 IIFE函数，运行：</p>
 <pre>
-    <code class="language-javascript">
-        var mark = 'I am global';
-        (function(){
-            var mark = 'I am outside';
-            var a = {
-                mark: 'I am inside',
-                b: function(){
-                    console.log(this.mark);
-                }
-            };
-            a.b(); // => I am inside
-            (a.b = a.b)()// => I am global
-        })()
-    </code>
+  <code class="language-javascript">
+    var mark = 'I am global';
+    (function(){
+      var mark = 'I am outside';
+      var a = {
+        mark: 'I am inside',
+        b: function(){
+          console.log(this.mark);
+        }
+      };
+      a.b(); // => I am inside
+      (a.b = a.b)()// => I am global
+    })()
+  </code>
 </pre>
 
 <p>发现，所谓的<code>Environment Records</code>，在浏览器里是指<code>window</code>对象。</p>

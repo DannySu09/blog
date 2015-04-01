@@ -303,13 +303,13 @@
         <div class="article-content essay"><p>昨天在微博上看到有人在At各位大大，想解答一个关于赋值运算符的问题，其实这个问题我在阅读《JavaScript 高级程序设计》的过程中也被难住了，一直没有解决，问题如下：</p>
 <pre>
     <code class="language-javascript">
-        var o = {
-            a: function(){
-                console.log(this === o);
-            }
+    var o = {
+        a: function(){
+            console.log(this === o);
         }
-        o.a(); //=> true
-        (o.a = o.a)(); //=> false, the value of 'this' is equal with the window object now
+    }
+    o.a(); //=> true
+    (o.a = o.a)(); //=> false, the value of 'this' is equal with the window object now
     </code>
 </pre>
 

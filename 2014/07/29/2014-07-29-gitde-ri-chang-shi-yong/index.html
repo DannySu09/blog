@@ -67,7 +67,7 @@
 <h2 id="首先，先看本地的操作。">首先，先看本地的操作。</h2><p><strong>把文件加入缓存区中</strong></p>
 <pre>
 <code class="language-git">
-git add <filename>
+    git add <filename>
 </filename></code>
 </pre>
 加入缓存区后，文件如果再被改动，git就可以根据之前的版本来对文件的改动进行对比。所以，这是，就等于有了两个版本的文件，一份是上一个已经加入缓存区中的文件，一个是正在改动，还未加入缓存区中的文件。这时，如果想放弃已经对文件进行的改动，就可以：
@@ -81,16 +81,15 @@ git checkout -- &lt; filename &gt;
 <p>执行这个命令后，文件就回到了之前加入缓存区中的那个版本。比如，刚才加入缓存区的文件是<code>index.html</code>，那这时，执行</p>
 <pre>
 <code class="language-git">
-git status
+    git status
 </code>
 </pre>
 
 <p>获得的信息就应该是：</p>
 <pre>
 <code class="language-git">
-Changes to be committed:
-  (use "git rm --cached &lt; file &gt; ..." to unstage)
-
+    Changes to be committed:
+    (use "git rm --cached &lt; file &gt; ..." to unstage)
     new file:   index.html
 </code>
 </pre>
@@ -98,7 +97,7 @@ Changes to be committed:
 <p>好了，改变已经被取消，只剩下早先已经加入缓冲区的这个版本，可以提交了，执行：</p>
 <pre>
 <code class="language-git">
-git commit -m 'commit message'
+    git commit -m 'commit message'
 </code>
 </pre>
 
@@ -106,7 +105,7 @@ git commit -m 'commit message'
 <p>当很清楚自己修改了什么文件，不需要再仔细辨别时，为了节省时间，可以执行</p>
 <pre>
 <code class="language-git">
-git commit -a
+    git commit -a
 </code>
 </pre>
 
@@ -115,7 +114,7 @@ git commit -a
 <p>可以使用</p>
 <pre>
 <code class="language-git">
-git commit --amend
+    git commit --amend
 </code>
 </pre>
 
@@ -125,14 +124,14 @@ git commit --amend
 <p>回滚的命令为</p>
 <pre>
 <code class="language-git">
-git reset
+    git reset
 </code>
 </pre>
 
 <p>如果想要硬回滚，就加参数<code>--hard</code>，命令就成了</p>
 <pre>
 <code class="language-git">
-git reset --hard &lt; commit &gt;
+    git reset --hard &lt; commit &gt;
 </code>
 </pre>
 
@@ -140,7 +139,7 @@ git reset --hard &lt; commit &gt;
 <p>所以，让我们来看看更谨慎的软回滚</p>
 <pre>
 <code class="language-git">
-git reset --soft &lt; commit &gt;
+    git reset --soft &lt; commit &gt;
 </code>
 </pre>
 
@@ -150,7 +149,7 @@ git reset --soft &lt; commit &gt;
 <p>这时你可以再执行</p>
 <pre>
 <code class="language-git">
-git reset HEAD
+    git reset HEAD
 </code>
 </pre>
 
@@ -158,12 +157,12 @@ git reset HEAD
 <p>我们再假设，小妹妹的照片就是在回滚的那次commit新加进去的，那执行了上面这个命令后，你会得到这样的提示信息</p>
 <pre>
 <code class="language-git">
-Untracked files:
-  (use "git add &lt; file &gt;..." to include in what will be committed)
+    Untracked files:
+       (use "git add &lt; file &gt;..." to include in what will be committed)
 
-    mm.jpg
+       mm.jpg
 
-nothing added to commit but untracked files present (use "git add" to track)
+    nothing added to commit but untracked files present (use "git add" to track)
 </code>
 </pre>
 

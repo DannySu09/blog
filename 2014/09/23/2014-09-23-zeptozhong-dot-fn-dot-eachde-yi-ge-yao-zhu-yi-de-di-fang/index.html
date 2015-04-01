@@ -89,7 +89,7 @@
 <p>翻了一下Zepto的相关源码，看到以下的代码：</p>
 <pre class="language-javascript">
     <code>
-each: function(callback){
+    each: function(callback){
       emptyArray.every.call(this, function(el, idx){
         return callback.call(el, idx, el) !== false
       })
