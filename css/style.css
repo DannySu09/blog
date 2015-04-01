@@ -1815,7 +1815,7 @@ a:hover {
     margin-bottom: 60px; }
     .article.is-articleMeta .article-title {
       float: left;
-      font-size: 1.38889em; }
+      font-size: 1.22222em; }
 
 .article-head {
   margin-bottom: 30px; }
@@ -1907,6 +1907,8 @@ a:hover {
   border-top: 1px solid #ededed;
   text-align: center;
   clear: left; }
+  .pagination.is-onlyOnePage {
+    display: none; }
 
 .pagination-item {
   display: block;
@@ -1965,11 +1967,15 @@ a:hover {
   .essay a {
     color: #a7a7a7; }
 
-.ct-header {
-  margin-bottom: 100px; }
+.ct-header, .archive-header {
+  margin-top: 8em;
+  margin-bottom: 3em; }
+  .ct-header:first-of-type, .archive-header:first-of-type {
+    margin-top: 0; }
 
-.ct-title {
-  font-size: 1.77778em;
+.ct-title, .archive-year {
+  font-size: 2.22222em;
+  color: #a7a7a7;
   border-bottom: 1px solid #ededed; }
 
 .ct-icon {
