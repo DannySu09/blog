@@ -27,7 +27,7 @@
   content: ''; }
 
 .u-hightLightText {
-  color: #4285F4 !important; }
+  color: #2e6cee !important; }
 
 .u-centerBlock {
   margin-left: auto !important;
@@ -1729,7 +1729,7 @@ button {
   outline: none; }
 
 a:hover {
-  color: #4285F4 !important; }
+  color: #2e6cee !important; }
 
 img {
   border: 1px solid #ededed;
@@ -1757,8 +1757,8 @@ img {
   box-shadow: 0 0 0 1px #a7a7a7;
   -webkit-box-shadow: 0 0 0 1px #a7a7a7; }
   .head-flag:hover {
-    box-shadow: 0 0 0 1px #4285F4;
-    -webkit-box-shadow: 0 0 0 1px #4285F4; }
+    box-shadow: 0 0 0 1px #2e6cee;
+    -webkit-box-shadow: 0 0 0 1px #2e6cee; }
 
 .head-flag-img {
   width: 100%;
@@ -1808,8 +1808,8 @@ img {
   color: #a7a7a7;
   background-color: #ffffff; }
   .head-search-input:focus {
-    border-color: #4285F4;
-    color: #4285F4; }
+    border-color: #2e6cee;
+    color: #2e6cee; }
   .has-filter .head-search-input {
     border: none !important; }
 
@@ -1843,7 +1843,7 @@ img {
   margin-right: 15px; }
 
 .ami-icon {
-  color: #4285F4;
+  color: #2e6cee;
   font-size: 1.2em;
   vertical-align: top; }
 
@@ -1863,10 +1863,10 @@ img {
   line-height: 2.5;
   text-align: center; }
   .article-footer-readFurther:hover {
-    color: #4285F4;
-    border-left-color: #4285F4;
-    border-right-color: #4285F4;
-    border-bottom-color: #4285F4; }
+    color: #2e6cee;
+    border-left-color: #2e6cee;
+    border-right-color: #2e6cee;
+    border-bottom-color: #2e6cee; }
 
 .aside {
   margin-bottom: 100px; }
@@ -1877,7 +1877,7 @@ img {
 .aside-list {
   padding-top: 10px;
   list-style: none;
-  color: #4285F4; }
+  color: #2e6cee; }
 
 .aside-list-item {
   margin-bottom: 15px;
@@ -1892,7 +1892,7 @@ img {
   min-width: 1.5em;
   *width: 1.5em;
   height: 1.5em;
-  border: 1px solid #4285F4;
+  border: 1px solid #2e6cee;
   border-radius: 1em;
   line-height: 1.4;
   text-align: center; }
@@ -1904,7 +1904,7 @@ img {
   line-height: 30px;
   font-family: menlo, monaco, monospace;
   font-size: 0.85714em;
-  color: #4285F4;
+  color: #2e6cee;
   text-align: center; }
 
 .pagination {
@@ -1928,7 +1928,7 @@ img {
       float: right; }
 
 #ds-thread #ds-reset .ds-highlight {
-  color: #4285F4 !important; }
+  color: #2e6cee !important; }
 
 #ds-thread #ds-reset .ds-comment-body p {
   color: #333333; }
