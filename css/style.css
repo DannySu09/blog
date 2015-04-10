@@ -20,6 +20,9 @@
   font-weight: bold;
   line-height: 1.2;
   color: #333333; }
+  @media screen and (min-width: 320px) and (max-width: 540px) {
+    .article-title, .aside-title {
+      font-size: 1.66667em; } }
 
 .u-cf:after {
   display: table;
@@ -1744,6 +1747,12 @@ img {
   z-index: 10;
   line-height: 47px;
   text-align: center; }
+  @media screen and (min-width: 320px) and (max-width: 540px) {
+    .head {
+      height: auto;
+      padding-top: 10px;
+      padding-left: 0;
+      padding-right: 0; } }
 
 .head a {
   text-decoration: none; }
@@ -1759,6 +1768,9 @@ img {
   .head-flag:hover {
     box-shadow: 0 0 0 1px #2845ce;
     -webkit-box-shadow: 0 0 0 1px #2845ce; }
+  @media screen and (min-width: 320px) and (max-width: 540px) {
+    .head-flag {
+      display: none; } }
 
 .head-flag-img {
   width: 100%;
@@ -1776,6 +1788,11 @@ img {
   line-height: 39px;
   margin-left: -99px;
   border-bottom: 1px solid #ededed; }
+  @media screen and (min-width: 320px) and (max-width: 540px) {
+    .head-nav {
+      position: static;
+      margin-left: auto;
+      margin-right: auto; } }
 
 .head-nav-item {
   display: inline-block;
@@ -1791,15 +1808,40 @@ img {
     color: #ffffff;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
     -webkit-text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7); }
+  @media screen and (min-width: 320px) and (max-width: 540px) {
+    .head-nav-item {
+      margin-right: 20px; } }
+
+.hni-search {
+  display: none; }
+  @media screen and (min-width: 320px) and (max-width: 540px) {
+    .hni-search {
+      display: inline-block; } }
 
 .head-search {
   float: right; }
+  @media screen and (min-width: 320px) and (max-width: 540px) {
+    .head-search {
+      position: fixed;
+      display: none;
+      width: 100%;
+      height: 100%;
+      padding-top: 80px;
+      left: 0;
+      top: 0;
+      background-color: rgba(255, 255, 255, 0.9);
+      transition: height 0.4s;
+      -webkit-transition: height 0.4s; }
+      .head-search.is-show {
+        display: block;
+        z-index: 100; } }
 
 .head-search-input {
   width: 12.85714em;
   height: 35px;
   padding-left: 10px;
   padding-right: 10px;
+  margin-top: 80px;
   border: 1px solid #a7a7a7;
   border-radius: 18px;
   font-size: 1.07143em;
@@ -1813,6 +1855,34 @@ img {
   .has-filter .head-search-input {
     border: none !important; }
 
+.head-search-close {
+  display: none; }
+  @media screen and (min-width: 320px) and (max-width: 540px) {
+    .head-search-close {
+      display: block;
+      width: 1.5em;
+      height: 1.5em;
+      border: 1px solid #a7a7a7;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: .8em;
+      color: #a7a7a7;
+      font-size: 2.14286em;
+      background-color: transparent; } }
+
+.head-search-btn {
+  display: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 17px;
+  font-size: 1.14286em;
+  color: #ffffff;
+  background-color: #2845ce;
+  vertical-align: middle; }
+  @media screen and (min-width: 320px) and (max-width: 540px) {
+    .head-search-btn {
+      display: inline-block; } }
+
 .article {
   margin-bottom: 200px; }
   .article.is-articleFull {
@@ -1822,6 +1892,9 @@ img {
     .article.is-articleMeta .article-title {
       float: left;
       font-size: 1.22222em; }
+  @media screen and (min-width: 320px) and (max-width: 540px) {
+    .article {
+      margin-bottom: 80px; } }
 
 .article-head {
   margin-bottom: 30px; }
@@ -1920,6 +1993,10 @@ img {
 .pagination-item {
   display: block;
   color: #a7a7a7; }
+  .is-inPage .pagination-item {
+    margin-left: auto;
+    margin-right: auto;
+    width: 8em; }
   .pagination--post .pagination-item {
     max-width: 45%; }
     .pagination--post .pagination-item:first-of-type {
@@ -1945,6 +2022,10 @@ img {
   font-size: 1.05556em;
   line-height: 1.9;
   letter-spacing: .01em; }
+  @media screen and (min-width: 320px) and (max-width: 540px) {
+    .essay {
+      line-height: 1.75;
+      word-break: break-all; } }
   .essay h1, .essay h2, .essay h3, .essay h4 {
     margin-top: 3em; }
   .essay h1 {
@@ -2031,18 +2112,31 @@ img {
   margin-left: auto;
   margin-top: 80px;
   margin-right: auto;
-  z-index: 10;
   font-size: 18px; }
   .has-filter .main {
     padding: 35px 20px;
     box-sizing: content-box;
     -webkit-box-sizing: content-box; }
+  @media screen and (min-width: 320px) and (max-width: 540px) {
+    .main {
+      width: 100%;
+      margin-top: 0;
+      font-size: 16.2px; } }
 
 .main-article {
   float: left;
   width: 68.75%;
   margin-right: 10.41667%; }
+  @media screen and (min-width: 320px) and (max-width: 540px) {
+    .main-article {
+      float: none;
+      width: 92.70833%;
+      margin-left: auto;
+      margin-right: auto; } }
 
 .main-aside {
   float: left;
   width: 20.83333%; }
+  @media screen and (min-width: 320px) and (max-width: 540px) {
+    .main-aside {
+      display: none; } }
