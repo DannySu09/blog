@@ -2087,6 +2087,9 @@ img {
   font-size: 2.22222em;
   color: #a7a7a7;
   border-bottom: 1px solid #ededed; }
+  @media screen and (min-width: 320px) and (max-width: 540px) {
+    .ct-title, .archive-year {
+      font-size: 1.44444em; } }
 
 .ct-icon {
   color: #ededed; }
