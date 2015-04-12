@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="/css/style.css"/>
 <link rel="stylesheet" href="/css/highlight.css"/>
 <script src="/js/lib/modernizr-shiv.js"></script>
-    <title> 无限滚动更新的痛 </title>
+    <title> Don't Make Me Think </title>
 </head>
 <body>
     <header class="head u-cf">
@@ -44,19 +44,19 @@
 <article class="article  is-articleFull ">
     <header class="article-head">
         
-            <h1 class="article-title">无限滚动更新的痛</h1>
+            <h1 class="article-title">Don't Make Me Think</h1>
         
         <ul class="article-meta">
             <li class="article-meta-item">
                 <i class="fa fa-clock-o ami-icon"></i>
-                <span class="ami-text">2015-02-09</span>
+                <span class="ami-text">2015-04-12</span>
             </li>
             <li class="article-meta-item">
                 
                     <i class="fa fa-book ami-icon"></i>
                     
                         
-                            <a class="ami-text" href="/categories/用户体验/">用户体验</a>
+                            <a class="ami-text" href="/categories/英语透析阅读/">英语透析阅读</a>
                         
                     
                 
@@ -67,22 +67,23 @@
         </ul>
     </header>
     
-        <div class="article-content essay"><ol>
-<li><p>今天突然有人提出，对于一个无限下拉更新的图片浏览网站来说，如果点开了某张图片，跳转到这张图片的详情页面。再回退回来，想找回刚才那张图片，发现又回到页面顶部，又得重新开始拉啊拉啊拉，几乎等于这玩意儿没办法用。<a id="more"></a></p>
-</li>
-<li><p>搜了几个类似类型的网站，第一个是<a href="https://youyanchu.com/" target="_blank" rel="external">有演出</a>，他们大概也遇到了同样的问题。解决方法是，干脆就不用下拉更新了，还原到「上一页，下一页」的模式。应该只要记住当前数据加载的页码，就能很容易找回数据。而且，回退后，自动滚动到上一次看到的图片（item） 也是可以做的。</p>
-</li>
-<li><p>第二个是<a href="https://www.pinterest.com/" target="_blank" rel="external">Pinterest</a>，也是这种类型网站的鼻祖了。点开某张图时，首先会弹出一个弹层；同时根据一个 ID，组合出一个 URL，写出到浏览器历史记录里。接下来，如果把弹层关掉，URL 会被重写，也写到浏览器历史记录里。</p>
-<p> 重点是，如果在有弹层的显示的同时，刷新页面。这时的行为相当于直接打开根据 ID 组合的那种 URL，这时，我以为会照旧打开页面，不过会根据 URL 的类型来识别出页面状态，发现 URL 里有 ID，就根据 ID 把相应弹层打开。</p>
-<p> 但实际上 Pinterest 的做法更巧妙。会直接打开一个样式和弹层差不多的独立页面，相当于为之前弹层里面的内容单独做一个专门的页面。这就免了上面我提到的，根据  URL 的 ID 来识别当前状态，恢复弹层之类的。而且，如果是单独打开弹层出现后的 URL 的用户，肯定都是奔着看大图，而不是瀑布流去的。所以，这样做就很实在很顺了。</p>
-</li>
-<li>结论可以出来了。<ol>
-<li>为了保存当前页面的滚动位置，只能用弹层来显示某张图片的详情。</li>
-<li>弹层出现或者消失，都重写 URL，写入历史记录。</li>
-<li>当直接打开弹层出现时的 URL，就直接进入了真正的某张图片的详情页面。</li>
-</ol>
-</li>
-</ol>
+        <div class="article-content essay"><p>书名：Don’t Make Me Think<br>作者：Steve Krug<br>页数：216<br>阅读时间：两个月</p>
+<p>这本书是断断续续的读。年前就已经打算要读，后来读了一部分后，因为工作突然忙了起来，又被打断了一段时间。工作忙完后，在拿起来看，发现之前看的已经不记得了，又重头开始读。</p>
+<p>因为是英文透析阅读，所以虽然是第一遍读，但是读得还挺仔细。<a id="more"></a>甚至边读边试着实践了一下，设计<br>了现在这个<a href="https://github.com/sunaiwen/hexo-theme-plain" target="_blank" rel="external">博客主题</a>：</p>
+<img src="/2015/04/12/Don-t-Make-Me-Think/dont-make-me-think.png">
+<h2 id="收获">收获</h2><p>在读的过程中，无意间在知乎上看到一篇奶爸的<a href="http://www.zhihu.com/question/28580617/answer/41405379" target="_blank" rel="external">回答</a>。就决定降低查单个单词释义的优先级，更优先的去标记陌生单词所在句子的整句搭配。</p>
+<p>而且意外的发现，Kindle 的标记功能其实是很强大的，唯一难忍的就是机器反映比较慢，所以整个操作耗时较长。但标记之后，如果要查阅和复习标记的句子，就会发现 Kindle 帮做了非常清晰的整理，使用起来很方便。</p>
+<h2 id="更换词典">更换词典</h2><p>之前在欧路词典里，是一本英英词典和一本中英词典搭配着看，当英英释义看不懂时就看中英的。但又是某天翻了翻知乎，发现众人最推荐的英语学习词典是<strong>麦克米伦（Macmillan）</strong>。我不清楚是否有中英版本的，但是我找了英英版本的。</p>
+<p>使用下来，大致感受如下：</p>
+<ul>
+<li>优点：解释生动容易理解，而且音标词类等信息很清晰。</li>
+<li>缺点：每个词的释义很多，如果恰好那个词的释义不常见，就要找好一会儿才找到想找的释义。</li>
+</ul>
+<h2 id="看书设备">看书设备</h2><p>这本书有几章是在上班的午间休息的时候，用电脑直接看的。PC 版本的 Kindle 客户端看 MOBI 格式体验其实很不错。翻页，章节间跳转，字体调节，背景调节什么的都挺好。下次要看看 Kindle 内的备注是否能设备间同步。如果能同步，那 iPad、PC、Kindle 就都能看书了。而且用 iPad 看技术书籍会有明显的优势（要往返反复翻看）。</p>
+<h2 id="打算">打算</h2><p>虽然读了一遍，但很多地方仍然混混沌沌。但重读也不作为透析阅读的另一本书计数了，仅在平时有时间的时候当平常书籍阅读就好。</p>
+<p>最近在想，阅读小说所得的无非就是阅读上的快感。如果情节精彩，那阅读起来是很快的。但实际上的收获却有点少。</p>
+<p>回想当初为什么提高自己的英语？目的不就是为了能进入英语世界获得更多的信息吗？虽然透析阅读的目的是提高英语，但一直这样为了提高英语阅读而读小说，到底何时才能开始「进入英语世界获得更多信息」呢？</p>
+<p>不如直接阅读那些想获得的信息吧。所以，下一本书就看 Robert Sedgewick 的《算法》吧。</p>
 </div>
     
 </article>
@@ -90,29 +91,20 @@
         
     <footer class="pagination pagination--post u-cf">
         
-            <a class="pagination-item" href="/2015/04/12/Don-t-Make-Me-Think/">
-                <i class="fa fa-angle-left u-hightLightText"></i>
-                
-                    上一篇：Don't Make Me Think
-                
-            </a>
         
-        
-            <a class="pagination-item" href="/2015/01/19/2015-01-19-复杂/">
+            <a class="pagination-item" href="/2015/02/09/2015-02-09-无限滚动更新的痛/">
                 
-                    下一篇：复杂
+                    下一篇：无限滚动更新的痛
                 
                 <i class="fa fa-angle-right u-hightLightText"></i>
             </a>
         
         
-            <span class="pagination-break u-hightLightText">&bullet;</span>
-        
     </footer>
 
         
             
-                <div class="ds-thread" data-thread-key="1423491348000" data-title="无限滚动更新的痛" data-url="2015/02/09/2015-02-09-无限滚动更新的痛/"></div>
+                <div class="ds-thread" data-thread-key="1428831547000" data-title="Don't Make Me Think" data-url="2015/04/12/Don-t-Make-Me-Think/"></div>
             
         
     </section>
