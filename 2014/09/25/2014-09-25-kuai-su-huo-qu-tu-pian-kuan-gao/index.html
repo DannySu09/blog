@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
-
-<meta name="description" content="这里放着我的个人文章"/>
-
 <link rel="shortcut icon" href= "/favicon.png"/>
 <link rel="stylesheet" href="/css/style.css"/>
 <link rel="stylesheet" href="/css/highlight.css"/>
 <script src="/js/lib/modernizr-shiv.js"></script>
+    
+    <meta name="description" content="开发过一个等宽瀑布流，请求后端的数据发现后端并没有提供图片宽高，应该是后端的哥们忙吧。加之项目比较赶，还是想办法在前端解决吧。
+那时的解决方法就是直接监听请求来的每一组的数据的图片的onload事件，触发一次或者img.complete === true就记一次数，发现加载完了，就把图片按照瀑布流的布局显示出来。因为无法预知每张图片到底高度多少，所以不知道瀑布流接下来该怎么摆，所以整个过程是阻塞的，也就是图片不加载完，就不干其他事。"/>
+
     <title> 快速获取图片宽高 </title>
 </head>
 <body>

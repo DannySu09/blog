@@ -48,9 +48,9 @@
     win.o.Search = Search;
 })(window, document);
 
-(function(doc){
+(function(win, doc){
     var search = null;
     doc.addEventListener('DOMContentLoaded', function(){
         search = new win.o.Search();
     });
-})(document);
+})(window, document);

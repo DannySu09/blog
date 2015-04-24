@@ -4,13 +4,28 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
-
-<meta name="description" content="这里放着我的个人文章"/>
-
 <link rel="shortcut icon" href= "/favicon.png"/>
 <link rel="stylesheet" href="/css/style.css"/>
 <link rel="stylesheet" href="/css/highlight.css"/>
 <script src="/js/lib/modernizr-shiv.js"></script>
+    
+    <meta name="description" content="昨天在微博上看到有人在At各位大大，想解答一个关于赋值运算符的问题，其实这个问题我在阅读《JavaScript 高级程序设计》的过程中也被难住了，一直没有解决，问题如下：
+
+    
+    var o = {
+        a: function(){
+            console.log(this === o);
+        }
+    }
+    o.a(); //=> true
+    (o.a = o.a)(); //=> false, the value of 'this' is equal with the window object now
+    
+
+
+为什么第二种调用方法，this就变成了window对象了呢？
+在微博上看到有人提到了Reference Type，然后就去翻 ECMAScript 文档，第一次去翻这玩意儿呢，有些紧张。结果看了好几遍才貌似看懂了，不确定是否真的看懂。
+但还是把我的理解写下来。"/>
+
     <title> 一个赋值运算问题 </title>
 </head>
 <body>

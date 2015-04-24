@@ -4,13 +4,26 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
-
-<meta name="description" content="这里放着我的个人文章"/>
-
 <link rel="shortcut icon" href= "/favicon.png"/>
 <link rel="stylesheet" href="/css/style.css"/>
 <link rel="stylesheet" href="/css/highlight.css"/>
 <script src="/js/lib/modernizr-shiv.js"></script>
+    
+    <meta name="description" content="为何有这个困惑今天看browserify的文档，看到exports的两种写法，不禁起了困惑。
+其文档是这么说的，当只需要导出单独的一样东西，可以这么写：
+
+    
+        module.exports = function(){}; // 可以是一个函数或者其他东西。
+    
+
+
+但是，这样写绝对不可以：
+
+    
+        exports = function(){}; // 可以是一个函数或者其他东西。
+    
+"/>
+
     <title> 当把引用类型当做参数传递给函数 </title>
 </head>
 <body>

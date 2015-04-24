@@ -4,13 +4,23 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
-
-<meta name="description" content="这里放着我的个人文章"/>
-
 <link rel="shortcut icon" href= "/favicon.png"/>
 <link rel="stylesheet" href="/css/style.css"/>
 <link rel="stylesheet" href="/css/highlight.css"/>
 <script src="/js/lib/modernizr-shiv.js"></script>
+    
+    <meta name="description" content="起因今天同事碰到了一个奇怪的问题，使用了position: fixed的元素居然不以viewport为 containing block，而是以它的父元素为 containing block。原因是因为在设置了fixed的元素的父元素上，用了transform: translate3d();
+后来Google了一番，看到 MDN 上列出的几个会生成 stacking context 的原因，其中就有它。我记得以前在前端观察看过这篇关于z-index的那些事儿，其中列出了几个会形成 stacking context 的条件：
+
+当一个元素是文档的根元素时（元素）
+当一个元素有一个position值而不是static，有一个z-index值而不是auto
+当一个元素有一个opacity值小于1
+
+当初就是看了这篇文章，才对 stacking context 有了初步了解。不过现在看来，它还少一个条件：
+
+当一个元素有一个transform属性，且值不为none时
+"/>
+
     <title> 由transform不为none产生的stacking context </title>
 </head>
 <body>

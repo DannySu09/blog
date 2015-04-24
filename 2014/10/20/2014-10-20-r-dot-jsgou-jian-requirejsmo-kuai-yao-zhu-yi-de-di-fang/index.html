@@ -4,13 +4,23 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
-
-<meta name="description" content="这里放着我的个人文章"/>
-
 <link rel="shortcut icon" href= "/favicon.png"/>
 <link rel="stylesheet" href="/css/style.css"/>
 <link rel="stylesheet" href="/css/highlight.css"/>
 <script src="/js/lib/modernizr-shiv.js"></script>
+    
+    <meta name="description" content="window.define的写法导致mismatch错误第一次用RequireJS，今天把所有模块及其依赖用r.js打包后，RequireJS一直在抛mismatched的错误。盯着打包后的代码看了一会儿，终于找到了问题。
+假设有一个模块叫做Countdown，返回的是变量名为Countdown的构造函数，然后就有了如下的代码：
+
+    
+    if(window.define != null) {
+      window.define(function(){
+          return Countdown;
+      });
+  }
+    
+"/>
+
     <title> r.js打包requirejs模块要注意的一个地方 </title>
 </head>
 <body>

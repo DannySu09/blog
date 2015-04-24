@@ -4,13 +4,30 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
-
-<meta name="description" content="这里放着我的个人文章"/>
-
 <link rel="shortcut icon" href= "/favicon.png"/>
 <link rel="stylesheet" href="/css/style.css"/>
 <link rel="stylesheet" href="/css/highlight.css"/>
 <script src="/js/lib/modernizr-shiv.js"></script>
+    
+    <meta name="description" content="2014-09-25补充：Zepto的文档中其实是对return false有说明的：
+
+Iterate through every element of the collection. Inside the iterator function, this keyword refers to the current item (also passed as the second argument to the function). If the iterator function returns false, iteration stops.
+
+是我疏忽了。不过可以把本文当做$.fn.each方法实现的探讨吧。
+原文：
+前几天在用Zepto做一个项目，同事写了一个小插件，代码的作用是找到某个父元素下的所有img标签，然后将其中lazyload属性的值赋给src属性，达到控制加载图片的目的。
+首先想到的，当然是这样实现：
+
+    
+        $('img').each(function(idx, el){
+            if(!$(el).attr('lazyload')) return false;
+            // do something here
+        });
+    
+
+
+看代码第二行的return false，这行会导致执行流跳出each循环。"/>
+
     <title> Zepto中$.fn.each的一个要注意的地方 </title>
 </head>
 <body>
