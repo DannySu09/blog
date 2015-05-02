@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
+<link rel="shortcut icon" href= "/favicon.png"/>
+<link rel="stylesheet" href="/css/style.css"/>
+<link rel="stylesheet" href="/css/highlight.css"/>
+<script src="/js/lib/modernizr-shiv.js"></script>
+    
+    <meta name="description" content="什么是IIFE相信你一定知道「自调用匿名函数」吧。类似于这样的写法：
+
+    
+        (function(){})();
+    
+
+
+IIFE就是对这种写法的「自调用的匿名函数」称呼纠正后的叫法。"/>
+
+    <title> IIFE和它们面前的分号 </title>
+</head>
+<body>
+    <header class="head u-cf">
+        <a class="head-flag" href="/">
+    <img class="head-flag-img" src="/image/logo.png" alt="sunaiwen 个人博客"/>
+</a>
+<div id="j-searchBox" class="head-search">
+    <button id="j-search-closeBtn" class="head-search-close"><i class="fa fa-close"></i></button>
+    <form action="//google.com/search" method="get" accept-charset="utf-8">
+        <input id="j-searchScope" type="hidden" name="q" value="http://blog.snwin.co"/>
+        <input class="head-search-input" type="search" name="q" placeholder="搜索本站文章..."/>
+        <button class="head-search-btn" type="submit"><i class="fa fa-search"></i></button>
+    </form>
+    <script>
+        var scopeInput = document.getElementById('j-searchScope');
+        scopeInput.value = 'site:' + scopeInput.value.replace(/^https?:\/\//, '');
+    </script>
+</div>
+<nav class="head-nav">
+    <a class="head-nav-item" href="/">首页</a>
+    <a class="head-nav-item" href="/archives">归档</a>
+    <a class="head-nav-item" href="/about">关于我</a>
+    <a id="j-nav-searchBtn" class="head-nav-item hni-search" href="javascript:void(0)"><i class="fa fa-search"></i></a>
+</nav>
+    </header>
+    <main class="main u-cf block">
+        
+    <section class="main-article">
+        
+<article class="article  is-articleFull ">
+    <header class="article-head">
+        
+            <h1 class="article-title">IIFE和它们面前的分号</h1>
+        
+        <ul class="article-meta">
+            <li class="article-meta-item">
+                <i class="fa fa-clock-o ami-icon"></i>
+                <span class="ami-text">2014-09-27</span>
+            </li>
+            <li class="article-meta-item">
+                
+                    <i class="fa fa-book ami-icon"></i>
+                    
+                        
+                            <a class="ami-text" href="/categories/JavaScript/">JavaScript</a>
+                        
+                    
+                
+            </li>
+            <li class="article-meta-item">
+                
+            </li>
+        </ul>
+    </header>
+    
+        <div class="article-content essay"><h1 id="什么是IIFE">什么是IIFE</h1><p>相信你一定知道「自调用匿名函数」吧。类似于这样的写法：</p>
+<pre class="language-javascript">
+    <code>
+        (function(){})();
+    </code>
+</pre>
+
+<p>IIFE就是对这种写法的「自调用的匿名函数」称呼纠正后的叫法。<br><a id="more"></a></p>
+<p>为什么不叫做「自调用的匿名函数」？看一个例子：</p>
+<pre class="language-javascript">
+    <code>
+        (function test(){
+            test();
+        })();
+    </code>
+</pre>
+
+<p>这才应该叫做自调用函数，它在自己的内部又调用了自己。对于匿名函数来说，会是这样：</p>
+<pre class="language-javascript">
+    <code>
+    (function(){
+        arguments.callee();
+    })();
+    </code>
+</pre>
+
+<p>不过这种在ES5严格模式下不允许。所以，目前不知道在ES5下怎么实现匿名函数的自调用。</p>
+<p>而IIFE是指的这种写法：</p>
+<pre class="language-javascript">
+    <code>
+    (function(){
+        // do something, but not invoke itself
+    })();
+    </code>
+</pre>
+
+<p>看出来了吗？IIFE并没有调用自己，所以「自调用」的叫法在这种情况下并不合适。说到这里，该是时候知道IIFE非缩写时的样子了。</p>
+<p>IIFE，即 Immediately-Invoked Function Expression，中文就不翻译了。</p>
+<h1 id="IIFE面前的分号">IIFE面前的分号</h1><p>看别人写的代码，会看到这样的写法：</p>
+<pre class="language-javascript">
+    <code>
+    ;(function(){
+        // do something
+    })();
+    </code>
+</pre>
+
+<p>本来我以为这个分号是为了消除函数声明和表达式的语法歧义，但是一看不对啊，没有分号这也是一个IIFE啊。那到底这个分号是干嘛的？</p>
+<p>再看一个例子：</p>
+<pre class="language-javascript">
+    <code>
+    (function(){ // do something })()
+    (function(){// do something })()
+    </code>
+</pre>
+
+<p>这段代码这样看没问题，但压缩后，就会变成：</p>
+<pre class="language-javascript">
+    <code>
+    (function(){ // do something })()(function(){// do something })()
+    </code>
+</pre>
+
+<p>此时，第一个函数执行后，会是这样的状态：<code>undefined(function(){})()</code>，包裹第二个函数的这对括号就会变成了函数的调用符，<code>undefined()</code>这样的结果肯定会抛错的。</p>
+<p>所以，在前面加上一个分好，应该是为了避免压缩代码之后出现错误，也兼顾了一些不写分号和写分号两种风格的代码。其实加分号也不仅仅在IIFE前加，应该在可能产生歧义的地方都加。</p>
+<p>分号的作用是我自己观察的结果，如有不对请指正哦。 :-)</p>
+<h1 id="IIFE提出者的博文">IIFE提出者的博文</h1><p>IIFE的提出者的博客对此有更详细准确的描述：<br><a href="http://benalman.com/news/2010/11/immediately-invoked-function-expression" target="_blank" rel="external">http://benalman.com/news/2010/11/immediately-invoked-function-expression</a></p>
+</div>
+    
+</article>
+
+        
+    <footer class="pagination pagination--post u-cf">
+        
+            <a class="pagination-item" href="/2014/10/05/touxijilu-of-theconfession/">
+                <i class="fa fa-angle-left u-hightLightText"></i>
+                
+                    上一篇：the confession
+                
+            </a>
+        
+        
+            <a class="pagination-item" href="/2014/09/25/kuai-su-huo-qu-tu-pian-kuan-gao/">
+                
+                    下一篇：快速获取图片宽高
+                
+                <i class="fa fa-angle-right u-hightLightText"></i>
+            </a>
+        
+        
+            <span class="pagination-break u-hightLightText">&bullet;</span>
+        
+    </footer>
+
+        
+            
+                <div class="ds-thread" data-thread-key="1411794770000" data-title="IIFE和它们面前的分号" data-url="2014/09/27/iifehe-ta-men-qian-mian-de-fen-hao/"></div>
+            
+        
+    </section>
+
+        <aside class="main-aside">
+    <section class="main-aside-section aside">
+        <h1 class="aside-title">分类</h1>
+        <ul class="aside-list">
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/JavaScript/">JavaScript&nbsp;<span class="ali-count u-hightLightText">10</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/英语透析阅读/">英语透析阅读&nbsp;<span class="ali-count u-hightLightText">5</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/说说/">说说&nbsp;<span class="ali-count u-hightLightText">8</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/用户体验/">用户体验&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/Web-基础/">Web 基础&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/CSS/">CSS&nbsp;<span class="ali-count u-hightLightText">3</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/读后感/">读后感&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/Git/">Git&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/设计/">设计&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+        </ul>
+    </section>
+    <section class="main-aside-section aside">
+        <h1 class="aside-title">标签</h1>
+        <ul class="aside-list">
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/Angular/">Angular&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/酷产品/">酷产品&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/英文小说/">英文小说&nbsp;<span class="ali-count u-hightLightText">4</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/DOM/">DOM&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/RequireJS/">RequireJS&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/Zepto/">Zepto&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/自控力/">自控力&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/Sketch/">Sketch&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/足球/">足球&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/世界杯/">世界杯&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/上班/">上班&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/租房/">租房&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+        </ul>
+    </section>
+</aside>
+        
+    </main>
+    <div class="bg-global" style="background-image: url('image/bg-default.jpg')"></div>
+    <footer class="foot">
+        <span class="foot-text">&spades;&nbsp;sunaiwen - 2015&nbsp;&clubs;&nbsp;Power by hexo&nbsp;&spades;</span>
+    </footer>
+    <script src="/js/lib/highlight.js"></script>
+<script src="/js/app.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-51163552-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+
+
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    var duoshuoQuery = {short_name:"sunaiwen"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
+<link rel="shortcut icon" href= "/favicon.png"/>
+<link rel="stylesheet" href="/css/style.css"/>
+<link rel="stylesheet" href="/css/highlight.css"/>
+<script src="/js/lib/modernizr-shiv.js"></script>
+    
+    <meta name="description" content="
+前几天碰到一个问题，一个绝对定位的盒子，left为50%，在iPhone（320px）下，里面的内容折行了，在PC下，里面的内容又没有折行。试了各种有可能造成这种情况的属性，最后才发现是宽度搞的鬼。
+
+如引用中说的，是宽度搞的鬼，具体的说，是 containing block 的宽度搞的鬼。
+关于一个绝对定位的元素，其宽度在各种情况下如何计算，在这个W3C的文档里有详细说明。
+下面内容的目的，是记录这次问题，然后阐述下在上面那个文档里找到的回答，加强下记忆。"/>
+
+    <title> 绝对定位元素 width:auto 时的宽度计算 </title>
+</head>
+<body>
+    <header class="head u-cf">
+        <a class="head-flag" href="/">
+    <img class="head-flag-img" src="/image/logo.png" alt="sunaiwen 个人博客"/>
+</a>
+<div id="j-searchBox" class="head-search">
+    <button id="j-search-closeBtn" class="head-search-close"><i class="fa fa-close"></i></button>
+    <form action="//google.com/search" method="get" accept-charset="utf-8">
+        <input id="j-searchScope" type="hidden" name="q" value="http://blog.snwin.co"/>
+        <input class="head-search-input" type="search" name="q" placeholder="搜索本站文章..."/>
+        <button class="head-search-btn" type="submit"><i class="fa fa-search"></i></button>
+    </form>
+    <script>
+        var scopeInput = document.getElementById('j-searchScope');
+        scopeInput.value = 'site:' + scopeInput.value.replace(/^https?:\/\//, '');
+    </script>
+</div>
+<nav class="head-nav">
+    <a class="head-nav-item" href="/">首页</a>
+    <a class="head-nav-item" href="/archives">归档</a>
+    <a class="head-nav-item" href="/about">关于我</a>
+    <a id="j-nav-searchBtn" class="head-nav-item hni-search" href="javascript:void(0)"><i class="fa fa-search"></i></a>
+</nav>
+    </header>
+    <main class="main u-cf block">
+        
+    <section class="main-article">
+        
+<article class="article  is-articleFull ">
+    <header class="article-head">
+        
+            <h1 class="article-title">绝对定位元素 width:auto 时的宽度计算</h1>
+        
+        <ul class="article-meta">
+            <li class="article-meta-item">
+                <i class="fa fa-clock-o ami-icon"></i>
+                <span class="ami-text">2014-11-25</span>
+            </li>
+            <li class="article-meta-item">
+                
+                    <i class="fa fa-book ami-icon"></i>
+                    
+                        
+                            <a class="ami-text" href="/categories/CSS/">CSS</a>
+                        
+                    
+                
+            </li>
+            <li class="article-meta-item">
+                
+            </li>
+        </ul>
+    </header>
+    
+        <div class="article-content essay"><blockquote>
+<p>前几天碰到一个问题，一个绝对定位的盒子，left为50%，在iPhone（320px）下，里面的内容折行了，在PC下，里面的内容又没有折行。试了各种有可能造成这种情况的属性，最后才发现是宽度搞的鬼。</p>
+</blockquote>
+<p>如引用中说的，是宽度搞的鬼，具体的说，是 containing block 的宽度搞的鬼。</p>
+<p>关于一个绝对定位的元素，其宽度在各种情况下如何计算，在这个<a href="http://www.w3.org/TR/CSS2/visudet.html#abs-non-replaced-width" target="_blank" rel="external">W3C的文档</a>里有详细说明。</p>
+<p>下面内容的目的，是记录这次问题，然后阐述下在上面那个文档里找到的回答，加强下记忆。</p>
+<a id="more"></a>
+<h2 id="重现问题">重现问题</h2><pre class="language-markup">
+    <code>
+        &lt;div class="outer">
+            &lt;p class="inner">a very loooooooooooooooooooooooooooooooooooooooooooooooooooooooong word&lt;/p>
+        &lt;/div>
+    </code>
+</pre>
+
+<pre class="language-css">
+    <code>
+        html {
+            height: 100%;
+        }
+        body {
+            font-size: 14px;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+        .outer {
+            position: relative;
+            width: 10em;
+            height: 100%;
+            background-color: #BBBBBB;
+        }
+        .inner {
+            position: absolute;
+            left: 50%;
+            background-color: rgba(0,0,0,0.5);
+        }
+    </code>
+</pre>
+
+<p>把代码复制放到CodePen之类的服务，可以看到：</p>
+<p></p><p data-height="268" data-theme-id="7830" data-slug-hash="NPqbXp" data-default-tab="result" data-user="sunivengg" class="codepen">See the Pen <a href="http://codepen.io/sunivengg/pen/NPqbXp/" target="_blank" rel="external">NPqbXp</a> by Sunaiwen (<a href="http://codepen.io/sunivengg" target="_blank" rel="external">@sunivengg</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.</p><p></p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+
+<p>因为中间那个<code>long</code>单词的变形超长单词很长很长很长，没有<code>white-space</code>字符可以用来当做断行处理，所以绝对定位的元素的宽度被撑成了这么宽。</p>
+<p>让我们在上面进行一些改动：</p>
+<ul>
+<li>把 p 元素的内容改成很短的 <code>short</code> 就看到元素的宽度就被撑成了<code>short</code>这个单词这么宽的宽度。</li>
+<li>把 p 元素的内容改成很多行 <code>oooooooo</code> 这样的字符，中间可以用换行或者空格隔开，长短随意，但是宽度要预计好，一定都要比父元素的宽度小。就会看到元素占满了父元素<code>50%</code>的宽度。内容由空格或换行符断开，折成多行来显示。</li>
+</ul>
+<p>然后翻翻W3C的文档：</p>
+<blockquote>
+<p>Otherwise, set ‘auto’ values for ‘margin-left’ and ‘margin-right’ to 0, and pick the one of the following six rules that applies.</p>
+<ol>
+<li>‘left’ and ‘width’ are ‘auto’ and ‘right’ is not ‘auto’, then the width is shrink-to-fit. Then solve for ‘left’</li>
+<li>‘left’ and ‘right’ are ‘auto’ and ‘width’ is not ‘auto’, then if the ‘direction’ property of the element establishing the static-position containing block is ‘ltr’ set ‘left’ to the static position, otherwise set ‘right’ to the static position. Then solve for ‘left’ (if ‘direction is ‘rtl’) or ‘right’ (if ‘direction’ is ‘ltr’).</li>
+<li>‘width’ and ‘right’ are ‘auto’ and ‘left’ is not ‘auto’, then the width is shrink-to-fit . Then solve for ‘right’</li>
+<li>‘left’ is ‘auto’, ‘width’ and ‘right’ are not ‘auto’, then solve for ‘left’</li>
+<li>‘width’ is ‘auto’, ‘left’ and ‘right’ are not ‘auto’, then solve for ‘width’</li>
+<li>‘right’ is ‘auto’, ‘left’ and ‘width’ are not ‘auto’, then solve for ‘right’</li>
+</ol>
+</blockquote>
+<p>我们是第三条的情况，第三条里面说<code>then the width is shrink-to-fit</code>，那么<code>shrink-to-fit</code>是什么东西呢？用我初级的英语水平翻译就是：自适应收缩。它是按照一定的策略的，再看：</p>
+<blockquote>
+<p>Calculation of the shrink-to-fit width is similar to calculating the width of a table cell using the automatic table layout algorithm. Roughly: calculate the preferred width by formatting the content without breaking lines other than where explicit line breaks occur, and also calculate the preferred minimum width, e.g., by trying all possible line breaks. CSS 2.1 does not define the exact algorithm. Thirdly, calculate the available width: this is found by solving for ‘width’ after setting ‘left’ (in case 1) or ‘right’ (in case 3) to 0.</p>
+</blockquote>
+<p>我的理解是这样的：</p>
+<ol>
+<li>首先看只在断行符出现的地方断行的情况下，计算出来的宽度，这时宽度由最长的那个单词来决定。这种叫做<code>preferred width</code>。</li>
+<li>同时也考虑在<code>white-space</code>字符一出现就断行的情况下计算出来的宽度。这时连空格出现都会造成断行。那宽度就由尽可能折行后，仍然最宽的那个单词来决定。这是<code>preferred minimum width</code>。</li>
+<li>最后考虑<code>right : 0</code>时，元素能占的宽度。解释下，比如<code>left: 50%</code>，那么此时元素能占的宽度就只剩 containing block 宽的的 50% 了。这样就很清楚了，也就是 containing block 的宽度减去 left 属性的computed value 之后得到的值。嗯，是<code>available width</code>。</li>
+</ol>
+<p>当 preferred width 大于 available width 时，再去看看 preferred minimum width。如果 preferred minimum width 得出的宽度比 available width 小，那么最后元素的宽度就取 available width。<strong>这条比较特殊啊，按正常理解，应该是取 preferred minimum width 的宽度才对。</strong></p>
+<p>当 preferred width 和 preferred minimum width 都大于 available width 时，就取 preferred minimum width 得出的宽度。</p>
+<p>当 preferred width 的宽度小于 available width 的宽度时，就取 preferred width 的宽度。</p>
+</div>
+    
+</article>
+
+        
+    <footer class="pagination pagination--post u-cf">
+        
+            <a class="pagination-item" href="/2014/12/02/shen-ru-fu-zhi-yun-suan-fu/">
+                <i class="fa fa-angle-left u-hightLightText"></i>
+                
+                    上一篇：一个赋值运算问题
+                
+            </a>
+        
+        
+            <a class="pagination-item" href="/2014/11/20/tou-xi-ji-lu-of-a-time-to-kill/">
+                
+                    下一篇：A Time To Kill
+                
+                <i class="fa fa-angle-right u-hightLightText"></i>
+            </a>
+        
+        
+            <span class="pagination-break u-hightLightText">&bullet;</span>
+        
+    </footer>
+
+        
+            
+                <div class="ds-thread" data-thread-key="1416904722000" data-title="绝对定位元素 width:auto 时的宽度计算" data-url="2014/11/25/jue-dui-ding-wei-xia-width-autode-blockde-kuan-du-ji-suan/"></div>
+            
+        
+    </section>
+
+        <aside class="main-aside">
+    <section class="main-aside-section aside">
+        <h1 class="aside-title">分类</h1>
+        <ul class="aside-list">
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/JavaScript/">JavaScript&nbsp;<span class="ali-count u-hightLightText">10</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/英语透析阅读/">英语透析阅读&nbsp;<span class="ali-count u-hightLightText">5</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/说说/">说说&nbsp;<span class="ali-count u-hightLightText">8</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/用户体验/">用户体验&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/Web-基础/">Web 基础&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/CSS/">CSS&nbsp;<span class="ali-count u-hightLightText">3</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/读后感/">读后感&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/Git/">Git&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/categories/设计/">设计&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+        </ul>
+    </section>
+    <section class="main-aside-section aside">
+        <h1 class="aside-title">标签</h1>
+        <ul class="aside-list">
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/Angular/">Angular&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/酷产品/">酷产品&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/英文小说/">英文小说&nbsp;<span class="ali-count u-hightLightText">4</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/DOM/">DOM&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/RequireJS/">RequireJS&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/Zepto/">Zepto&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/自控力/">自控力&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/Sketch/">Sketch&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/足球/">足球&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/世界杯/">世界杯&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/上班/">上班&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/tags/租房/">租房&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+        </ul>
+    </section>
+</aside>
+        
+    </main>
+    <div class="bg-global" style="background-image: url('image/bg-default.jpg')"></div>
+    <footer class="foot">
+        <span class="foot-text">&spades;&nbsp;sunaiwen - 2015&nbsp;&clubs;&nbsp;Power by hexo&nbsp;&spades;</span>
+    </footer>
+    <script src="/js/lib/highlight.js"></script>
+<script src="/js/app.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-51163552-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+
+
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    var duoshuoQuery = {short_name:"sunaiwen"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+</body>
+</html>
