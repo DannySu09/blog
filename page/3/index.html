@@ -47,46 +47,6 @@
 <article class="article ">
     <header class="article-head">
         
-            <a class="article-title" href="/2014/11/25/jue-dui-ding-wei-xia-width-autode-blockde-kuan-du-ji-suan/">绝对定位元素 width:auto 时的宽度计算</a>
-        
-        <ul class="article-meta">
-            <li class="article-meta-item">
-                <i class="fa fa-clock-o ami-icon"></i>
-                <span class="ami-text">2014-11-25</span>
-            </li>
-            <li class="article-meta-item">
-                
-                    <i class="fa fa-book ami-icon"></i>
-                    
-                        
-                            <a class="ami-text" href="/categories/CSS/">CSS</a>
-                        
-                    
-                
-            </li>
-            <li class="article-meta-item">
-                
-            </li>
-        </ul>
-    </header>
-    
-        <div class="article-content essay"><blockquote>
-<p>前几天碰到一个问题，一个绝对定位的盒子，left为50%，在iPhone（320px）下，里面的内容折行了，在PC下，里面的内容又没有折行。试了各种有可能造成这种情况的属性，最后才发现是宽度搞的鬼。</p>
-</blockquote>
-<p>如引用中说的，是宽度搞的鬼，具体的说，是 containing block 的宽度搞的鬼。</p>
-<p>关于一个绝对定位的元素，其宽度在各种情况下如何计算，在这个<a href="http://www.w3.org/TR/CSS2/visudet.html#abs-non-replaced-width">W3C的文档</a>里有详细说明。</p>
-<p>下面内容的目的，是记录这次问题，然后阐述下在上面那个文档里找到的回答，加强下记忆。</p></div>
-        <footer class="article-footer">
-            <a class="article-footer-readFurther" href="/2014/11/25/jue-dui-ding-wei-xia-width-autode-blockde-kuan-du-ji-suan/">继续阅读</a>
-        </footer>
-    
-</article>
-
-        
-            
-<article class="article ">
-    <header class="article-head">
-        
             <a class="article-title" href="/2014/11/20/tou-xi-ji-lu-of-a-time-to-kill/">A Time To Kill</a>
         
         <ul class="article-meta">
@@ -267,6 +227,54 @@
 </article>
 
         
+            
+<article class="article ">
+    <header class="article-head">
+        
+            <a class="article-title" href="/2014/10/10/dang-ba-yin-yong-lei-xing-dang-zuo-can-shu-chuan-di-gei-han-shu/">当把引用类型当做参数传递给函数</a>
+        
+        <ul class="article-meta">
+            <li class="article-meta-item">
+                <i class="fa fa-clock-o ami-icon"></i>
+                <span class="ami-text">2014-10-10</span>
+            </li>
+            <li class="article-meta-item">
+                
+                    <i class="fa fa-book ami-icon"></i>
+                    
+                        
+                            <a class="ami-text" href="/categories/JavaScript/">JavaScript</a>
+                        
+                    
+                
+            </li>
+            <li class="article-meta-item">
+                
+            </li>
+        </ul>
+    </header>
+    
+        <div class="article-content essay"><h2 id="为何有这个困惑">为何有这个困惑</h2><p>今天看<code>browserify</code>的文档，看到exports的两种写法，不禁起了困惑。</p>
+<p>其文档是这么说的，当只需要导出单独的一样东西，可以这么写：</p>
+<pre class="language-javascript">
+    <code>
+        module.exports = function(){}; // 可以是一个函数或者其他东西。
+    </code>
+</pre>
+
+<p>但是，这样写绝对不可以：</p>
+<pre class="language-javascript">
+    <code>
+        exports = function(){}; // 可以是一个函数或者其他东西。
+    </code>
+</pre></div>
+        <footer class="article-footer">
+            <a class="article-footer-readFurther" href="/2014/10/10/dang-ba-yin-yong-lei-xing-dang-zuo-can-shu-chuan-di-gei-han-shu/">继续阅读</a>
+        </footer>
+    
+</article>
+
+        
     </section>
 
         <aside class="main-aside">
@@ -275,7 +283,7 @@
         <ul class="aside-list">
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/categories/JavaScript/">JavaScript&nbsp;<span class="ali-count u-hightLightText">11</span></a>
+                    <a class="ali-text u-cf" href="/categories/JavaScript/">JavaScript&nbsp;<span class="ali-count u-hightLightText">10</span></a>
                 </li>
             
                 <li class="aside-list-item">
