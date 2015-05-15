@@ -73,59 +73,10 @@
         <div class="article-content essay"><blockquote>
 <p>最底下有三篇参考文章。第一篇是 Hax 在知乎上的回答，全文读起来很爽，从历史到原理都有。第二篇的作者不清楚是哪位大神，但也是大神无疑，把 ASI 的机制结合 ES 规范娓娓道来，很清楚。第三篇是 npm 作者写的，态度比较鲜明，叙述比较概括性。推荐通读第二篇文章。</p>
 </blockquote>
-<p>为了加深理解，还是得自己总结总结，然后写下来。</p>
-<h2 id="什么是_ASI?">什么是 ASI?</h2><p>ASI 即 Automatic semicolon insertion。在一些必须由分号明确断句的情况下，遗漏了分号，解析器就会在行末自动补全分号。</p>
-<h2 id="什么地方会自动补分号？">什么地方会自动补分号？</h2><h3 id="第一种情况">第一种情况</h3><p>(a)当一个 token 没办法和其之前的语句一起组成合法语句时; (b)和上一个 token 之间相隔了一个换行符; (c)或者这个 token 就是<code>}</code>; 只要满足 (a)且(b), 或者 (a)且(c)，就会在这个 token 之前插入分号。</p>
-<p>对于 (a) 且 (b):</p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">3</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">b</span><span class="params">()</span></span>&#123;&#125;</span><br></pre></td></tr></table></figure>
-<p><code>function</code> 无法和前面的<code>var a = 3</code> 组成有效的语句，且相隔  了一个换行符，所以就会自动在<code>function</code> 前插入分号。</p>
-<p>对于(a) 且 (c):</p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span><span class="params">()</span></span>&#123;<span class="keyword">var</span> b = <span class="number">0</span>&#125;</span><br></pre></td></tr></table></figure>
-<p><code>}</code> 无法和前面的 <code>var b = 0</code> 组成有效语句，而且这个字符是 <code>}</code>，所以就直接在 <code>}</code> 前面插入分号。</p>
-<h3 id="第二种情况">第二种情况</h3><p>会在整个源码文本的最后自动插入分号</p>
-<h3 id="第三种情况">第三种情况</h3><p>在 <code>restricted production</code> 下，当某个 token 作为那一个语句的第一个 token，紧跟在一个换行符之后，或者一个被明确声明「禁止插入换行符」的地方之后且与之相隔一个换行符，就算可以和前面的语句一起组成合法的语句，在此 token 之前，分号仍会被自动插入。</p>
-<p>(a) 某语句第一个 token 紧跟在一个换行符之后的例子：</p>
-<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="header">a = b</span><br><span class="line">++</span></span><br><span class="line">c</span><br></pre></td></tr></table></figure>
-<p>会变成：</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="setting">a = <span class="value">b</span></span></span><br><span class="line"><span class="comment">;++c</span></span><br><span class="line"><span class="comment">;</span></span><br></pre></td></tr></table></figure>
-<p>(b) 某语句第一个 token 紧跟在被声明「禁止插入换行符」的地方之后：</p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="comment">/*这里禁止插入换行符，但还是被插入了……*/</span></span><br><span class="line">	b()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<pre><code>会变成：
-</code></pre><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">	;b()</span><br><span class="line">;&#125;;</span><br></pre></td></tr></table></figure>
-<h2 id="什么地方永远不会自动补分号？">什么地方永远不会自动补分号？</h2><h3 id="如果补上分号之后会变成一个空语句">如果补上分号之后会变成一个空语句</h3><p> 比如：</p>
-<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="literal">true</span>)</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	<span class="literal">a</span>=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p>这个情况下，如果在 <code>if(true)</code> 后面补分号，变成 <code>if(true);</code>，那 if 后面就是一句空语句了，所以这里的分号不会被补上，最后这里就会报错。</p>
-<h3 id="不会帮补for_循环_头部的分号。">不会帮补<code>for 循环</code> 头部的分号。</h3><p>比如：</p>
-<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for<span class="comment">(var i=0</span><br><span class="line">	i &lt; 10</span><br><span class="line">	i++)</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
-<p>缺失的两个分号就不会被补上。</p>
-<h2 id="再给我翻译翻译">再给我翻译翻译</h2><blockquote>
-<p>师爷，再给我翻译翻译。 —— 张麻子</p>
-</blockquote>
-<h3 id="把自动补上分号的情况反过来">把自动补上分号的情况反过来</h3><h4 id="对于第一种情况：">对于第一种情况：</h4><ul>
-<li>(a) 反过来变成，token 能和之前语句合成合法语句。</li>
-<li>(b) 反过来变成，token 没和前一个语句相隔有换行符。</li>
-<li>(c) 反过来变成，token 不是 <code>}</code></li>
-</ul>
-<p>(a) 反过来后，就要查清楚「一个 token 可以和前面语句合成合法语句，且隔着换行符」的情况。</p>
-<p>由参考文章可以得知，隔着换行符也有可能和前面语句组成合法语句的 token 有：<code>/</code>, <code>[</code>, <code>(</code>, <code>+</code>, <code>-</code>。</p>
-<p>所以：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="tag">var</span> <span class="tag">a</span> = <span class="tag">b</span></span><br><span class="line">(c+d)+e</span><br><span class="line"></span><br><span class="line"><span class="comment">// 变成</span></span><br><span class="line"></span><br><span class="line"><span class="tag">var</span> <span class="tag">a</span> = <span class="function"><span class="title">b</span><span class="params">(c+d)</span></span>+e</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="tag">var</span> <span class="tag">a</span> = <span class="tag">b</span></span><br><span class="line">[c,d,e].<span class="function"><span class="title">forEach</span><span class="params">()</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 变成</span></span><br><span class="line"></span><br><span class="line"><span class="tag">var</span> <span class="tag">a</span> = <span class="tag">b</span>[c,d,e].<span class="function"><span class="title">forEach</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
-<p>更多的例子还可以举出来，但这里省略。</p>
-<p>(b) 反过来时，会变成：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = b <span class="comment">/*没有换行符，只有空格*/</span> <span class="built_in">c</span> = b</span><br><span class="line"></span><br><span class="line"><span class="comment">// 不会变成</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = b;<span class="built_in">c</span>=b;</span><br></pre></td></tr></table></figure>
-<p>这个就很容易理解啦！</p>
-<h2 id="所以不写分号时要注意什么？">所以不写分号时要注意什么？</h2><h3 id="注意/,_[,_(,_+,_-">注意<code>/</code>, <code>[</code>, <code>(</code>, <code>+</code>, <code>-</code></h3><p>当代码的上一行没有分号结尾，但这一行第一个 token 又是<code>/</code>, <code>[</code>, <code>(</code>, <code>+</code>, <code>-</code> 中的一个时，要注意这一行有可能会被接到上一行代码，组成新的语句。<br>一般的解决方法就是，在这一行行首加一个分号。</p>
-<h3 id="注意_restricted_production">注意 <code>restricted production</code></h3><p>在 <code>++</code>,  <code>--</code> 前面换行，会自动在这两个 token 前插入分号，比如：<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="header">a</span><br><span class="line">++</span></span><br><span class="line">c</span><br><span class="line">/ 变成</span><br><span class="line"></span><br><span class="line">++</span><br><span class="line">;</span><br></pre></td></tr></table></figure></p>
-<p>在 <code>return</code>, <code>break</code>, <code>continue</code>, <code>throw</code>，后面换行，会在这几个 token 后面插入分号，比如：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span></span><br><span class="line">&#123;&#125;</span><br><span class="line"><span class="comment">// 变成</span></span><br><span class="line"><span class="keyword">return</span></span><br><span class="line">;&#123;&#125;;</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>参考文章：</p>
-<ol>
-<li><a href="http://www.zhihu.com/question/20298345/answer/14670020" target="_blank" rel="external">http://www.zhihu.com/question/20298345/answer/14670020</a></li>
-<li><a href="http://inimino.org/~inimino/blog/javascript_semicolons" target="_blank" rel="external">http://inimino.org/~inimino/blog/javascript_semicolons</a></li>
-<li><a href="http://blog.izs.me/post/2353458699/an-open-letter-to-javascript-leaders-regarding" target="_blank" rel="external">http://blog.izs.me/post/2353458699/an-open-letter-to-javascript-leaders-regarding</a></li>
-</ol>
-</blockquote>
-</div>
+<p>为了加深理解，还是得自己总结总结，然后写下来。<br></div>
+        <footer class="article-footer">
+            <a class="article-footer-readFurther" href="/2015/05/11/理解javascript的asi/">继续阅读</a>
+        </footer>
     
 </article>
 

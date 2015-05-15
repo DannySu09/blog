@@ -9,7 +9,10 @@
 <link rel="stylesheet" href="/css/highlight.css"/>
 <script src="/js/lib/modernizr-shiv.js"></script>
     
-    <meta name="description" content=""/>
+    <meta name="description" content="
+最底下有三篇参考文章。第一篇是 Hax 在知乎上的回答，全文读起来很爽，从历史到原理都有。第二篇的作者不清楚是哪位大神，但也是大神无疑，把 ASI 的机制结合 ES 规范娓娓道来，很清楚。第三篇是 npm 作者写的，态度比较鲜明，叙述比较概括性。推荐通读第二篇文章。
+
+为了加深理解，还是得自己总结总结，然后写下来。"/>
 
     <title> 理解 JavaScript 的 ASI </title>
 </head>
@@ -70,7 +73,7 @@
         <div class="article-content essay"><blockquote>
 <p>最底下有三篇参考文章。第一篇是 Hax 在知乎上的回答，全文读起来很爽，从历史到原理都有。第二篇的作者不清楚是哪位大神，但也是大神无疑，把 ASI 的机制结合 ES 规范娓娓道来，很清楚。第三篇是 npm 作者写的，态度比较鲜明，叙述比较概括性。推荐通读第二篇文章。</p>
 </blockquote>
-<p>为了加深理解，还是得自己总结总结，然后写下来。</p>
+<p>为了加深理解，还是得自己总结总结，然后写下来。<br><a id="more"></a></p>
 <h2 id="什么是_ASI?">什么是 ASI?</h2><p>ASI 即 Automatic semicolon insertion。在一些必须由分号明确断句的情况下，遗漏了分号，解析器就会在行末自动补全分号。</p>
 <h2 id="什么地方会自动补分号？">什么地方会自动补分号？</h2><h3 id="第一种情况">第一种情况</h3><p>(a)当一个 token 没办法和其之前的语句一起组成合法语句时; (b)和上一个 token 之间相隔了一个换行符; (c)或者这个 token 就是<code>}</code>; 只要满足 (a)且(b), 或者 (a)且(c)，就会在这个 token 之前插入分号。</p>
 <p>对于 (a) 且 (b):</p>
