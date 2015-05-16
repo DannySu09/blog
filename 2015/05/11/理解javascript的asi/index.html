@@ -158,10 +158,11 @@ var a = b;c=b;
 <pre><code>a
 ++
 c
-/ 变成
 
-++
-;
+// 变成
+a
+;++
+c
 </code></pre><p>在 <code>return</code>, <code>break</code>, <code>continue</code>, <code>throw</code>，后面换行，会在这几个 token 后面紧挨着的 token 前面插入分号，比如：</p>
 <pre><code>return
 {}

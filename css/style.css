@@ -1713,7 +1713,11 @@ h2,
 h3,
 h4,
 h5,
-h6,
+h6 {
+  padding-left: 0;
+  margin: 0;
+  font-family: "Helvetica Neue", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif; }
+
 ul,
 ol,
 p,
@@ -2020,28 +2024,44 @@ img {
 
 .essay {
   font-size: 1.05556em;
-  line-height: 1.9;
+  line-height: 1.7;
   letter-spacing: .01em; }
   @media screen and (min-width: 320px) and (max-width: 540px) {
     .essay {
       line-height: 1.75;
       word-break: break-all; } }
-  .essay h1, .essay h2, .essay h3, .essay h4 {
-    margin-top: 3em; }
-  .essay h1 {
-    font-size: 1.6em; }
-  .essay h2 {
-    font-size: 1.4em; }
-  .essay h3 {
-    font-size: 1.2em; }
-  .essay h4 {
-    font-size: 1.1em; }
   .essay p {
     margin-top: 2.5em; }
     .essay p:last-of-type {
       margin-bottom: 2.5em; }
-    h1 + P, h2 + p {
-      margin-top: 1em !important; }
+  .essay h1 + p,
+  .essay h2 + p,
+  .essay h3 + p,
+  .essay h4 + p,
+  .essay h5 + p,
+  .essay h6 + p {
+    margin-top: .6em !important; }
+  .essay h1 {
+    margin-top: 2.8em;
+    font-size: 2em; }
+  .essay h2 {
+    margin-top: 1.6em;
+    font-size: 1.6em; }
+  .essay h3 {
+    margin-top: 1.3em;
+    font-size: 1.2em; }
+  .essay h4 {
+    margin-top: 1.2em;
+    font-size: 1.1em; }
+  .essay h5 {
+    margin-top: 1.1em;
+    font-size: 1em; }
+  .essay h1 + h2,
+  .essay h2 + h3,
+  .essay h3 + h4,
+  .essay h4 + h5,
+  .essay h5 + h6 {
+    margin-top: .3em; }
   .essay blockquote {
     position: relative;
     margin: 1.5em 0 1.5em .2em;
