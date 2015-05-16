@@ -24,6 +24,14 @@
     .article-title, .aside-title {
       font-size: 1.66667em; } }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6, .article-title {
+  font-family: "Helvetica Neue", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif; }
+
 .u-cf:after {
   display: table;
   clear: both;
@@ -1715,8 +1723,7 @@ h4,
 h5,
 h6 {
   padding-left: 0;
-  margin: 0;
-  font-family: "Helvetica Neue", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif; }
+  margin: 0; }
 
 ul,
 ol,
