@@ -188,7 +188,9 @@
                 marginTop: -p.height / 2 + 'px',
                 marginLeft: -p.width / 2 + 'px',
                 transform: 'translate(' + dx + 'px, ' + dy + 'px)',
-                transition: ''
+                transition: '',
+                maxHeight: p.width < p.height ? (window.innerHeight * 0.9 / scale + 'px') : 'none',
+                maxWidth: p.width > p.height ? (window.innerWidth * 0.9 / scale + 'px') : 'none'
             }, true)
 
             // deal with % width and height
@@ -270,6 +272,7 @@
         },
 
         listen: function listen (el) {
+
             if (typeof el === 'string') {
                 var els = document.querySelectorAll(el),
                     i = els.length

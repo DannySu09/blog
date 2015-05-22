@@ -56,7 +56,7 @@
     }
     Zoomerang.config({
         transitionDuration: '.3s',
-        bgOpacity: 0.8,
+        bgOpacity: 1,
         maxWidth: 1000,
         maxHeight: 1000
     })
