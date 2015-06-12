@@ -211,19 +211,19 @@
 <article class="article  j-zoomerage-range">
     <header class="article-head">
         
-            <a class="article-title" href="/2014/12/02/shen-ru-fu-zhi-yun-suan-fu/">一个赋值运算问题</a>
+            <a class="article-title" href="/2014/11/25/jue-dui-ding-wei-xia-width-autode-blockde-kuan-du-ji-suan/">绝对定位元素 width:auto 时的宽度计算</a>
         
         <ul class="article-meta">
             <li class="article-meta-item">
                 <i class="fa fa-clock-o ami-icon"></i>
-                <span class="ami-text">2014-12-02</span>
+                <span class="ami-text">2014-11-25</span>
             </li>
             <li class="article-meta-item">
                 
                     <i class="fa fa-book ami-icon"></i>
                     
                         
-                            <a class="ami-text" href="/categories/JavaScript/">JavaScript</a>
+                            <a class="ami-text" href="/categories/CSS/">CSS</a>
                         
                     
                 
@@ -234,24 +234,14 @@
         </ul>
     </header>
     
-        <div class="article-content essay"><p>昨天在微博上看到有人在At各位大大，想解答一个关于赋值运算符的问题，其实这个问题我在阅读《JavaScript 高级程序设计》的过程中也被难住了，一直没有解决，问题如下：</p>
-<pre>
-    <code class="language-javascript">
-    var o = {
-        a: function(){
-            console.log(this === o);
-        }
-    }
-    o.a(); //=> true
-    (o.a = o.a)(); //=> false, the value of 'this' is equal with the window object now
-    </code>
-</pre>
-
-<p>为什么第二种调用方法，<code>this</code>就变成了<code>window</code>对象了呢？</p>
-<p>在微博上看到有人提到了<code>Reference Type</code>，然后就去翻 ECMAScript <a href="http://www.ecma-international.org/ecma-262/5.1/#sec-8.7">文档</a>，第一次去翻这玩意儿呢，有些紧张。结果看了好几遍才貌似看懂了，不确定是否真的看懂。</p>
-<p>但还是把我的理解写下来。</p></div>
+        <div class="article-content essay"><blockquote>
+<p>前几天碰到一个问题，一个绝对定位的盒子，left为50%，在iPhone（320px）下，里面的内容折行了，在PC下，里面的内容又没有折行。试了各种有可能造成这种情况的属性，最后才发现是宽度搞的鬼。</p>
+</blockquote>
+<p>如引用中说的，是宽度搞的鬼，具体的说，是 containing block 的宽度搞的鬼。</p>
+<p>关于一个绝对定位的元素，其宽度在各种情况下如何计算，在这个<a href="http://www.w3.org/TR/CSS2/visudet.html#abs-non-replaced-width">W3C的文档</a>里有详细说明。</p>
+<p>下面内容的目的，是记录这次问题，然后阐述下在上面那个文档里找到的回答，加强下记忆。</p></div>
         <footer class="article-footer">
-            <a class="article-footer-readFurther" href="/2014/12/02/shen-ru-fu-zhi-yun-suan-fu/">继续阅读</a>
+            <a class="article-footer-readFurther" href="/2014/11/25/jue-dui-ding-wei-xia-width-autode-blockde-kuan-du-ji-suan/">继续阅读</a>
         </footer>
     
 </article>
@@ -265,7 +255,7 @@
         <ul class="aside-list">
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/categories/JavaScript/">JavaScript&nbsp;<span class="ali-count u-hightLightText">11</span></a>
+                    <a class="ali-text u-cf" href="/categories/JavaScript/">JavaScript&nbsp;<span class="ali-count u-hightLightText">10</span></a>
                 </li>
             
                 <li class="aside-list-item">
