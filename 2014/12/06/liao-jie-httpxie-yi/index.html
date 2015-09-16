@@ -125,7 +125,7 @@ name=testusername&password=123456
 <li>header-content</li>
 </ol>
 <p>先别骂娘，深呼吸。</p>
-<h4 id="—_start-line_—">— start-line —</h4><p>上面说过，request 和 response 的 header 结构一致，但是内容不同。start-line 就是两者都有的结构，但是里面内容不同。</p>
+<h4 id="–_start-line_–">– start-line –</h4><p>上面说过，request 和 response 的 header 结构一致，但是内容不同。start-line 就是两者都有的结构，但是里面内容不同。</p>
 <p>request 的 header 的 start-line 放着的是这三种信息：</p>
 <ol>
 <li>请求方法</li>
@@ -140,7 +140,7 @@ name=testusername&password=123456
 <li>响应描述</li>
 </ol>
 <p>一个示例：<code>HTTP/1.1 200 OK</code><br>解释下，就是，使用了1.1版本的 HTTP 协议，状态码是200（请求响应成功，并返回），响应描述当然就是 OK 了。</p>
-<h4 id="—_header-content_—">— header-content —</h4><p>header-content 是由多组这种键值对组成：</p>
+<h4 id="–_header-content_–">– header-content –</h4><p>header-content 是由多组这种键值对组成：</p>
 <pre class="language-markup">
   <code>
     Server: zhihu_nginx
@@ -222,7 +222,7 @@ Content-Encoding: gzip
   </code>
 </pre>
 
-<h4 id="—_请求方法_—">— 请求方法 —</h4><p>你应该注意到了，在 request-header 的 start-line 的第一部分会写着请求方法，这些方法用来告诉服务器，浏览器希望服务器进行什么样的操作。然后细看每个方法都代表着浏览器想让服务器进行什么样的操作：</p>
+<h4 id="–_请求方法_–">– 请求方法 –</h4><p>你应该注意到了，在 request-header 的 start-line 的第一部分会写着请求方法，这些方法用来告诉服务器，浏览器希望服务器进行什么样的操作。然后细看每个方法都代表着浏览器想让服务器进行什么样的操作：</p>
 <ul>
 <li>GET：从服务器获取资源</li>
 <li>POST：在服务器新添一个资源（会在请求的 body 里附带新添资源所需数据）</li>
