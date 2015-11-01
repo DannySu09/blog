@@ -1791,11 +1791,13 @@ img {
   .has-filter .head-flag-img {
     box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.4);
     -webkit-box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.4); }
+  .lte-ie8 .head-flag-img {
+    border: none; }
 
 .head-nav {
   position: absolute;
   left: 50%;
-  top: 15px;
+  top: 25px;
   height: 50px;
   line-height: 49px;
   margin-left: -99px;
@@ -1855,6 +1857,7 @@ img {
   padding-right: 10px;
   border: 1px solid #a7a7a7;
   border-radius: 18px;
+  line-height: 35px;
   font-size: 1.07143em;
   font-family: inherit;
   color: #a7a7a7;
@@ -1981,6 +1984,8 @@ img {
   border-radius: 1em;
   line-height: 1.4;
   text-align: center; }
+  .lte-ie8 .ali-count {
+    border: none; }
 
 .foot {
   padding-top: 20px;
@@ -1991,8 +1996,11 @@ img {
   font-size: 0.85714em;
   color: #2845ce;
   text-align: center; }
+  .foot a {
+    color: inherit; }
 
 .pagination {
+  position: relative;
   padding-top: 20px;
   padding-bottom: 20px;
   border-top: 1px solid #ededed;
@@ -2003,7 +2011,6 @@ img {
     display: none; }
 
 .pagination-item {
-  display: block;
   color: #a7a7a7; }
   .is-inPage .pagination-item {
     margin-left: auto;
@@ -2011,9 +2018,9 @@ img {
     width: 8em; }
   .pagination--post .pagination-item {
     max-width: 45%; }
-    .pagination--post .pagination-item:first-of-type {
+    .pagination--post .pagination-item--previous {
       float: left; }
-    .pagination--post .pagination-item:last-of-type {
+    .pagination--post .pagination-item--next {
       float: right; }
 
 #ds-thread #ds-reset .ds-highlight {

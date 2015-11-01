@@ -1,4 +1,7 @@
 <!doctype html>
+<!--[if lte IE 8]>
+<html lang="zh-cmn-Hans" class="lte-ie8">
+<![endif]-->
 <html lang="zh-cmn-Hans">
 <head>
     <meta charset="UTF-8">
@@ -21,6 +24,12 @@ TCP &amp; HTTP打开 Google，搜索「HTTP tutorial」，看了几篇文章，�
         <a class="head-flag" href="/blog/">
     <img class="head-flag-img" src="/blog/image/logo.png" alt="sunaiwen 个人博客"/>
 </a>
+<nav class="head-nav">
+    <a class="head-nav-item" href="/blog/">首页</a>
+    <a class="head-nav-item" href="/blog/archives">归档</a>
+    <a class="head-nav-item" href="/blog//about">关于我</a>
+    <a id="j-nav-searchBtn" class="head-nav-item hni-search" href="javascript:void(0)"><i class="fa fa-search"></i></a>
+</nav>
 <div id="j-searchBox" class="head-search">
     <button id="j-search-closeBtn" class="head-search-close"><i class="fa fa-close"></i></button>
     <form action="//google.com/search" method="get" accept-charset="utf-8">
@@ -33,12 +42,6 @@ TCP &amp; HTTP打开 Google，搜索「HTTP tutorial」，看了几篇文章，�
         scopeInput.value = 'site:' + scopeInput.value.replace(/^https?:\/\//, '');
     </script>
 </div>
-<nav class="head-nav">
-    <a class="head-nav-item" href="/blog/">首页</a>
-    <a class="head-nav-item" href="/blog/archives">归档</a>
-    <a class="head-nav-item" href="/blog//about">关于我</a>
-    <a id="j-nav-searchBtn" class="head-nav-item hni-search" href="javascript:void(0)"><i class="fa fa-search"></i></a>
-</nav>
 
     </header>
     <div class="main u-cf block">
@@ -263,7 +266,7 @@ Content-Encoding: gzip
         
     <footer class="pagination pagination--post u-cf">
         
-            <a class="pagination-item" href="/blog/2015/01/05/jian-dan-ji-lu-xia-2014/">
+            <a class="pagination-item pagination-item--previous" href="/blog/2015/01/05/jian-dan-ji-lu-xia-2014/">
                 <i class="fa fa-angle-left u-hightLightText"></i>
                 
                     上一篇：简单记录下 2014
@@ -271,15 +274,15 @@ Content-Encoding: gzip
             </a>
         
         
-            <a class="pagination-item" href="/blog/2014/11/25/jue-dui-ding-wei-xia-width-autode-blockde-kuan-du-ji-suan/">
+        <span class="pagination-break u-hightLightText">&#9787;</span>
+        
+        
+            <a class="pagination-item pagination-item--next" href="/blog/2014/11/25/jue-dui-ding-wei-xia-width-autode-blockde-kuan-du-ji-suan/">
                 
                     下一篇：绝对定位元素 width:auto 时的宽度计算
                 
                 <i class="fa fa-angle-right u-hightLightText"></i>
             </a>
-        
-        
-            <span class="pagination-break u-hightLightText">&bullet;</span>
         
     </footer>
 
@@ -392,7 +395,8 @@ Content-Encoding: gzip
     </div>
     <div class="bg-global" style="background-image: url('image/bg-default.jpg')"></div>
     <footer class="foot">
-        <span class="foot-text">&spades;&nbsp;sunaiwen - 2015&nbsp;&clubs;&nbsp;Power by hexo&nbsp;&spades;</span>
+        <span class="foot-text">&spades;&nbsp;sunaiwen - 2015&nbsp;&clubs;&nbsp;Power by hexo&nbsp;&spades;<br/>
+            Using theme:&nbsp;<a  target="_blank" href="http://github.com/sunaiwen/hexo-theme-plain">hexo-theme-plain</a></span>
     </footer>
     <script src="/blog/js/lib/highlight.js"></script>
 <script src="/blog/js/lib/zoomerang.js"></script>

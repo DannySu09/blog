@@ -1,4 +1,7 @@
 <!doctype html>
+<!--[if lte IE 8]>
+<html lang="zh-cmn-Hans" class="lte-ie8">
+<![endif]-->
 <html lang="zh-cmn-Hans">
 <head>
     <meta charset="UTF-8">
@@ -17,6 +20,12 @@
         <a class="head-flag" href="/blog/">
     <img class="head-flag-img" src="/blog/image/logo.png" alt="sunaiwen 个人博客"/>
 </a>
+<nav class="head-nav">
+    <a class="head-nav-item" href="/blog/">首页</a>
+    <a class="head-nav-item" href="/blog/archives">归档</a>
+    <a class="head-nav-item" href="/blog//about">关于我</a>
+    <a id="j-nav-searchBtn" class="head-nav-item hni-search" href="javascript:void(0)"><i class="fa fa-search"></i></a>
+</nav>
 <div id="j-searchBox" class="head-search">
     <button id="j-search-closeBtn" class="head-search-close"><i class="fa fa-close"></i></button>
     <form action="//google.com/search" method="get" accept-charset="utf-8">
@@ -29,12 +38,6 @@
         scopeInput.value = 'site:' + scopeInput.value.replace(/^https?:\/\//, '');
     </script>
 </div>
-<nav class="head-nav">
-    <a class="head-nav-item" href="/blog/">首页</a>
-    <a class="head-nav-item" href="/blog/archives">归档</a>
-    <a class="head-nav-item" href="/blog//about">关于我</a>
-    <a id="j-nav-searchBtn" class="head-nav-item hni-search" href="javascript:void(0)"><i class="fa fa-search"></i></a>
-</nav>
 
     </header>
     <div class="main u-cf block">
@@ -92,7 +95,7 @@
         
     <footer class="pagination pagination--post u-cf">
         
-            <a class="pagination-item" href="/blog/2015/01/19/复杂/">
+            <a class="pagination-item pagination-item--previous" href="/blog/2015/01/19/复杂/">
                 <i class="fa fa-angle-left u-hightLightText"></i>
                 
                     上一篇：复杂
@@ -100,15 +103,15 @@
             </a>
         
         
-            <a class="pagination-item" href="/blog/2015/01/17/断舍离/">
+        <span class="pagination-break u-hightLightText">&#9787;</span>
+        
+        
+            <a class="pagination-item pagination-item--next" href="/blog/2015/01/17/断舍离/">
                 
                     下一篇：断舍离
                 
                 <i class="fa fa-angle-right u-hightLightText"></i>
             </a>
-        
-        
-            <span class="pagination-break u-hightLightText">&bullet;</span>
         
     </footer>
 
@@ -221,7 +224,8 @@
     </div>
     <div class="bg-global" style="background-image: url('image/bg-default.jpg')"></div>
     <footer class="foot">
-        <span class="foot-text">&spades;&nbsp;sunaiwen - 2015&nbsp;&clubs;&nbsp;Power by hexo&nbsp;&spades;</span>
+        <span class="foot-text">&spades;&nbsp;sunaiwen - 2015&nbsp;&clubs;&nbsp;Power by hexo&nbsp;&spades;<br/>
+            Using theme:&nbsp;<a  target="_blank" href="http://github.com/sunaiwen/hexo-theme-plain">hexo-theme-plain</a></span>
     </footer>
     <script src="/blog/js/lib/highlight.js"></script>
 <script src="/blog/js/lib/zoomerang.js"></script>
