@@ -1853,10 +1853,10 @@ img {
 .head-search-input {
   width: 12.85714em;
   height: 35px;
-  padding: 5px 10px;
+  padding: 7px 4px;
   border: 1px solid #a7a7a7;
   border-radius: 18px;
-  line-height: 25px;
+  line-height: 21px;
   font-size: 1.07143em;
   font-family: inherit;
   color: #a7a7a7;
