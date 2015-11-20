@@ -9,7 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
 <link rel="shortcut icon" href= "/blog/favicon.png"/>
 <link rel="stylesheet" href="/blog/css/style.css"/>
+<!--[ if lte IE 8 ]>
 <script src="/blog/js/lib/modernizr-shiv.js"></script>
+<![endif]-->
+
     
     <meta name="description" content="起因今天同事碰到了一个奇怪的问题，使用了position: fixed的元素居然不以viewport为 containing block，而是以它的父元素为 containing block。原因是因为在设置了fixed的元素的父元素上，用了transform: translate3d();
 后来Google了一番，看到 MDN 上列出的几个会生成 stacking context 的原因，其中就有它。我记得以前在前端观察看过这篇关于z-index的那些事儿，其中列出了几个会形成 stacking context 的条件：
@@ -27,14 +30,24 @@
 </head>
 <body>
     <header class="head u-cf">
-        <a class="head-flag" href="/blog/">
-    <img class="head-flag-img" src="/blog/image/logo.png" alt="sunaiwen 个人博客"/>
-</a>
+        <section class="head-flag">
+    <h1>
+        <a href="/blog/">
+            
+                <img class="head-flag-img" src="/blog/image/logo.png" alt="sunaiwen 个人博客"/>
+            
+        </a>
+    </h1>
+</section>
 <nav class="head-nav">
     <a class="head-nav-item" href="/blog/">首页</a>
     <a class="head-nav-item" href="/blog/archives">归档</a>
-    <a class="head-nav-item" href="/blog//about">关于我</a>
-    <a id="j-nav-searchBtn" class="head-nav-item hni-search" href="javascript:void(0)"><i class="fa fa-search"></i></a>
+    
+      <a class="head-nav-item" href="http://sunaiwen.github.io/resume/dist">关于我</a>
+    
+    <a id="j-nav-searchBtn" class="head-nav-item hni-search" href="javascript:void(0)">
+        <i class="fa fa-search"></i>
+    </a>
 </nav>
 <div id="j-searchBox" class="head-search">
     <button id="j-search-closeBtn" class="head-search-close"><i class="fa fa-close"></i></button>
@@ -143,8 +156,6 @@
     </footer>
 
         
-            
-                <div class="ds-thread" data-thread-key="1413208974000" data-title="由transform不为none产生的stacking context" data-url="2014/10/13/the-stacking-contextyao-zhu-yi-de-yi-ge-di-fang/"></div>
             
         
     </section>
@@ -266,20 +277,7 @@
 <script src="/blog/js/lib/zoomerang.js"></script>
 <script src="/blog/js/app.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-51163552-1', 'auto');
-    ga('send', 'pageview');
-</script>
-
-
-
-    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
     var duoshuoQuery = {short_name:"sunaiwen"};
     (function() {
@@ -292,6 +290,16 @@
     })();
 </script>
 <!-- 多说公共JS代码 end -->
+
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+</script>
 
 
 </body>

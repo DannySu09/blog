@@ -9,7 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
 <link rel="shortcut icon" href= "/blog/favicon.png"/>
 <link rel="stylesheet" href="/blog/css/style.css"/>
+<!--[ if lte IE 8 ]>
 <script src="/blog/js/lib/modernizr-shiv.js"></script>
+<![endif]-->
+
     
     <meta name="description" content="#什么是IIFE相信你一定知道「自调用匿名函数」吧。类似于这样的写法：
 
@@ -24,14 +27,24 @@ IIFE就是对这种写法的「自调用的匿名函数」称呼纠正后的叫�
 </head>
 <body>
     <header class="head u-cf">
-        <a class="head-flag" href="/blog/">
-    <img class="head-flag-img" src="/blog/image/logo.png" alt="sunaiwen 个人博客"/>
-</a>
+        <section class="head-flag">
+    <h1>
+        <a href="/blog/">
+            
+                <img class="head-flag-img" src="/blog/image/logo.png" alt="sunaiwen 个人博客"/>
+            
+        </a>
+    </h1>
+</section>
 <nav class="head-nav">
     <a class="head-nav-item" href="/blog/">首页</a>
     <a class="head-nav-item" href="/blog/archives">归档</a>
-    <a class="head-nav-item" href="/blog//about">关于我</a>
-    <a id="j-nav-searchBtn" class="head-nav-item hni-search" href="javascript:void(0)"><i class="fa fa-search"></i></a>
+    
+      <a class="head-nav-item" href="http://sunaiwen.github.io/resume/dist">关于我</a>
+    
+    <a id="j-nav-searchBtn" class="head-nav-item hni-search" href="javascript:void(0)">
+        <i class="fa fa-search"></i>
+    </a>
 </nav>
 <div id="j-searchBox" class="head-search">
     <button id="j-search-closeBtn" class="head-search-close"><i class="fa fa-close"></i></button>
@@ -173,8 +186,6 @@ IIFE就是对这种写法的「自调用的匿名函数」称呼纠正后的叫�
 
         
             
-                <div class="ds-thread" data-thread-key="1411794770000" data-title="IIFE和它们面前的分号" data-url="2014/09/27/iifehe-ta-men-qian-mian-de-fen-hao/"></div>
-            
         
     </section>
 
@@ -295,20 +306,7 @@ IIFE就是对这种写法的「自调用的匿名函数」称呼纠正后的叫�
 <script src="/blog/js/lib/zoomerang.js"></script>
 <script src="/blog/js/app.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-51163552-1', 'auto');
-    ga('send', 'pageview');
-</script>
-
-
-
-    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
     var duoshuoQuery = {short_name:"sunaiwen"};
     (function() {
@@ -321,6 +319,16 @@ IIFE就是对这种写法的「自调用的匿名函数」称呼纠正后的叫�
     })();
 </script>
 <!-- 多说公共JS代码 end -->
+
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+</script>
 
 
 </body>

@@ -9,7 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
 <link rel="shortcut icon" href= "/blog/favicon.png"/>
 <link rel="stylesheet" href="/blog/css/style.css"/>
+<!--[ if lte IE 8 ]>
 <script src="/blog/js/lib/modernizr-shiv.js"></script>
+<![endif]-->
+
     
     <meta name="description" content="##工作状态回公司一个星期了。我觉得自己完成工作的速度真是死慢死慢的。技术上无太多进步。我要重新审视一下自己对新技术的态度。在这点上玉伯说的很对，忘了他原话了，按我理解，意思应该是：不要老想着不能错过所有的技术，那对自己的提高没有什么作用。前端技术太多，涉及广泛，肯定无法在所有方面深入的。所以，放过一些大牛们讨论的话题，漏掉一些新闻，着眼于自己更缺乏的东西。"/>
 
@@ -17,14 +20,24 @@
 </head>
 <body>
     <header class="head u-cf">
-        <a class="head-flag" href="/blog/">
-    <img class="head-flag-img" src="/blog/image/logo.png" alt="sunaiwen 个人博客"/>
-</a>
+        <section class="head-flag">
+    <h1>
+        <a href="/blog/">
+            
+                <img class="head-flag-img" src="/blog/image/logo.png" alt="sunaiwen 个人博客"/>
+            
+        </a>
+    </h1>
+</section>
 <nav class="head-nav">
     <a class="head-nav-item" href="/blog/">首页</a>
     <a class="head-nav-item" href="/blog/archives">归档</a>
-    <a class="head-nav-item" href="/blog//about">关于我</a>
-    <a id="j-nav-searchBtn" class="head-nav-item hni-search" href="javascript:void(0)"><i class="fa fa-search"></i></a>
+    
+      <a class="head-nav-item" href="http://sunaiwen.github.io/resume/dist">关于我</a>
+    
+    <a id="j-nav-searchBtn" class="head-nav-item hni-search" href="javascript:void(0)">
+        <i class="fa fa-search"></i>
+    </a>
 </nav>
 <div id="j-searchBox" class="head-search">
     <button id="j-search-closeBtn" class="head-search-close"><i class="fa fa-close"></i></button>
@@ -110,8 +123,6 @@
     </footer>
 
         
-            
-                <div class="ds-thread" data-thread-key="1405261531000" data-title="工作一星期记" data-url="2014/07/13/gong-zuo-yi-xing-qi-ji/"></div>
             
         
     </section>
@@ -233,20 +244,7 @@
 <script src="/blog/js/lib/zoomerang.js"></script>
 <script src="/blog/js/app.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-51163552-1', 'auto');
-    ga('send', 'pageview');
-</script>
-
-
-
-    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
     var duoshuoQuery = {short_name:"sunaiwen"};
     (function() {
@@ -259,6 +257,16 @@
     })();
 </script>
 <!-- 多说公共JS代码 end -->
+
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+</script>
 
 
 </body>

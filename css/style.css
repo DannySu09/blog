@@ -1774,11 +1774,11 @@ img {
   height: 47px;
   overflow: hidden;
   border-radius: 26px;
-  box-shadow: 0 0 0 1px #a7a7a7;
-  -webkit-box-shadow: 0 0 0 1px #a7a7a7; }
+  border: 1px solid #efefef; }
+  .head-flag > h1 {
+    font-size: inherit; }
   .head-flag:hover {
-    box-shadow: 0 0 0 1px #2845ce;
-    -webkit-box-shadow: 0 0 0 1px #2845ce; }
+    border-color: #2845ce; }
   @media screen and (min-width: 320px) and (max-width: 540px) {
     .head-flag {
       display: none; } }
@@ -1786,13 +1786,9 @@ img {
 .head-flag-img {
   width: 100%;
   height: 100%;
-  padding: 2px;
-  vertical-align: top; }
-  .has-filter .head-flag-img {
-    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.4);
-    -webkit-box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.4); }
-  .lte-ie8 .head-flag-img {
-    border: none; }
+  padding: 0;
+  vertical-align: top;
+  border: none; }
 
 .head-nav {
   position: absolute;

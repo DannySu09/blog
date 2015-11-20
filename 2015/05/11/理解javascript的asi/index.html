@@ -9,7 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
 <link rel="shortcut icon" href= "/blog/favicon.png"/>
 <link rel="stylesheet" href="/blog/css/style.css"/>
+<!--[ if lte IE 8 ]>
 <script src="/blog/js/lib/modernizr-shiv.js"></script>
+<![endif]-->
+
     
     <meta name="description" content="
 最底下有三篇参考文章。第一篇是 Hax 在知乎上的回答，全文读起来很爽，从历史到原理都有。第二篇的作者不清楚是哪位大神，但也是大神无疑，把 ASI 的机制结合 ES 规范娓娓道来，很清楚。第三篇是 npm 作者写的，态度比较鲜明，叙述比较概括性。推荐通读第二篇文章。
@@ -20,14 +23,24 @@
 </head>
 <body>
     <header class="head u-cf">
-        <a class="head-flag" href="/blog/">
-    <img class="head-flag-img" src="/blog/image/logo.png" alt="sunaiwen 个人博客"/>
-</a>
+        <section class="head-flag">
+    <h1>
+        <a href="/blog/">
+            
+                <img class="head-flag-img" src="/blog/image/logo.png" alt="sunaiwen 个人博客"/>
+            
+        </a>
+    </h1>
+</section>
 <nav class="head-nav">
     <a class="head-nav-item" href="/blog/">首页</a>
     <a class="head-nav-item" href="/blog/archives">归档</a>
-    <a class="head-nav-item" href="/blog//about">关于我</a>
-    <a id="j-nav-searchBtn" class="head-nav-item hni-search" href="javascript:void(0)"><i class="fa fa-search"></i></a>
+    
+      <a class="head-nav-item" href="http://sunaiwen.github.io/resume/dist">关于我</a>
+    
+    <a id="j-nav-searchBtn" class="head-nav-item hni-search" href="javascript:void(0)">
+        <i class="fa fa-search"></i>
+    </a>
 </nav>
 <div id="j-searchBox" class="head-search">
     <button id="j-search-closeBtn" class="head-search-close"><i class="fa fa-close"></i></button>
@@ -209,8 +222,6 @@ return
 
         
             
-                <div class="ds-thread" data-thread-key="1431350390000" data-title="理解 JavaScript 的 ASI" data-url="2015/05/11/理解javascript的asi/"></div>
-            
         
     </section>
 
@@ -331,20 +342,7 @@ return
 <script src="/blog/js/lib/zoomerang.js"></script>
 <script src="/blog/js/app.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-51163552-1', 'auto');
-    ga('send', 'pageview');
-</script>
-
-
-
-    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
     var duoshuoQuery = {short_name:"sunaiwen"};
     (function() {
@@ -357,6 +355,16 @@ return
     })();
 </script>
 <!-- 多说公共JS代码 end -->
+
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+</script>
 
 
 </body>
