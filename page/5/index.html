@@ -63,6 +63,65 @@
 <article class="article  j-zoomerage-range">
     <header class="article-head">
         
+            <a class="article-title" href="/blog/2014/09/23/zeptozhong-dot-fn-dot-eachde-yi-ge-yao-zhu-yi-de-di-fang/">Zepto中$.fn.each的一个要注意的地方</a>
+        
+        <ul class="article-meta">
+            <li class="article-meta-item">
+                <i class="fa fa-clock-o ami-icon"></i>
+                <span class="ami-text">2014-09-23</span>
+            </li>
+            <li class="article-meta-item">
+                
+                    <i class="fa fa-book ami-icon"></i>
+                    
+                        
+                            <a class="ami-text" href="/blog/categories/JavaScript/">JavaScript</a>
+                        
+                    
+                
+            </li>
+            <li class="article-meta-item">
+                
+                    <i class="fa  fa-tag  ami-icon"></i>
+                    
+                        
+                            <a class="ami-text" href="/blog/tags/Zepto/">Zepto</a>&nbsp;
+                        
+                    
+                
+            </li>
+        </ul>
+    </header>
+    
+        <div class="article-content essay"><p><strong>2014-09-25补充：</strong><br>Zepto的文档中其实是对<code>return false</code>有说明的：</p>
+<blockquote>
+<p>Iterate through every element of the collection. Inside the iterator function, this keyword refers to the current item (also passed as the second argument to the function). <strong>If the iterator function returns false, iteration stops.</strong></p>
+</blockquote>
+<p>是我疏忽了。不过可以把本文当做<code>$.fn.each</code>方法实现的探讨吧。</p>
+<p><strong>原文：</strong></p>
+<p>前几天在用Zepto做一个项目，同事写了一个小插件，代码的作用是找到某个父元素下的所有<code>img</code>标签，然后将其中<code>lazyload</code>属性的值赋给<code>src</code>属性，达到控制加载图片的目的。</p>
+<p>首先想到的，当然是这样实现：</p>
+<pre class="language-javascript">
+    <code>
+        $('img').each(function(idx, el){
+            if(!$(el).attr('lazyload')) return false;
+            // do something here
+        });
+    </code>
+</pre>
+
+<p>看代码第二行的<code>return false</code>，这行会导致执行流跳出each循环。</p></div>
+        <footer class="article-footer">
+            <a class="article-footer-readFurther" href="/blog/2014/09/23/zeptozhong-dot-fn-dot-eachde-yi-ge-yao-zhu-yi-de-di-fang/">继续阅读</a>
+        </footer>
+    
+</article>
+
+        
+            
+<article class="article  j-zoomerage-range">
+    <header class="article-head">
+        
             <a class="article-title" href="/blog/2014/09/19/22sui-la/">22岁啦</a>
         
         <ul class="article-meta">
@@ -213,48 +272,6 @@
 </article>
 
         
-            
-<article class="article  j-zoomerage-range">
-    <header class="article-head">
-        
-            <a class="article-title" href="/blog/2014/09/03/wen-xi-han-shu-zhi-xing-huan-jing-he-zuo-yong-yu-lian/">温习函数执行环境和作用域链</a>
-        
-        <ul class="article-meta">
-            <li class="article-meta-item">
-                <i class="fa fa-clock-o ami-icon"></i>
-                <span class="ami-text">2014-09-03</span>
-            </li>
-            <li class="article-meta-item">
-                
-                    <i class="fa fa-book ami-icon"></i>
-                    
-                        
-                            <a class="ami-text" href="/blog/categories/JavaScript/">JavaScript</a>
-                        
-                    
-                
-            </li>
-            <li class="article-meta-item">
-                
-            </li>
-        </ul>
-    </header>
-    
-        <div class="article-content essay"><blockquote>
-<p>子曰：温故而知新，可以教妹子。</p>
-</blockquote>
-<p>这几天写JavaScript写着写着，感觉越写越像一坨东西。这坨东西里面的东西怎么工作的，会造成什么问题，我几乎一无所知。我所能知道的，就是刷新页面时，它好像能做我想让它做的事情。</p>
-<blockquote>
-<p>好像是在知乎上，看到一句话：优秀的程序员和普通的程序员最大的区别是什么？优秀的程序员对自己在做的事情了如指掌。</p>
-</blockquote>
-<p>这句话本意也许是，优秀程序员不仅对写下的代码了如指掌，而且还对自己写下的服务于的目标领域，也了如指掌。</p></div>
-        <footer class="article-footer">
-            <a class="article-footer-readFurther" href="/blog/2014/09/03/wen-xi-han-shu-zhi-xing-huan-jing-he-zuo-yong-yu-lian/">继续阅读</a>
-        </footer>
-    
-</article>
-
-        
     </section>
 
         <aside class="main-aside">
@@ -310,6 +327,10 @@
             
                 <li class="aside-list-item">
                     <a class="ali-text u-cf" href="/blog/tags/Angular/">Angular&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                </li>
+            
+                <li class="aside-list-item">
+                    <a class="ali-text u-cf" href="/blog/tags/JavaScript/">JavaScript&nbsp;<span class="ali-count u-hightLightText">1</span></a>
                 </li>
             
                 <li class="aside-list-item">
