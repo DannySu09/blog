@@ -7,10 +7,10 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
-<link rel="shortcut icon" href= "/blog/favicon.png"/>
-<link rel="stylesheet" href="/blog/css/style.css"/>
+<link rel="shortcut icon" href= "/favicon.png"/>
+<link rel="stylesheet" href="/css/style.css"/>
 <!--[ if lte IE 8 ]>
-<script src="/blog/js/lib/modernizr-shiv.js"></script>
+<script src="/js/lib/modernizr-shiv.js"></script>
 <![endif]-->
 
     
@@ -29,16 +29,16 @@
     <header class="head u-cf">
         <section class="head-flag">
     <h1>
-        <a href="/blog/">
+        <a href="/">
             
-                <img class="head-flag-img" src="/blog/image/logo.png" alt="sunaiwen 个人博客"/>
+                <img class="head-flag-img" src="/image/logo.png" alt="sunaiwen 个人博客"/>
             
         </a>
     </h1>
 </section>
 <nav class="head-nav">
-    <a class="head-nav-item" href="/blog/">首页</a>
-    <a class="head-nav-item" href="/blog/archives">归档</a>
+    <a class="head-nav-item" href="/">首页</a>
+    <a class="head-nav-item" href="/archives">归档</a>
     
       <a class="head-nav-item" href="http://sunaiwen.github.io/resume/dist">关于我</a>
     
@@ -79,7 +79,7 @@
                     <i class="fa fa-book ami-icon"></i>
                     
                         
-                            <a class="ami-text" href="/blog/categories/JavaScript/">JavaScript</a>
+                            <a class="ami-text" href="/categories/JavaScript/">JavaScript</a>
                         
                     
                 
@@ -120,10 +120,10 @@
 </ol>
 <p>而 Event Loop 就是一个循环，管理要执行的消息队列。当收到事件的时候，就把队列最前面的消息抽取出来，将其回调函数压入栈中。这时就回到了普通调用函数的情境，把相互调用到的函数都压入栈中，然后执行完后就弹出，直到栈空白了，也就是执行结束了。而且要注意的是，每条消息被调出来执行，都会等到其相应的函数全都执行完，也就是栈完全空了，才会去调下一条消息。</p>
 <p>现在再回头看本文开头的两个例子，为了保证执行，我们把传入的数字减为 10。此时得到的第一个例子执行时，在 Chrome 的开发工具里的调用栈是这样的：</p>
-<img src="/blog/2015/12/07/初识Event-Loop/1.png" alt="在Chrome开发工具里发现调用栈有十层这么高" title="在Chrome开发工具里发现调用栈有十层这么高">
+<img src="/2015/12/07/初识Event-Loop/1.png" alt="在Chrome开发工具里发现调用栈有十层这么高" title="在Chrome开发工具里发现调用栈有十层这么高">
 <p>也就说明了函数同步执行时，会把相互调用的函数一个接一个的压入栈中，然后从顶到底边执行边弹出。当相互调用的函数数量过多时，就 StackOverflow.com 了……</p>
 <p>再看加了 setTimeout 之后，是这样的：</p>
-<img src="/blog/2015/12/07/初识Event-Loop/2.png" alt="栈里只有两层" title="栈里只有两层">
+<img src="/2015/12/07/初识Event-Loop/2.png" alt="栈里只有两层" title="栈里只有两层">
 <p>可以看到，第一层就是传入 setTimeout 的匿名函数，第二层就是我们的 count 函数了。用这个方法我们把原本都要压入栈中的函数转换成了由 Event Loop 一个个调出来执行的消息。</p>
 <p><strong>参考文章</strong>：</p>
 <blockquote>
@@ -141,7 +141,7 @@
         
         
         
-            <a class="pagination-item pagination-item--next" href="/blog/2015/11/02/程序员跳槽指南读书笔记/">
+            <a class="pagination-item pagination-item--next" href="/2015/11/02/程序员跳槽指南读书笔记/">
                 
                     下一篇：《程序员跳槽全攻略》读书笔记
                 
@@ -161,43 +161,43 @@
         <ul class="aside-list">
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/blog/categories/英语透析阅读/">英语透析阅读&nbsp;<span class="ali-count u-hightLightText">5</span></a>
+                    <a class="ali-text u-cf" href="/categories/英语透析阅读/">英语透析阅读&nbsp;<span class="ali-count u-hightLightText">5</span></a>
                 </li>
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/blog/categories/JavaScript/">JavaScript&nbsp;<span class="ali-count u-hightLightText">11</span></a>
+                    <a class="ali-text u-cf" href="/categories/JavaScript/">JavaScript&nbsp;<span class="ali-count u-hightLightText">11</span></a>
                 </li>
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/blog/categories/读书笔记/">读书笔记&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                    <a class="ali-text u-cf" href="/categories/读书笔记/">读书笔记&nbsp;<span class="ali-count u-hightLightText">1</span></a>
                 </li>
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/blog/categories/说说/">说说&nbsp;<span class="ali-count u-hightLightText">8</span></a>
+                    <a class="ali-text u-cf" href="/categories/说说/">说说&nbsp;<span class="ali-count u-hightLightText">8</span></a>
                 </li>
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/blog/categories/用户体验/">用户体验&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                    <a class="ali-text u-cf" href="/categories/用户体验/">用户体验&nbsp;<span class="ali-count u-hightLightText">1</span></a>
                 </li>
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/blog/categories/Web-基础/">Web 基础&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                    <a class="ali-text u-cf" href="/categories/Web-基础/">Web 基础&nbsp;<span class="ali-count u-hightLightText">1</span></a>
                 </li>
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/blog/categories/CSS/">CSS&nbsp;<span class="ali-count u-hightLightText">3</span></a>
+                    <a class="ali-text u-cf" href="/categories/CSS/">CSS&nbsp;<span class="ali-count u-hightLightText">3</span></a>
                 </li>
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/blog/categories/读后感/">读后感&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                    <a class="ali-text u-cf" href="/categories/读后感/">读后感&nbsp;<span class="ali-count u-hightLightText">1</span></a>
                 </li>
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/blog/categories/Git/">Git&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                    <a class="ali-text u-cf" href="/categories/Git/">Git&nbsp;<span class="ali-count u-hightLightText">1</span></a>
                 </li>
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/blog/categories/设计/">设计&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                    <a class="ali-text u-cf" href="/categories/设计/">设计&nbsp;<span class="ali-count u-hightLightText">1</span></a>
                 </li>
             
         </ul>
@@ -207,55 +207,55 @@
         <ul class="aside-list">
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/blog/tags/思维导图/">思维导图&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                    <a class="ali-text u-cf" href="/tags/思维导图/">思维导图&nbsp;<span class="ali-count u-hightLightText">1</span></a>
                 </li>
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/blog/tags/酷产品/">酷产品&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                    <a class="ali-text u-cf" href="/tags/酷产品/">酷产品&nbsp;<span class="ali-count u-hightLightText">1</span></a>
                 </li>
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/blog/tags/英文小说/">英文小说&nbsp;<span class="ali-count u-hightLightText">4</span></a>
+                    <a class="ali-text u-cf" href="/tags/英文小说/">英文小说&nbsp;<span class="ali-count u-hightLightText">4</span></a>
                 </li>
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/blog/tags/DOM/">DOM&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                    <a class="ali-text u-cf" href="/tags/DOM/">DOM&nbsp;<span class="ali-count u-hightLightText">1</span></a>
                 </li>
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/blog/tags/RequireJS/">RequireJS&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                    <a class="ali-text u-cf" href="/tags/RequireJS/">RequireJS&nbsp;<span class="ali-count u-hightLightText">1</span></a>
                 </li>
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/blog/tags/Zepto/">Zepto&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                    <a class="ali-text u-cf" href="/tags/Zepto/">Zepto&nbsp;<span class="ali-count u-hightLightText">1</span></a>
                 </li>
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/blog/tags/自控力/">自控力&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                    <a class="ali-text u-cf" href="/tags/自控力/">自控力&nbsp;<span class="ali-count u-hightLightText">1</span></a>
                 </li>
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/blog/tags/Sketch/">Sketch&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                    <a class="ali-text u-cf" href="/tags/Sketch/">Sketch&nbsp;<span class="ali-count u-hightLightText">1</span></a>
                 </li>
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/blog/tags/足球/">足球&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                    <a class="ali-text u-cf" href="/tags/足球/">足球&nbsp;<span class="ali-count u-hightLightText">1</span></a>
                 </li>
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/blog/tags/世界杯/">世界杯&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                    <a class="ali-text u-cf" href="/tags/世界杯/">世界杯&nbsp;<span class="ali-count u-hightLightText">1</span></a>
                 </li>
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/blog/tags/上班/">上班&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                    <a class="ali-text u-cf" href="/tags/上班/">上班&nbsp;<span class="ali-count u-hightLightText">1</span></a>
                 </li>
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/blog/tags/租房/">租房&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                    <a class="ali-text u-cf" href="/tags/租房/">租房&nbsp;<span class="ali-count u-hightLightText">1</span></a>
                 </li>
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/blog/tags/Angular/">Angular&nbsp;<span class="ali-count u-hightLightText">1</span></a>
+                    <a class="ali-text u-cf" href="/tags/Angular/">Angular&nbsp;<span class="ali-count u-hightLightText">1</span></a>
                 </li>
             
         </ul>
@@ -268,9 +268,9 @@
         <span class="foot-text">&spades;&nbsp;sunaiwen&nbsp;2014-2016&nbsp;&clubs;&nbsp;Power by hexo&nbsp;&spades;<br/>
             Using theme:&nbsp;<a  target="_blank" href="http://github.com/sunaiwen/hexo-theme-plain">hexo-theme-plain</a></span>
     </footer>
-    <script src="/blog/js/lib/highlight.js"></script>
-<script src="/blog/js/lib/zoomerang.js"></script>
-<script src="/blog/js/app.js"></script>
+    <script src="/js/lib/highlight.js"></script>
+<script src="/js/lib/zoomerang.js"></script>
+<script src="/js/app.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
