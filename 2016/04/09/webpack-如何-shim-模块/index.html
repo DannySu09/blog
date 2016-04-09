@@ -111,7 +111,7 @@ exports-loader的作用是，当要引入一个模块时，在引入之前，先
   var window = {};
 
   window.foo = {
-      say: function() {
+      bar: function() {
           return &#39;hello&#39;
       }
   }
@@ -124,9 +124,9 @@ exports-loader的作用是，当要引入一个模块时，在引入之前，先
 </code></pre>
 <p>首先，<code>exports?window.foo</code>起到了什么样的作用呢？回顾一下文章开头<code>exports-loader</code>的作用：<strong>「把一些导出模块的语句加到那个模块中」</strong>。</p>
 <p>很容易看到代码末尾的<code>module.exports = window.foo;</code>，这样就等于把该导出的东西导出了。</p>
-<p>再看看<code>imports?window=&gt;{}</code>的作用<strong>先把一些赋值语句注入到那个模块中</strong>。由于模块代码的最外层被一个方法包裹着，所以这里的<code>var window</code> 就避免把<code>foo</code>直接导出到全局环境。</p>
+<p>再看看<code>imports?window=&gt;{}</code>的作用：<strong>先把一些赋值语句注入到那个模块中</strong>。由于模块代码的最外层被一个方法包裹着，所以这里的<code>var window</code> 就避免把<code>foo</code>直接导出到全局环境。</p>
 <p>把两个 loader 连起来，总结来说，就是先用<code>imports-loader</code>把一些赋值语句注入到代码中，防止全局污染，再用<code>exports-loader</code>把一些该导出的东西以<code>commonjs</code>方式导出，以便能正常<code>require</code>。两者这样一配合，就成功 shim 了一个模块了。</p>
-<p>当然后面还有配合用 <code>ProvidePlugin</code>自动把模块注入到项目下的某个文件中去的做法，但这只是锦上添花。最主要的还是要搞清楚这两个 loader 是如何配合的。</p>
+<p>当然后面还有配合用 <code>ProvidePlugin</code>自动把模块注入到项目下的每个文件中去的做法，但这只是锦上添花。最主要的还是要搞清楚这两个 loader 是如何配合的。</p>
 <blockquote>
 <p>参考文章：</p>
 <ul>
