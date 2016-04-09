@@ -63,6 +63,58 @@
 <article class="article  j-zoomerage-range">
     <header class="article-head">
         
+            <a class="article-title" href="/2014/10/20/r-dot-jsgou-jian-requirejsmo-kuai-yao-zhu-yi-de-di-fang/">r.js打包requirejs模块要注意的一个地方</a>
+        
+        <ul class="article-meta">
+            <li class="article-meta-item">
+                <i class="fa fa-clock-o ami-icon"></i>
+                <span class="ami-text">2014-10-20</span>
+            </li>
+            <li class="article-meta-item">
+                
+                    <i class="fa fa-book ami-icon"></i>
+                    
+                        
+                            <a class="ami-text" href="/categories/JavaScript/">JavaScript</a>
+                        
+                    
+                
+            </li>
+            <li class="article-meta-item">
+                
+                    <i class="fa  fa-tag  ami-icon"></i>
+                    
+                        
+                            <a class="ami-text" href="/tags/RequireJS/">RequireJS</a>&nbsp;
+                        
+                    
+                
+            </li>
+        </ul>
+    </header>
+    
+        <div class="article-content essay"><h2 id="window-define的写法导致mismatch错误">window.define的写法导致<code>mismatch</code>错误</h2><p>第一次用<a href="http://requirejs.org/">RequireJS</a>，今天把所有模块及其依赖用<a href="https://github.com/jrburke/r.js">r.js</a>打包后，RequireJS一直在抛<a href="http://requirejs.org/docs/errors.html#mismatch">mismatched的错误</a>。盯着打包后的代码看了一会儿，终于找到了问题。</p>
+<p>假设有一个模块叫做<code>Countdown</code>，返回的是变量名为<code>Countdown</code>的构造函数，然后就有了如下的代码：</p>
+<pre>
+    <code class="language-javascript">
+    if(window.define != null) {
+      window.define(function(){
+          return Countdown;
+      });
+  }
+    </code>
+</pre></div>
+        <footer class="article-footer">
+            <a class="article-footer-readFurther" href="/2014/10/20/r-dot-jsgou-jian-requirejsmo-kuai-yao-zhu-yi-de-di-fang/">继续阅读</a>
+        </footer>
+    
+</article>
+
+        
+            
+<article class="article  j-zoomerage-range">
+    <header class="article-head">
+        
             <a class="article-title" href="/2014/10/13/the-stacking-contextyao-zhu-yi-de-yi-ge-di-fang/">由transform不为none产生的stacking context</a>
         
         <ul class="article-meta">
@@ -237,42 +289,6 @@
 </article>
 
         
-            
-<article class="article  j-zoomerage-range">
-    <header class="article-head">
-        
-            <a class="article-title" href="/2014/09/25/kuai-su-huo-qu-tu-pian-kuan-gao/">快速获取图片宽高</a>
-        
-        <ul class="article-meta">
-            <li class="article-meta-item">
-                <i class="fa fa-clock-o ami-icon"></i>
-                <span class="ami-text">2014-09-25</span>
-            </li>
-            <li class="article-meta-item">
-                
-                    <i class="fa fa-book ami-icon"></i>
-                    
-                        
-                            <a class="ami-text" href="/categories/JavaScript/">JavaScript</a>
-                        
-                    
-                
-            </li>
-            <li class="article-meta-item">
-                
-            </li>
-        </ul>
-    </header>
-    
-        <div class="article-content essay"><p>开发过一个等宽瀑布流，请求后端的数据发现后端并没有提供图片宽高，应该是后端的哥们忙吧。加之项目比较赶，还是想办法在前端解决吧。</p>
-<p>那时的解决方法就是直接监听请求来的每一组的数据的图片的<code>onload</code>事件，触发一次或者<code>img.complete === true</code>就记一次数，发现加载完了，就把图片按照瀑布流的布局显示出来。因为无法预知每张图片到底高度多少，所以不知道瀑布流接下来该怎么摆，所以整个过程是阻塞的，也就是图片不加载完，就不干其他事。</p></div>
-        <footer class="article-footer">
-            <a class="article-footer-readFurther" href="/2014/09/25/kuai-su-huo-qu-tu-pian-kuan-gao/">继续阅读</a>
-        </footer>
-    
-</article>
-
-        
     </section>
 
         <aside class="main-aside">
@@ -285,7 +301,7 @@
                 </li>
             
                 <li class="aside-list-item">
-                    <a class="ali-text u-cf" href="/categories/JavaScript/">JavaScript&nbsp;<span class="ali-count u-hightLightText">11</span></a>
+                    <a class="ali-text u-cf" href="/categories/JavaScript/">JavaScript&nbsp;<span class="ali-count u-hightLightText">12</span></a>
                 </li>
             
                 <li class="aside-list-item">
