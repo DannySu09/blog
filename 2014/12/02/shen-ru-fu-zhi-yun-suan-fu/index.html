@@ -14,9 +14,24 @@
 <![endif]-->
 
     
-    <meta name="description" content=""/>
+    <meta name="description" content="昨天在微博上看到有人在At各位大大，想解答一个关于赋值运算符的问题，其实这个问题我在阅读《JavaScript 高级程序设计》的过程中也被难住了，一直没有解决，问题如下：
 
-    <title> Not By Chance Alone </title>
+    
+    var o = {
+        a: function(){
+            console.log(this === o);
+        }
+    }
+    o.a(); //=> true
+    (o.a = o.a)(); //=> false, the value of 'this' is equal with the window object now
+    
+
+
+为什么第二种调用方法，this就变成了window对象了呢？
+在微博上看到有人提到了Reference Type，然后就去翻 ECMAScript 文档，第一次去翻这玩意儿呢，有些紧张。结果看了好几遍才貌似看懂了，不确定是否真的看懂。
+但还是把我的理解写下来。"/>
+
+    <title> 一个赋值运算问题 </title>
 </head>
 <body>
     <header class="head u-cf">
@@ -60,47 +75,131 @@
 <article class="article  is-articleFull  j-zoomerage-range">
     <header class="article-head">
         
-            <h1 class="article-title">Not By Chance Alone</h1>
+            <h1 class="article-title">一个赋值运算问题</h1>
         
         <ul class="article-meta">
             <li class="article-meta-item">
                 <i class="fa fa-clock-o ami-icon"></i>
-                <span class="ami-text">2015-01-17</span>
+                <span class="ami-text">2014-12-02</span>
             </li>
             <li class="article-meta-item">
                 
                     <i class="fa fa-book ami-icon"></i>
                     
                         
-                            <a class="ami-text" href="/categories/英语透析阅读/">英语透析阅读</a>
+                            <a class="ami-text" href="/categories/JavaScript/">JavaScript</a>
                         
                     
                 
             </li>
             <li class="article-meta-item">
                 
-                    <i class="fa  fa-tag  ami-icon"></i>
-                    
-                        
-                            <a class="ami-text" href="/tags/英文小说/">英文小说</a>&nbsp;
-                        
-                    
-                
             </li>
         </ul>
     </header>
     
-        <div class="article-content essay"><blockquote>
-<p>书名：Not By Chance Alone<br>作者：Elloit Aronson<br>篇幅：320 页</p>
-</blockquote>
+        <div class="article-content essay"><p>昨天在微博上看到有人在At各位大大，想解答一个关于赋值运算符的问题，其实这个问题我在阅读《JavaScript 高级程序设计》的过程中也被难住了，一直没有解决，问题如下：</p>
+<pre>
+    <code class="language-javascript">
+    var o = {
+        a: function(){
+            console.log(this === o);
+        }
+    }
+    o.a(); //=> true
+    (o.a = o.a)(); //=> false, the value of 'this' is equal with the window object now
+    </code>
+</pre>
+
+<p>为什么第二种调用方法，<code>this</code>就变成了<code>window</code>对象了呢？</p>
+<p>在微博上看到有人提到了<code>Reference Type</code>，然后就去翻 ECMAScript <a href="http://www.ecma-international.org/ecma-262/5.1/#sec-8.7" target="_blank" rel="external">文档</a>，第一次去翻这玩意儿呢，有些紧张。结果看了好几遍才貌似看懂了，不确定是否真的看懂。</p>
+<p>但还是把我的理解写下来。</p>
+<a id="more"></a>
+<h2 id="赋值运算的背后">赋值运算的背后</h2><p>按照 ECMAScript 的这个<a href="http://www.ecma-international.org/ecma-262/5.1/#sec-11.13.1" target="_blank" rel="external">文档</a>，来看，当进行一次赋值运算时会发生：</p>
 <ol>
-<li>前后花了差不多两个月</li>
-<li>积累的词汇并没有统计</li>
-<li>碰到的熟悉词挺多</li>
-<li>自己读的太快，很多长句都没有理解，就为了量而敷衍过去了</li>
-<li>语法生疏了（一直在生疏）</li>
+<li>计算等号左边的值（比如，取到某个对象的某个属性值）</li>
+<li>计算等号右边的值（这个好理解，就是求出最后的值）</li>
+<li>通过<code>GetValue</code>方法取出右边的<code>Reference</code>类型值，这时会涉及到取此值的<code>Base</code>。</li>
+<li>通过<code>PutValue</code>方法把取得的<code>Reference</code>类型值扔给等号左边，这时会确定赋值之后的<code>Base</code>。</li>
+<li>返回右边通过<code>GetValue</code>取到的值（关键）</li>
 </ol>
-<p>其实如果不连贯的去读，对最后读完之后的收获会造成很大的损害。不只透析阅读吧，任何事都是这样吧。不是有人说么？一个人要把一个想法变成现实，最好在72小时内就行动。</p>
+<p>虽然，看到这几条，还是无法完全明白赋值运算的全部机制，但最后一条给了我们方向。</p>
+<p>可以试着去运行：</p>
+<pre>
+    <code class="language-javascript">
+      var a, b=1;
+      alert(a = b);
+    </code>
+</pre>
+
+<p>会弹窗显示<code>1</code>。</p>
+<p>再运行下：</p>
+<pre>
+  <code class="language-javascript">
+    var o = {
+      a: function(){
+        console.log(this === o);
+      }
+    }
+
+    o.a(); //=> true
+    console.log(o.a = o.a);
+  </code>
+</pre>
+
+<p>会在控制台打出：</p>
+<pre>
+  <code class="language-javascript">
+    function(){
+      console.log(this === o);
+    }
+  </code>
+</pre>
+
+
+<p>说明赋值运算的返回值就是等号右边部分经过<code>GetValue</code>方法取到的值。</p>
+<h2 id="GetValue方法">GetValue方法</h2><p>接着看<a href="http://www.ecma-international.org/ecma-262/5.1/#sec-8.7.1" target="_blank" rel="external">文档</a>，得知，<code>GetValue</code>方法接受的参数是一个对象的时候，又会涉及到如何决定取到的值的<code>Base</code>的问题。其中有一条，是当取不到<code>Base</code>时，那就把<code>Environment Records</code>给当做<code>Base</code>，可以试着运行下面代码：</p>
+<pre>
+  <code class="language-javascript">
+    var mark = 'I am outside';
+    var a = {
+      mark: 'I am inside',
+      b: function(){
+        console.log(this.mark);
+      }
+    };
+    a.b(); // => I am inside
+    (a.b = a.b)(); // => I am outside
+  </code>
+</pre>
+
+<p>然后再包一层 IIFE函数，运行：</p>
+<pre>
+  <code class="language-javascript">
+    var mark = 'I am global';
+    (function(){
+      var mark = 'I am outside';
+      var a = {
+        mark: 'I am inside',
+        b: function(){
+          console.log(this.mark);
+        }
+      };
+      a.b(); // => I am inside
+      (a.b = a.b)()// => I am global
+    })()
+  </code>
+</pre>
+
+<p>发现，所谓的<code>Environment Records</code>，在浏览器里是指<code>window</code>对象。</p>
+<h2 id="结论">结论</h2><p>我知道你肯定想骂娘，但是让我全部解释，我也无力。我只能半猜半看文档。以下是我的理解：</p>
+<ol>
+<li>当运行<code>(o.a = o.a)()</code>时，<code>(o.a = o.a)</code>这里面进行的就是赋值运算，所以如上面说的，会有一个返回值。</li>
+<li>这个返回值由<code>GetValue</code>方法取得，在这里这个值应该是函数<code>function(){console.log(this === o)}</code>。</li>
+<li>返回这个值之后，会执行一次<code>PutValue</code>方法（<em>根据非严格模式下，不声明直接赋值给变量，那个变量会变成全局变量可知</em>），这个过程中，根据<code>PutValue</code>的执行原理，只能把<code>Environment Records</code>作为<code>Base</code>，所以此时<code>Base</code>就是<code>window</code>对象了。</li>
+<li>接着，就是马上执行这个函数，但在执行之前，会发生一次取值，这时又会再次需要<code>GetValue</code>，但这次取得的<code>Base</code>已经变成了<code>window</code>。所以<code>this</code>就指向了<code>window</code>对象。</li>
+</ol>
+<p>好心塞啊，睡觉去了。</p>
 </div>
     
 </article>
@@ -108,10 +207,10 @@
         
     <footer class="pagination pagination--post u-cf">
         
-            <a class="pagination-item pagination-item--previous" href="/2015/01/19/复杂/">
+            <a class="pagination-item pagination-item--previous" href="/2014/12/06/liao-jie-httpxie-yi/">
                 <i class="fa fa-angle-left u-hightLightText"></i>
                 
-                    上一篇：复杂
+                    上一篇：了解 HTTP 协议
                 
             </a>
         
@@ -119,9 +218,9 @@
         <span class="pagination-break u-hightLightText">&#9787;</span>
         
         
-            <a class="pagination-item pagination-item--next" href="/2015/01/17/断舍离/">
+            <a class="pagination-item pagination-item--next" href="/2014/11/25/jue-dui-ding-wei-xia-width-autode-blockde-kuan-du-ji-suan/">
                 
-                    下一篇：断舍离
+                    下一篇：绝对定位元素 width:auto 时的宽度计算
                 
                 <i class="fa fa-angle-right u-hightLightText"></i>
             </a>
