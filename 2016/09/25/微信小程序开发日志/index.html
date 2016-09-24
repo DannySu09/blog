@@ -14,10 +14,9 @@
 <![endif]-->
 
     
-    <meta name="description" content="感慨万千，下班回家总结。
-7.15 更新04年中国亚洲杯，那时我才初一，半决赛中国vs伊朗，双方点球大战。我和老爸在大厅一起看，进一个球，我们就疯狂庆祝。悄然十年过去，我还记得老妈被吓醒，从房里跑出来生气的表情，还有我和老爸理直气壮的解释。"/>
+    <meta name="description" content=""/>
 
-    <title> 世界杯 </title>
+    <title> 微信小程序开发日志 </title>
 </head>
 <body>
     <header class="head u-cf">
@@ -61,33 +60,29 @@
 <article class="article  is-articleFull  j-zoomerage-range">
     <header class="article-head">
         
-            <h1 class="article-title">世界杯</h1>
+            <h1 class="article-title">微信小程序开发日志</h1>
         
         <ul class="article-meta">
             <li class="article-meta-item">
                 <i class="fa fa-clock-o ami-icon"></i>
-                <span class="ami-text">2014-07-14</span>
+                <span class="ami-text">2016-09-24</span>
             </li>
             <li class="article-meta-item">
                 
                     <i class="fa fa-book ami-icon"></i>
                     
                         
-                            <a class="ami-text" href="/categories/说说/">说说</a>
+                            <a class="ami-text" href="/categories/JavaScript/">JavaScript</a>
                         
                     
                 
             </li>
             <li class="article-meta-item">
                 
-                    <i class="fa  fa-tags  ami-icon"></i>
+                    <i class="fa  fa-tag  ami-icon"></i>
                     
                         
-                            <a class="ami-text" href="/tags/世界杯/">世界杯</a>&nbsp;
-                        
-                    
-                        
-                            <a class="ami-text" href="/tags/足球/">足球</a>&nbsp;
+                            <a class="ami-text" href="/tags/微信小程序/">微信小程序</a>&nbsp;
                         
                     
                 
@@ -95,13 +90,13 @@
         </ul>
     </header>
     
-        <div class="article-content essay"><p>感慨万千，下班回家总结。</p>
-<h2 id="7-15_更新">7.15 更新</h2><p>04年中国亚洲杯，那时我才初一，半决赛中国vs伊朗，双方点球大战。我和老爸在大厅一起看，进一个球，我们就疯狂庆祝。悄然十年过去，我还记得老妈被吓醒，从房里跑出来生气的表情，还有我和老爸理直气壮的解释。</p>
-<a id="more"></a>
-<p>10年南非世界杯，好像是德国4:0阿根廷那场，那时我刚高考完，晚上和老爸约好半夜爬起来出去啤酒夜市看。其实这是我们第一次跑到这种地方看球，不是很适应气氛。要了些烧烤和饮料，见证了这场疯狂的比赛。</p>
-<p>14年巴西世界杯，半夜一个人爬起来看，在刚租的房子里，第二天，不，再过几个小时，就要赶去上班。比赛中，和二叔用微信交流了几句，和远方的好朋友也QQ了几句。该激动的时候还是激动。但还是压低声音，害怕吵到舍友。</p>
-<p>碎话几句，证明我也看过世界杯。四年后的又一届，我应该还会熬夜看。那时又是怎样的情景呢？</p>
-<p><img src="http://sunaiwenblogimage.qiniudn.com/2014_world_cup2405612_big-lnd.jpg" alt="happy"><br><img src="http://sunaiwenblogimage.qiniudn.com/2014_world_cup2405615_big-lnd.jpg" alt="sad"></p>
+        <div class="article-content essay"><p>这两天都在赶工公司的小程序，踩了一些坑，总结如下：</p>
+<ul>
+<li>在根目录下的 app.js 中不能 require，会导致报 Page 找不到的错误。</li>
+<li>UI上尽量不用 fixed 定位，当键盘弹出时，fixed 定位的元素不能正确布局，有点类似于当初 iOS 8 中的 Safari 不能正确布局 fixed 定位的感觉。；navbar 也不能正常显示，会显示成一片白。</li>
+<li>audio 组件接收一个 action 属性，可以通过设置这个传入的属性来控制播放、暂停、调到指定时间等操作。</li>
+<li>input 组件可以在 wxss 中直接定制样式。</li>
+</ul>
 </div>
     
 </article>
@@ -109,20 +104,11 @@
         
     <footer class="pagination pagination--post u-cf">
         
-            <a class="pagination-item pagination-item--previous" href="/2014/07/16/di-yi-ci-yong-sketch/">
-                <i class="fa fa-angle-left u-hightLightText"></i>
+        
+        
+            <a class="pagination-item pagination-item--next" href="/2016/07/10/GDG-Google-IO-2016-Redux-感受/">
                 
-                    上一篇：第一次用Sketch
-                
-            </a>
-        
-        
-        <span class="pagination-break u-hightLightText">&#9787;</span>
-        
-        
-            <a class="pagination-item pagination-item--next" href="/2014/04/25/tan-tan-angularshu-ju-bang-ding/">
-                
-                    下一篇：浅谈AngularJs的数据绑定
+                    下一篇：GDG Google IO 2016 Redux 感受
                 
                 <i class="fa fa-angle-right u-hightLightText"></i>
             </a>
