@@ -1,0 +1,808 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="昨天在微博上看到有人在At各位大大，想解答一个关于赋值运算符的问题，其实这个问题我在阅读《JavaScript 高级程序设计》的过程中也被难住了，一直没有解决，问题如下：
+
+    
+    var o = {
+        a: function(){
+            console.log(this === o);
+        }
+    }
+    o.a(); //=&amp;gt; tr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一个赋值运算问题">
+<meta property="og:url" content="http://sunaiwen.github.io/2014/12/02/shen-ru-fu-zhi-yun-suan-fu/index.html">
+<meta property="og:site_name" content="sunaiwen 个人博客">
+<meta property="og:description" content="昨天在微博上看到有人在At各位大大，想解答一个关于赋值运算符的问题，其实这个问题我在阅读《JavaScript 高级程序设计》的过程中也被难住了，一直没有解决，问题如下：
+
+    
+    var o = {
+        a: function(){
+            console.log(this === o);
+        }
+    }
+    o.a(); //=&amp;gt; tr">
+<meta property="og:updated_time" content="2016-07-28T11:24:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一个赋值运算问题">
+<meta name="twitter:description" content="昨天在微博上看到有人在At各位大大，想解答一个关于赋值运算符的问题，其实这个问题我在阅读《JavaScript 高级程序设计》的过程中也被难住了，一直没有解决，问题如下：
+
+    
+    var o = {
+        a: function(){
+            console.log(this === o);
+        }
+    }
+    o.a(); //=&amp;gt; tr">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sunaiwen.github.io/2014/12/02/shen-ru-fu-zhi-yun-suan-fu/"/>
+
+
+
+
+
+  <title> 一个赋值运算问题 | sunaiwen 个人博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">sunaiwen 个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">嘘！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://sunaiwen.github.io/2014/12/02/shen-ru-fu-zhi-yun-suan-fu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sunaiwen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sunaiwen 个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                一个赋值运算问题
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-12-02T22:48:24+08:00">
+                2014-12-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>昨天在微博上看到有人在At各位大大，想解答一个关于赋值运算符的问题，其实这个问题我在阅读《JavaScript 高级程序设计》的过程中也被难住了，一直没有解决，问题如下：</p>
+<pre>
+    <code class="language-javascript">
+    var o = {
+        a: function(){
+            console.log(this === o);
+        }
+    }
+    o.a(); //=> true
+    (o.a = o.a)(); //=> false, the value of 'this' is equal with the window object now
+    </code>
+</pre>
+
+<p>为什么第二种调用方法，<code>this</code>就变成了<code>window</code>对象了呢？</p>
+<p>在微博上看到有人提到了<code>Reference Type</code>，然后就去翻 ECMAScript <a href="http://www.ecma-international.org/ecma-262/5.1/#sec-8.7" target="_blank" rel="external">文档</a>，第一次去翻这玩意儿呢，有些紧张。结果看了好几遍才貌似看懂了，不确定是否真的看懂。</p>
+<p>但还是把我的理解写下来。</p>
+<a id="more"></a>
+<h2 id="赋值运算的背后"><a href="#赋值运算的背后" class="headerlink" title="赋值运算的背后"></a>赋值运算的背后</h2><p>按照 ECMAScript 的这个<a href="http://www.ecma-international.org/ecma-262/5.1/#sec-11.13.1" target="_blank" rel="external">文档</a>，来看，当进行一次赋值运算时会发生：</p>
+<ol>
+<li>计算等号左边的值（比如，取到某个对象的某个属性值）</li>
+<li>计算等号右边的值（这个好理解，就是求出最后的值）</li>
+<li>通过<code>GetValue</code>方法取出右边的<code>Reference</code>类型值，这时会涉及到取此值的<code>Base</code>。</li>
+<li>通过<code>PutValue</code>方法把取得的<code>Reference</code>类型值扔给等号左边，这时会确定赋值之后的<code>Base</code>。</li>
+<li>返回右边通过<code>GetValue</code>取到的值（关键）</li>
+</ol>
+<p>虽然，看到这几条，还是无法完全明白赋值运算的全部机制，但最后一条给了我们方向。</p>
+<p>可以试着去运行：</p>
+<pre>
+    <code class="language-javascript">
+      var a, b=1;
+      alert(a = b);
+    </code>
+</pre>
+
+<p>会弹窗显示<code>1</code>。</p>
+<p>再运行下：</p>
+<pre>
+  <code class="language-javascript">
+    var o = {
+      a: function(){
+        console.log(this === o);
+      }
+    }
+
+    o.a(); //=> true
+    console.log(o.a = o.a);
+  </code>
+</pre>
+
+<p>会在控制台打出：</p>
+<pre>
+  <code class="language-javascript">
+    function(){
+      console.log(this === o);
+    }
+  </code>
+</pre>
+
+
+<p>说明赋值运算的返回值就是等号右边部分经过<code>GetValue</code>方法取到的值。</p>
+<h2 id="GetValue方法"><a href="#GetValue方法" class="headerlink" title="GetValue方法"></a>GetValue方法</h2><p>接着看<a href="http://www.ecma-international.org/ecma-262/5.1/#sec-8.7.1" target="_blank" rel="external">文档</a>，得知，<code>GetValue</code>方法接受的参数是一个对象的时候，又会涉及到如何决定取到的值的<code>Base</code>的问题。其中有一条，是当取不到<code>Base</code>时，那就把<code>Environment Records</code>给当做<code>Base</code>，可以试着运行下面代码：</p>
+<pre>
+  <code class="language-javascript">
+    var mark = 'I am outside';
+    var a = {
+      mark: 'I am inside',
+      b: function(){
+        console.log(this.mark);
+      }
+    };
+    a.b(); // => I am inside
+    (a.b = a.b)(); // => I am outside
+  </code>
+</pre>
+
+<p>然后再包一层 IIFE函数，运行：</p>
+<pre>
+  <code class="language-javascript">
+    var mark = 'I am global';
+    (function(){
+      var mark = 'I am outside';
+      var a = {
+        mark: 'I am inside',
+        b: function(){
+          console.log(this.mark);
+        }
+      };
+      a.b(); // => I am inside
+      (a.b = a.b)()// => I am global
+    })()
+  </code>
+</pre>
+
+<p>发现，所谓的<code>Environment Records</code>，在浏览器里是指<code>window</code>对象。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>我知道你肯定想骂娘，但是让我全部解释，我也无力。我只能半猜半看文档。以下是我的理解：</p>
+<ol>
+<li>当运行<code>(o.a = o.a)()</code>时，<code>(o.a = o.a)</code>这里面进行的就是赋值运算，所以如上面说的，会有一个返回值。</li>
+<li>这个返回值由<code>GetValue</code>方法取得，在这里这个值应该是函数<code>function(){console.log(this === o)}</code>。</li>
+<li>返回这个值之后，会执行一次<code>PutValue</code>方法（<em>根据非严格模式下，不声明直接赋值给变量，那个变量会变成全局变量可知</em>），这个过程中，根据<code>PutValue</code>的执行原理，只能把<code>Environment Records</code>作为<code>Base</code>，所以此时<code>Base</code>就是<code>window</code>对象了。</li>
+<li>接着，就是马上执行这个函数，但在执行之前，会发生一次取值，这时又会再次需要<code>GetValue</code>，但这次取得的<code>Base</code>已经变成了<code>window</code>。所以<code>this</code>就指向了<code>window</code>对象。</li>
+</ol>
+<p>好心塞啊，睡觉去了。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/11/25/jue-dui-ding-wei-xia-width-autode-blockde-kuan-du-ji-suan/" rel="next" title="绝对定位元素 width:auto 时的宽度计算">
+                <i class="fa fa-chevron-left"></i> 绝对定位元素 width:auto 时的宽度计算
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/12/06/liao-jie-httpxie-yi/" rel="prev" title="了解 HTTP 协议">
+                了解 HTTP 协议 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="sunaiwen" />
+          <p class="site-author-name" itemprop="name">sunaiwen</p>
+           
+              <p class="site-description motion-element" itemprop="description">这里放着我的个人文章</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#赋值运算的背后"><span class="nav-number">1.</span> <span class="nav-text">赋值运算的背后</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GetValue方法"><span class="nav-number">2.</span> <span class="nav-text">GetValue方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">3.</span> <span class="nav-text">结论</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sunaiwen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

@@ -1,0 +1,876 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="今天周六，睁眼看表，已经是11点30分，马刺的比赛错过了，舍友也已不见踪影，窗外淡淡橘黄的阳光让人觉得这还是早晨。
+
+TCP &amp;amp; HTTP打开 Google，搜索「HTTP tutorial」，看了几篇文章，老是出现 TCP 这个词，然后后面跟一句，HTTP 是应用层的协议，基于 TCP 这个传输层的协议。其实这个道理我一直都听过，但是也没弄清楚过到底是什么意思。
+好了，让我们弄清楚他们">
+<meta property="og:type" content="article">
+<meta property="og:title" content="了解 HTTP 协议">
+<meta property="og:url" content="http://sunaiwen.github.io/2014/12/06/liao-jie-httpxie-yi/index.html">
+<meta property="og:site_name" content="sunaiwen 个人博客">
+<meta property="og:description" content="今天周六，睁眼看表，已经是11点30分，马刺的比赛错过了，舍友也已不见踪影，窗外淡淡橘黄的阳光让人觉得这还是早晨。
+
+TCP &amp;amp; HTTP打开 Google，搜索「HTTP tutorial」，看了几篇文章，老是出现 TCP 这个词，然后后面跟一句，HTTP 是应用层的协议，基于 TCP 这个传输层的协议。其实这个道理我一直都听过，但是也没弄清楚过到底是什么意思。
+好了，让我们弄清楚他们">
+<meta property="og:updated_time" content="2015-03-26T03:20:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="了解 HTTP 协议">
+<meta name="twitter:description" content="今天周六，睁眼看表，已经是11点30分，马刺的比赛错过了，舍友也已不见踪影，窗外淡淡橘黄的阳光让人觉得这还是早晨。
+
+TCP &amp;amp; HTTP打开 Google，搜索「HTTP tutorial」，看了几篇文章，老是出现 TCP 这个词，然后后面跟一句，HTTP 是应用层的协议，基于 TCP 这个传输层的协议。其实这个道理我一直都听过，但是也没弄清楚过到底是什么意思。
+好了，让我们弄清楚他们">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sunaiwen.github.io/2014/12/06/liao-jie-httpxie-yi/"/>
+
+
+
+
+
+  <title> 了解 HTTP 协议 | sunaiwen 个人博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">sunaiwen 个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">嘘！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://sunaiwen.github.io/2014/12/06/liao-jie-httpxie-yi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sunaiwen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sunaiwen 个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                了解 HTTP 协议
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-12-06T20:23:02+08:00">
+                2014-12-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Web-基础/" itemprop="url" rel="index">
+                    <span itemprop="name">Web 基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>今天周六，睁眼看表，已经是11点30分，马刺的比赛错过了，舍友也已不见踪影，窗外淡淡橘黄的阳光让人觉得这还是早晨。</p>
+</blockquote>
+<h2 id="TCP-amp-HTTP"><a href="#TCP-amp-HTTP" class="headerlink" title="TCP &amp; HTTP"></a>TCP &amp; HTTP</h2><p>打开 Google，搜索「HTTP tutorial」，看了几篇文章，老是出现 TCP 这个词，然后后面跟一句，HTTP 是应用层的协议，基于 TCP 这个传输层的协议。其实这个道理我一直都听过，但是也没弄清楚过到底是什么意思。</p>
+<p>好了，让我们弄清楚他们。首先，什么「应用层」，什么「传输层」，先当他们是个名词吧。不要在心里默念「这特么到底是什么意思」，就只当是两个名词，就好像「苹果」和「香蕉」一样。</p>
+<a id="more"></a>
+<p>然后，先让我们看看浏览器和服务器建立一次 HTTP 协议时，背后的动作是什么：</p>
+<ol>
+<li>告诉一声服务器，我要和你对接</li>
+<li>服务器听到了，好，我知道了</li>
+<li><strong>通道</strong>建立</li>
+<li>浏览器发送 HTTP 请求</li>
+<li>服务器分析接到的请求后，发送 HTTP 回应</li>
+<li>服务器的回应传输完毕后，通道断开</li>
+</ol>
+<p>再往大里分，就是：</p>
+<ol>
+<li>建立通道</li>
+<li>传输数据</li>
+</ol>
+<p>建立通道，就是建立数据传输的通道。传输数据，就是发送请求，发送回应，这些都是在通道上传输的数据。</p>
+<p>那前面说的 HTTP 这个应用层协议是基于 TCP 这个传输层协议是什么意思呢？其实，「建立通道」就是 TCP 协议干的活，建立传输通道。然后再此通道上，浏览器可以发送请求，服务器收到后，根据情况，响应请求，这种「请求」和「响应」的规则和传输数据的格式和内容根据的规范，就是 HTTP 协议。HTTP 协议的数据传输依赖于 TCP 协议来建立传输通道，这就是 HTTP 是基于 TCP 的。</p>
+<h2 id="HTTP-协议的具体内容"><a href="#HTTP-协议的具体内容" class="headerlink" title="HTTP 协议的具体内容"></a>HTTP 协议的具体内容</h2><p>如上所说，HTTP 协议其实就是：</p>
+<ol>
+<li>浏览器发送一个请求到服务器</li>
+<li>服务器分析了请求后，生成一个响应，发回给浏览器</li>
+<li>响应的数据被浏览器接收完毕后，断开链接</li>
+</ol>
+<p>然后在分别看看<strong>请求</strong>和<strong>响应</strong>，让我们专业一点，改叫 <strong>request</strong> 和 <strong>response</strong>。</p>
+<h3 id="一个-request-或者-response-的模样"><a href="#一个-request-或者-response-的模样" class="headerlink" title="一个 request 或者 response 的模样"></a>一个 request 或者 response 的模样</h3><p>先看看一个完整的 request 大概长什么样子：</p>
+<pre class="language-markup">
+  <code>
+    POST / HTTP/1.1
+Host: www.zhihu.com
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8,en;q=0.6,ja;q=0.4,zh-TW;q=0.2
+Cookie: xxxxxxxxxxx
+
+name=testusername&password=123456
+  </code>
+</pre>
+
+<p>可以看到  <code>name=testusername&amp;password=123456</code> 这一行和上面那一大块有之间有一行空行。这行空行的上方就是「request 的 header」，下半部分就是「request 的 body」。比如，表单数据、上传文件的数据，就是放在这里，然后发送到服务器。</p>
+<p>response 的大体结构也是如此，上面是「header」，下面就是从服务器发回来的数据所在的地方「body」。</p>
+<p>然后再往细里看。</p>
+<h2 id="header"><a href="#header" class="headerlink" title="header"></a>header</h2><p>request 和 response 的 header 结构一致，但是内容是不同的。</p>
+<p>先了解header分为两个部分：</p>
+<ol>
+<li>start-line，可以翻译为，起始行</li>
+<li>header-content</li>
+</ol>
+<p>先别骂娘，深呼吸。</p>
+<h4 id="–-start-line-–"><a href="#–-start-line-–" class="headerlink" title="– start-line –"></a>– start-line –</h4><p>上面说过，request 和 response 的 header 结构一致，但是内容不同。start-line 就是两者都有的结构，但是里面内容不同。</p>
+<p>request 的 header 的 start-line 放着的是这三种信息：</p>
+<ol>
+<li>请求方法</li>
+<li>请求的 URL</li>
+<li>使用的协议版本</li>
+</ol>
+<p>一个示例：<code>GET / HTTP/1.1</code><br>解释下，就是，使用了<code>GET</code>方法，URL 是 <code>/</code>，协议版本是 <code>HTTP</code>的1.1版（<code>HTTP/1.1</code> 这种写法是规定的，也就是不能写成 <code>HTTP - 1.1</code>）。</p>
+<p>response 的header 的 start-line 放着的是这三种信息：</p>
+<ol>
+<li>使用的协议版本</li>
+<li>状态码</li>
+<li>响应描述</li>
+</ol>
+<p>一个示例：<code>HTTP/1.1 200 OK</code><br>解释下，就是，使用了1.1版本的 HTTP 协议，状态码是200（请求响应成功，并返回），响应描述当然就是 OK 了。</p>
+<h4 id="–-header-content-–"><a href="#–-header-content-–" class="headerlink" title="– header-content –"></a>– header-content –</h4><p>header-content 是由多组这种键值对组成：</p>
+<pre class="language-markup">
+  <code>
+    Server: zhihu_nginx
+Date: Sat, 06 Dec 2014 14:30:56 GMT
+Content-Type: text/html; charset=UTF-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Vary: Accept-Encoding
+Content-Encoding: gzip
+  </code>
+</pre>
+
+<p>键值对的 key 和 value 可以是哪些都是规定的。这些键值对内部也分了类，分别是，general、entity、request、response。其实很好懂，一些键值对是请求和响应都可以用的，一些是描述传输的数据专用、一些是请求专用，一些是响应专用。</p>
+<p>这三种，下面分别列出来，但是也别看傻了，这没什么好看的，只是义务的列出来而已。要真正了解，还是到以后实践的时候，再详细看文档。好了，看看：</p>
+<h5 id="通用"><a href="#通用" class="headerlink" title="通用"></a>通用</h5><pre class="language-markup">
+  <code>
+    general-header = Cache-Control
+               | Connection
+               | Date
+               | Pragma
+               | Trailer
+               | Transfer-Encoding
+               | Upgrade
+               | Via
+               | Warning
+  </code>
+</pre>
+
+<h5 id="描述传输的数据专用"><a href="#描述传输的数据专用" class="headerlink" title="描述传输的数据专用"></a>描述传输的数据专用</h5><pre class="language-markup">
+  <code>
+    entity-header  = Allow
+               | Content-Encoding
+               | Content-Language
+               | Content-Length
+               | Content-Location
+               | Content-MD5
+               | Content-Range
+               | Content-Type
+               | Expires
+               | Last-Modified
+  </code>
+</pre>
+
+<h5 id="request-专用"><a href="#request-专用" class="headerlink" title="request 专用"></a>request 专用</h5><pre class="language-markup">
+  <code>
+    request-header = Accept
+               | Accept-Charset
+               | Accept-Encoding
+               | Accept-Language
+               | Authorization
+               | Expect
+               | From
+               | Host
+               | If-Match
+               | If-Modified-Since
+               | If-None-Match
+               | If-Range
+               | If-Unmodified-Since
+               | Max-Forwards
+               | Proxy-Authorization
+               | Range
+               | Referer
+               | TE
+               | User-Agent
+  </code>
+</pre>
+
+<h5 id="response-专用"><a href="#response-专用" class="headerlink" title="response 专用"></a>response 专用</h5><pre class="language-markup">
+  <code>
+    response-header = Accept-Ranges
+                | Age
+                | ETag
+                | Location
+                | Proxy-Authenticate
+                | Retry-After
+                | Server
+                | Vary
+                | WWW-Authenticate
+  </code>
+</pre>
+
+<h4 id="–-请求方法-–"><a href="#–-请求方法-–" class="headerlink" title="– 请求方法 –"></a>– 请求方法 –</h4><p>你应该注意到了，在 request-header 的 start-line 的第一部分会写着请求方法，这些方法用来告诉服务器，浏览器希望服务器进行什么样的操作。然后细看每个方法都代表着浏览器想让服务器进行什么样的操作：</p>
+<ul>
+<li>GET：从服务器获取资源</li>
+<li>POST：在服务器新添一个资源（会在请求的 body 里附带新添资源所需数据）</li>
+<li>PUT：升级服务器上的一个已有资源</li>
+<li>DELETE：删除服务器上的一个资源</li>
+<li>HEAD：从服务器获取一个资源的信息，而不是资源。比如，获取资源的最后修改时间和资源的格式等。</li>
+<li><p>TRACE：这个我不太清楚，照搬别人的解释来（英文）</p>
+<blockquote>
+<p>used to retrieve the hops that a request takes to round trip from the server. Each intermediate proxy or gateway would inject its IP or DNS name into the Via header field. This can be used for diagnostic purposes.</p>
+</blockquote>
+<ul>
+<li>OPTIONS: 用来测试服务器的支持能力和兼容性（不太了解具体的操作场景），也照搬别人的解释过来（英文）<blockquote>
+<p>used to retrieve the server capabilities. On the client-side, it can be used to modify the request based on what the server can support.</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>其实没什么好总结，无非是讲了：</p>
+<ul>
+<li>HTTP 协议的作用：用于根据规定的请求和响应规范，传输数据。</li>
+<li>HTTP 协议的结构：header + 一行空行 + body</li>
+<li>header 的结构：start-line + header 的 body</li>
+<li>header body 里面可以设置的内容的分类：通用、描述 body 专用、请求专用、响应专用</li>
+<li>请求的方法：GET、POST、PUT、DELETE、HEAD、TRACE、OPTIONS</li>
+</ul>
+<p>这篇比较简单。但目的就是，了解 HTTP 协议到底是干嘛的，大致运行机制是啥样的，内部细节大致啥样的。</p>
+<p>想更全面的了解，推荐 tuts+ 的两篇文章：</p>
+<ol>
+<li><a href="http://code.tutsplus.com/tutorials/http-the-protocol-every-web-developer-must-know-part-1--net-31177" target="_blank" rel="external">HTTP: The Protocol Every Web Developer Must Know - Part 1</a></li>
+<li><a href="http://code.tutsplus.com/tutorials/http-the-protocol-every-web-developer-must-know-part-2--net-31155" target="_blank" rel="external">HTTP: The Protocol Every Web Developer Must Know - Part 2</a></li>
+</ol>
+<p>最后，又深深的感受到了自己多么业余。Be proffessional, be proffessional…</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/12/02/shen-ru-fu-zhi-yun-suan-fu/" rel="next" title="一个赋值运算问题">
+                <i class="fa fa-chevron-left"></i> 一个赋值运算问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/01/05/jian-dan-ji-lu-xia-2014/" rel="prev" title="简单记录下 2014">
+                简单记录下 2014 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="sunaiwen" />
+          <p class="site-author-name" itemprop="name">sunaiwen</p>
+           
+              <p class="site-description motion-element" itemprop="description">这里放着我的个人文章</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-amp-HTTP"><span class="nav-number">1.</span> <span class="nav-text">TCP & HTTP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-协议的具体内容"><span class="nav-number">2.</span> <span class="nav-text">HTTP 协议的具体内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一个-request-或者-response-的模样"><span class="nav-number">2.1.</span> <span class="nav-text">一个 request 或者 response 的模样</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#header"><span class="nav-number">3.</span> <span class="nav-text">header</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#–-start-line-–"><span class="nav-number">3.0.1.</span> <span class="nav-text">– start-line –</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#–-header-content-–"><span class="nav-number">3.0.2.</span> <span class="nav-text">– header-content –</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#通用"><span class="nav-number">3.0.2.1.</span> <span class="nav-text">通用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#描述传输的数据专用"><span class="nav-number">3.0.2.2.</span> <span class="nav-text">描述传输的数据专用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#request-专用"><span class="nav-number">3.0.2.3.</span> <span class="nav-text">request 专用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#response-专用"><span class="nav-number">3.0.2.4.</span> <span class="nav-text">response 专用</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#–-请求方法-–"><span class="nav-number">3.0.3.</span> <span class="nav-text">– 请求方法 –</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sunaiwen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

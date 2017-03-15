@@ -1,0 +1,706 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="JavaScript里的继承是基于「原型机制」的。让我们一步一步来，从JavaScript的「对象」说起吧。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript里的继承机制">
+<meta property="og:url" content="http://sunaiwen.github.io/2014/09/14/javascriptde-dui-xiang/index.html">
+<meta property="og:site_name" content="sunaiwen 个人博客">
+<meta property="og:description" content="JavaScript里的继承是基于「原型机制」的。让我们一步一步来，从JavaScript的「对象」说起吧。">
+<meta property="og:updated_time" content="2015-03-26T03:20:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript里的继承机制">
+<meta name="twitter:description" content="JavaScript里的继承是基于「原型机制」的。让我们一步一步来，从JavaScript的「对象」说起吧。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sunaiwen.github.io/2014/09/14/javascriptde-dui-xiang/"/>
+
+
+
+
+
+  <title> JavaScript里的继承机制 | sunaiwen 个人博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">sunaiwen 个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">嘘！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://sunaiwen.github.io/2014/09/14/javascriptde-dui-xiang/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sunaiwen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sunaiwen 个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JavaScript里的继承机制
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-09-14T22:04:45+08:00">
+                2014-09-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>JavaScript里的继承是基于「原型机制」的。让我们一步一步来，从JavaScript的「对象」说起吧。</p>
+<a id="more"></a>
+<h2 id="new-操作符"><a href="#new-操作符" class="headerlink" title="new 操作符"></a>new 操作符</h2><p>对<code>new</code>操作符，StackOverflow上这个<a href="http://stackoverflow.com/questions/1646698/what-is-the-new-keyword-in-javascript" target="_blank" rel="external">问题</a>解答得已经很好了（其实看了这个问题的回答，也基本不用看这篇文章了ಥ_ಥ）。但我还是要写一遍的：</p>
+<ol>
+<li>生成一个原始的对象，这个对象是JavaScript里最原始的<code>Object</code>类的实例。如果还不了解JS里的类不要紧，说得直白点就是，<code>new</code>生成的这个对象的出厂配置在JS里是最基本的。既然是原始的，暂且称为<code>o</code>。</li>
+<li>把对象<code>o</code>的内部属性<code>[[prototype]]</code>指向构造函数的<code>prototype</code>属性指向的对象。（这个稍后解释）</li>
+<li>把构造函数内的<code>this</code>指向这个<code>o</code>对象。</li>
+<li>执行构造函数内的语句，把该给<code>o</code>对象配上的属性都配上。</li>
+<li>返回<code>o</code>。</li>
+</ol>
+<p>所以，用了<code>new</code>操作符的函数是默认返回<code>this</code>指向的对象<code>o</code>的。但是注意，这里说的只是<strong>默认</strong>，不是绝对。当在构造函数中有自定义的返回值时，就会返回<code>return</code>指定返回的值，而不是上面提到的对象<code>o</code>。</p>
+<p>至此，完成了一个对象的从无到有，到装配出厂。</p>
+<h2 id="prototype们"><a href="#prototype们" class="headerlink" title="prototype们"></a>prototype们</h2><p>上方提到的[[prototype]]又是什么呢？</p>
+<p>在JS中，每个函数里都会自带一个<code>prototype</code>属性，指向<code>原型对象</code>。可能现在你未必理解<code>原型对象</code>是什么，那就暂时记住这个名字吧。还要记住的是，这个是<strong>函数的prototype属性</strong>。不明白没关系，先记住。</p>
+<p>然后就说到了上方提到的经过构造函数生产出来的对象<code>o</code>。上面第二点提到了又一个<code>prototype</code>，不对，是<code>[[prototype]]</code>。看出了不同之处了吗？就是后者比前者多了两层的方括号。这表示<code>[[prototype]]</code>是内部属性。内部属性一般是不可以直接访问的。</p>
+<p>那上面提到的函数自带的<code>prototype</code>属性和构造函数生产出来的对象里的<code>[[prototype]]</code>有什么关联呢？上面说了，它们两指向的是同一个对象。指向的这个对象是什么？就是<code>原型对象</code>了。</p>
+<p>先记住<code>原型对象</code>这个概念。</p>
+<h2 id="属性访问机制"><a href="#属性访问机制" class="headerlink" title="属性访问机制"></a>属性访问机制</h2><p>在JS中，对属性的访问是从下往上的。比如，在<code>son</code>这个儿子对象里找<code>money</code>属性，发现值为<code>undefined</code>，也就是这个属性暂时没值。这时，就会接着网上找，去哪儿找？去上方提到的<code>原型对象</code>里找。如果在这个原型对象里没找到，那接着再到这个原型对象的原型对象里找。如果找到祖坟里，还没找到，那就只有返回<code>undefined</code>了。</p>
+<p>说到祖宗，你知道’son’对象该叫它的原型对象什么吗？叫爹。</p>
+<p>这就是JS里主要实现继承主要依靠的机制。到这里就很明白了，原型对象其实就是构造函数生成的对象<code>o</code>的大后方。为什么当年<code>我爹是李刚</code>这句话这么牛气呢？为什么有个好爹就能挺牛气的呢？其实道理都是一样的。儿子什么东西缺了，就跑到在身后支持着的爹找。</p>
+<p>所以，对象<code>o</code>有的，原型对象不一定有。比如，儿子在外面娶了一个媳妇儿，那这就是儿子的专属属性了。但是如果儿子缺钱了，那这时爹的钱就是儿子的钱了（这纯属是为了通俗易懂，不代表个人对社会的看法！）。</p>
+<h2 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h2><p>上面提到的原型对象也是对象，所以它也带着<code>[[ptototype]]</code>属性。如果将此原型对象的<code>[[prototype]]</code>指向另外一个对象<code>ooo</code>呢？根据上面提到的属性访问机制，属性<code>[[prototype]]</code>指向此原型对象的对象<code>o</code>就可以在搜索属性值时，一直搜索到<code>ooo</code>对象上了。如此的一个指向另外一个指向另外一个指向另外一个……看啊，一条链条就产生了。下面的对象都可以往上搜索属性了。他们的原型对象有的，其实也就可以说成他们有的了。</p>
+<p>而因为上面提到的三条，催生了很多为了能更方便快速的继承一个原型对象的方案。</p>
+<p>但是今晚先到这儿，这些方案下次再谈。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/09/09/sha-si-ming-ri-fu-ming-ri/" rel="next" title="明日复明日">
+                <i class="fa fa-chevron-left"></i> 明日复明日
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/09/17/cssde-3dbian-huan/" rel="prev" title="transform的3d变幻">
+                transform的3d变幻 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="sunaiwen" />
+          <p class="site-author-name" itemprop="name">sunaiwen</p>
+           
+              <p class="site-description motion-element" itemprop="description">这里放着我的个人文章</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#new-操作符"><span class="nav-number">1.</span> <span class="nav-text">new 操作符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#prototype们"><span class="nav-number">2.</span> <span class="nav-text">prototype们</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#属性访问机制"><span class="nav-number">3.</span> <span class="nav-text">属性访问机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原型链"><span class="nav-number">4.</span> <span class="nav-text">原型链</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sunaiwen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

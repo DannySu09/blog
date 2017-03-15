@@ -1,0 +1,868 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="为何有这个困惑今天看browserify的文档，看到exports的两种写法，不禁起了困惑。
+其文档是这么说的，当只需要导出单独的一样东西，可以这么写：
+
+    
+        module.exports = function(){}; // 可以是一个函数或者其他东西。
+    
+
+
+但是，这样写绝对不可以：
+
+    
+        exports = function(){}; //">
+<meta property="og:type" content="article">
+<meta property="og:title" content="当把引用类型当做参数传递给函数">
+<meta property="og:url" content="http://sunaiwen.github.io/2014/10/10/dang-ba-yin-yong-lei-xing-dang-zuo-can-shu-chuan-di-gei-han-shu/index.html">
+<meta property="og:site_name" content="sunaiwen 个人博客">
+<meta property="og:description" content="为何有这个困惑今天看browserify的文档，看到exports的两种写法，不禁起了困惑。
+其文档是这么说的，当只需要导出单独的一样东西，可以这么写：
+
+    
+        module.exports = function(){}; // 可以是一个函数或者其他东西。
+    
+
+
+但是，这样写绝对不可以：
+
+    
+        exports = function(){}; //">
+<meta property="og:updated_time" content="2015-04-01T06:15:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="当把引用类型当做参数传递给函数">
+<meta name="twitter:description" content="为何有这个困惑今天看browserify的文档，看到exports的两种写法，不禁起了困惑。
+其文档是这么说的，当只需要导出单独的一样东西，可以这么写：
+
+    
+        module.exports = function(){}; // 可以是一个函数或者其他东西。
+    
+
+
+但是，这样写绝对不可以：
+
+    
+        exports = function(){}; //">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sunaiwen.github.io/2014/10/10/dang-ba-yin-yong-lei-xing-dang-zuo-can-shu-chuan-di-gei-han-shu/"/>
+
+
+
+
+
+  <title> 当把引用类型当做参数传递给函数 | sunaiwen 个人博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">sunaiwen 个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">嘘！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://sunaiwen.github.io/2014/10/10/dang-ba-yin-yong-lei-xing-dang-zuo-can-shu-chuan-di-gei-han-shu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sunaiwen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sunaiwen 个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                当把引用类型当做参数传递给函数
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-10-10T23:33:11+08:00">
+                2014-10-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="为何有这个困惑"><a href="#为何有这个困惑" class="headerlink" title="为何有这个困惑"></a>为何有这个困惑</h2><p>今天看<code>browserify</code>的文档，看到exports的两种写法，不禁起了困惑。</p>
+<p>其文档是这么说的，当只需要导出单独的一样东西，可以这么写：</p>
+<pre class="language-javascript">
+    <code>
+        module.exports = function(){}; // 可以是一个函数或者其他东西。
+    </code>
+</pre>
+
+<p>但是，这样写绝对不可以：</p>
+<pre class="language-javascript">
+    <code>
+        exports = function(){}; // 可以是一个函数或者其他东西。
+    </code>
+</pre>
+<a id="more"></a>
+我就想，为什么呢？文档的解释是：
+
+<pre class="language-javascript">
+    <code>
+    var module = {
+      exports: {}
+    };
+
+    // If you require a module, it's basically wrapped in a function
+    (function(module, exports) {
+      exports = function (n) { return n * 1000 };
+    }(module, module.exports))
+
+    console.log(module.exports); // it's still an empty object :(
+    </code>
+</pre>
+
+<p>看啊，明明已经把<code>module.exports</code>传递给函数了。这时函数参数中的<code>exports</code>不就应该装着那个空对象吗？然后，函数也是引用类型，把那个函数赋给参数<code>exports</code>不就是相当于是</p>
+<pre class="language-javascript">
+    <code>
+    module.exports = function (n) { return n * 1000 };
+    </code>
+</pre>
+
+<h2 id="吗？"><a href="#吗？" class="headerlink" title="吗？"></a>吗？</h2><h2 id="解惑"><a href="#解惑" class="headerlink" title="解惑"></a>解惑</h2><p>有疑问就翻书啊。有疑问，还有书！这就是财富啊，这就是迎娶白富美的资本啊。然后翻开 <em>《JavaScript高级程序设计》</em> , Zakas说了，<strong>ECMAScript中所有函数的参数都是按值传递的</strong>。</p>
+<p>之后，需要明白的是，把函数外部的值，传递给函数内部的参数，就和把一个变量的值复制到另外一个变量上是一样的。</p>
+<p>再然后，需要明白，当把一个对象赋值给一个变量后，那个变量里装的是啥？是指向那个对象的指针。</p>
+<p>所以，综上，把一个对象或者其他的引用类型传递给一个函数时，其实就是把这个对象的指针值复制一份，然后赋值给函数内部的参数。</p>
+<p>说到这里，你明白了吗？</p>
+<p>明白个毛毛！这一堆和「ECMAScript中所有函数的参数都是按值传递的」这句话有毛线关系呢？</p>
+<p>网上已经有很多文章都讨论过这个问题了，看到很多人都在说大概是这个意思的一个例子：</p>
+<pre class="language-javascript">
+    <code>
+    var man = {
+        sex: 'male'
+    };
+
+    (function(human){
+        console.log(human.sex); // => male
+        human = {
+            sex: 'female'
+        };
+        console.log(human.sex); // => female
+    })(man);
+
+    console.log(man.sex) // => male
+    </code>
+</pre>
+
+<p>然后那些文章的作者们就说，喏，这就是为什么说函数的参数都是按值传递……</p>
+<p>作为一名野生程序员，感觉很无助，还是不明白。</p>
+<p>好，梳理一下自己的疑问：什么是按值传递？什么是按地址传递？</p>
+<p>说白了，就是根本不清楚按地址传递长什么样子，又怎能明白按值传递是什么样子呢？</p>
+<p>那现在，让我们假设如果「传递引用类型是按地址传递」，上面这段代码会是什么结果。</p>
+<pre class="language-javascript">
+    <code>
+    var man = {
+        sex: 'male',
+        from: 'outside'
+    };
+
+    (function(human){
+        console.log(human.sex); // => male
+
+        human = {
+            sex: 'female',
+            from: 'inside'
+        };
+
+    console.log(human.sex); // => female
+    })(man);
+
+    console.log(man.sex) // => female
+    console.log(man.from) // => inside
+    </code>
+</pre>
+
+<p>给对象加上一个<code>from</code>属性，便于直观。可以看到，如果是按地址传递，那变量<code>man</code>中装的已经是<code>{sex: &#39;female, from: &#39;inside&#39;&#39;}</code>这个对象的指针了，暂且称之为<strong>female对象</strong></p>
+<p>那之前那对象<code>{sex: &#39;male, fron: &#39;outside&#39;&#39;}</code>跑哪儿去了？在堆内存中，原本此对象的内存空间被新的对象，也就是上面所说的<strong>female</strong>对象给占了。这个对象就被消灭了，不存在了。</p>
+<p>然后，再回想一下指针的含义是什么？不就是指向某块内存空间的地址值吗？那地址值不变，指向的内存空间不变。但是，内存空间上的对象变了，那指针是不是就指向了新的对象了呢？</p>
+<p>在C和Java这些语言中，确实就是如此的，把一个引用类型传给函数，然后在函数中，把指针指向的这个对象干掉，在那片土地（内存空间）上，再换上一个新的对象，于是，所有存有相同地址值的指针所指向的对象就变成新的对象了。</p>
+<p>但，在JavaScript中不行。Zakas还说了，<strong>JavaScript不允许直接操作对象的内存空间</strong>。那我们平时操作对象都是怎么操作的？只是操作对象本身而已，无法接触到对象的内存空间。</p>
+<p>像上面所说的，当把一个对象赋值给一个变量后，那个变量里存的是什么？指针？刚才是说的指针，但是，又如刚才对按地址传递的讨论，指针是存着指向内存空间的地址值的。但是JavaScript无法直接操作内存空间，所以还叫做指针明显不合适了。书中已经帮我们想好了，叫做<strong>引用</strong>。所以，变量里存的是对那个对象的引用。</p>
+<p>我们可以通过这个引用去操作对象，为对象添加新属性，新方法。当把一个存有某个对象的引用的变量，赋值给另外一个变量时发生了什么？复制了一份引用的值。</p>
+<p>所以，把一个存有某个对象的引用的值的变量传递给一个函数，函数内部的参数存着的也只是一份引用值而已。</p>
+<p>再回顾一下刚才那段代码：</p>
+<pre class="language-javascript">
+    <code>
+    var man = {
+        sex: 'male'
+    };
+
+    (function(human){
+        console.log(human.sex); // => male
+        human = {
+            sex: 'female'
+        };
+        console.log(human.sex); // => female
+    })(man);
+
+    console.log(man.sex) // => male
+    </code>
+</pre>
+
+<p><code>man</code>中至始至终存着的都是对<code>{sex: &#39;male&#39;}</code>这个对象的引用，当在匿名函数中运行这一句代码：</p>
+<pre class="language-javascript">
+    <code>
+        human = {
+            sex: 'female',
+            from: 'inside'
+        };
+    </code>
+</pre>
+只不过是把一个新对象的引用传递给了函数内部的这个参数变量而已。而`man`里存有的依旧是那个对象的引用，没有改变。
+
+说来说去，其实对存有基本类型的变量的复制和对存有引用类型的变量的复制是一样的，前者是复制一份基本值，赋给另外一个变量。后者是复制一份引用值，赋给另外一个变量。
+
+不同的就是，前者的值占着两个独立空间，互不干扰。后者的引用值其实也是占着两个独立空间，互不干扰，但是相同的引用值都引向同一个对象。所以操作那个对象后，对象的变化通过所有引用都能看见。
+
+好了，再看看关于`exports`写法的疑问，应该明白了：
+<pre class="language-javascript">
+    <code>
+    var module = {
+      exports: {}
+    };
+
+    // If you require a module, it's basically wrapped in a function
+    (function(module, exports) {
+      exports = function (n) { return n * 1000 };
+    }(module, module.exports))
+
+    console.log(module.exports); // it's still an empty object :(
+    </code>
+</pre>
+
+
+
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/10/05/touxijilu-of-theconfession/" rel="next" title="the confession">
+                <i class="fa fa-chevron-left"></i> the confession
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/10/13/the-stacking-contextyao-zhu-yi-de-yi-ge-di-fang/" rel="prev" title="由transform不为none产生的stacking context">
+                由transform不为none产生的stacking context <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="sunaiwen" />
+          <p class="site-author-name" itemprop="name">sunaiwen</p>
+           
+              <p class="site-description motion-element" itemprop="description">这里放着我的个人文章</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为何有这个困惑"><span class="nav-number">1.</span> <span class="nav-text">为何有这个困惑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#吗？"><span class="nav-number">2.</span> <span class="nav-text">吗？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解惑"><span class="nav-number">3.</span> <span class="nav-text">解惑</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sunaiwen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
