@@ -250,6 +250,160 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://sunaiwen.github.io/2014/10/13/the-stacking-contextyao-zhu-yi-de-yi-ge-di-fang/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sunaiwen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sunaiwen 个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/10/13/the-stacking-contextyao-zhu-yi-de-yi-ge-di-fang/" itemprop="url">
+                  由transform不为none产生的stacking context
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-10-13T22:02:54+08:00">
+                2014-10-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CSS/" itemprop="url" rel="index">
+                    <span itemprop="name">CSS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>今天同事碰到了一个奇怪的问题，使用了<code>position: fixed</code>的元素居然不以<code>viewport</code>为 containing block，而是以它的父元素为 containing block。原因是因为在设置了<code>fixed</code>的元素的父元素上，用了<code>transform: translate3d()</code>;</p>
+<p>后来Google了一番，看到 MDN 上列出的几个会生成 stacking context 的原因，其中就有它。我记得以前在<a href="http://www.qianduan.net/">前端观察</a>看过这篇<a href="http://www.qianduan.net/that-thing-on-the-z-index.html">关于z-index的那些事儿</a>，其中列出了几个会形成 stacking context 的条件：</p>
+<ul>
+<li>当一个元素是文档的根元素时（<html>元素）</li>
+<li>当一个元素有一个position值而不是static，有一个z-index值而不是auto</li>
+<li>当一个元素有一个opacity值小于1</li>
+</ul>
+<p>当初就是看了这篇文章，才对 stacking context 有了初步了解。不过现在看来，它还少一个条件：</p>
+<ul>
+<li><strong>当一个元素有一个<code>transform</code>属性，且值不为<code>none</code>时</strong></li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2014/10/13/the-stacking-contextyao-zhu-yi-de-yi-ge-di-fang/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://sunaiwen.github.io/2014/10/10/dang-ba-yin-yong-lei-xing-dang-zuo-can-shu-chuan-di-gei-han-shu/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -839,167 +993,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://sunaiwen.github.io/2014/09/23/zeptozhong-dot-fn-dot-eachde-yi-ge-yao-zhu-yi-de-di-fang/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="sunaiwen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="sunaiwen 个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/09/23/zeptozhong-dot-fn-dot-eachde-yi-ge-yao-zhu-yi-de-di-fang/" itemprop="url">
-                  Zepto中$.fn.each的一个要注意的地方
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-09-23T23:01:41+08:00">
-                2014-09-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><strong>2014-09-25补充：</strong><br>Zepto的文档中其实是对<code>return false</code>有说明的：</p>
-<blockquote>
-<p>Iterate through every element of the collection. Inside the iterator function, this keyword refers to the current item (also passed as the second argument to the function). <strong>If the iterator function returns false, iteration stops.</strong></p>
-</blockquote>
-<p>是我疏忽了。不过可以把本文当做<code>$.fn.each</code>方法实现的探讨吧。</p>
-<p><strong>原文：</strong></p>
-<p>前几天在用Zepto做一个项目，同事写了一个小插件，代码的作用是找到某个父元素下的所有<code>img</code>标签，然后将其中<code>lazyload</code>属性的值赋给<code>src</code>属性，达到控制加载图片的目的。</p>
-<p>首先想到的，当然是这样实现：</p>
-<pre class="language-javascript">
-    <code>
-        $('img').each(function(idx, el){
-            if(!$(el).attr('lazyload')) return false;
-            // do something here
-        });
-    </code>
-</pre>
-
-<p>看代码第二行的<code>return false</code>，这行会导致执行流跳出each循环。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2014/09/23/zeptozhong-dot-fn-dot-eachde-yi-ge-yao-zhu-yi-de-di-fang/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1049,7 +1042,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1067,7 +1060,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

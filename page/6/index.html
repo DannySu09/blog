@@ -250,6 +250,167 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://sunaiwen.github.io/2014/09/23/zeptozhong-dot-fn-dot-eachde-yi-ge-yao-zhu-yi-de-di-fang/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sunaiwen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sunaiwen 个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/09/23/zeptozhong-dot-fn-dot-eachde-yi-ge-yao-zhu-yi-de-di-fang/" itemprop="url">
+                  Zepto中$.fn.each的一个要注意的地方
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-09-23T23:01:41+08:00">
+                2014-09-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><strong>2014-09-25补充：</strong><br>Zepto的文档中其实是对<code>return false</code>有说明的：</p>
+<blockquote>
+<p>Iterate through every element of the collection. Inside the iterator function, this keyword refers to the current item (also passed as the second argument to the function). <strong>If the iterator function returns false, iteration stops.</strong></p>
+</blockquote>
+<p>是我疏忽了。不过可以把本文当做<code>$.fn.each</code>方法实现的探讨吧。</p>
+<p><strong>原文：</strong></p>
+<p>前几天在用Zepto做一个项目，同事写了一个小插件，代码的作用是找到某个父元素下的所有<code>img</code>标签，然后将其中<code>lazyload</code>属性的值赋给<code>src</code>属性，达到控制加载图片的目的。</p>
+<p>首先想到的，当然是这样实现：</p>
+<pre class="language-javascript">
+    <code>
+        $('img').each(function(idx, el){
+            if(!$(el).attr('lazyload')) return false;
+            // do something here
+        });
+    </code>
+</pre>
+
+<p>看代码第二行的<code>return false</code>，这行会导致执行流跳出each循环。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2014/09/23/zeptozhong-dot-fn-dot-eachde-yi-ge-yao-zhu-yi-de-di-fang/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://sunaiwen.github.io/2014/09/17/cssde-3dbian-huan/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -830,150 +991,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://sunaiwen.github.io/2014/08/31/the-firmtou-xi-ji-lu/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="sunaiwen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="sunaiwen 个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/08/31/the-firmtou-xi-ji-lu/" itemprop="url">
-                  The Firm
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-08-31T20:23:47+08:00">
-                2014-08-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/英语透析阅读/" itemprop="url" rel="index">
-                    <span itemprop="name">英语透析阅读</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>书名： <em>the firm</em><br>作者： John Grisham<br>篇幅：512页，单词量未计算<br>用时：一个半月，中间有中断<br>词典：Meizu MX上用<strong>欧路词典</strong><br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2014/08/31/the-firmtou-xi-ji-lu/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1023,7 +1040,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1041,7 +1058,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
