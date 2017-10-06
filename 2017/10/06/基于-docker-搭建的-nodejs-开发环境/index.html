@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> docker 的 nodejs 开发环境折腾记录 · sunaiwen 个人博客</title><meta name="description" content="docker 的 nodejs 开发环境折腾记录 - sunaiwen"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://sunaiwen.github.io/atom.xml" title="sunaiwen 个人博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/sunaiwen" target="_blank" class="nav-list-link">GITHUB</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">docker 的 nodejs 开发环境折腾记录</h1><div class="post-info">Oct 6, 2017</div><div class="post-content"><h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><ul>
+<li>db 和 redis 都跑在容器里，避免在本地直接安装。</li>
+<li>前端和 nodejs 代码编译也跑在容器里。</li>
+</ul>
+<h2 id="Docker-入门"><a href="#Docker-入门" class="headerlink" title="Docker 入门"></a>Docker 入门</h2><blockquote>
+<p>参考文章：<br><a href="https://docker-curriculum.com/" target="_blank" rel="external">https://docker-curriculum.com/</a><br><a href="https://docs.docker.com/engine/docker-overview/" target="_blank" rel="external">官方文档</a></p>
+</blockquote>
+<h2 id="Docker-Compose"><a href="#Docker-Compose" class="headerlink" title="Docker Compose"></a>Docker Compose</h2><p><code>docker compose</code> 是把多个 docker 管理起来的工具。包括统一启动、关闭、打印输出、标注依赖等。通过 <code>docker-compose.yaml</code> 文件配置。</p>
+<a id="more"></a>
+<blockquote>
+<p>参考文章：<br><a href="https://blog.codeship.com/using-docker-compose-for-nodejs-development/" target="_blank" rel="external">Using Docker Compose for NodeJS Development</a><br><a href="https://docs.docker.com/compose/" target="_blank" rel="external">官方文档</a></p>
+</blockquote>
+<p>对于本文想达到的目的来看，需要：</p>
+<ul>
+<li>webpack 的 container。</li>
+<li>nodemon 和 babel 的 container。</li>
+<li>mysql 的 container。</li>
+<li>redis 的 container。</li>
+</ul>
+<p>把 <code>docker-compose.yaml</code> 直接贴出来，可能一下子看不懂，有点被吓到了，但别急，我们慢慢来解释。</p>
+<pre><code class="yaml">version: &#39;3&#39;
+services:
+  web:
+    image: &quot;dev-node&quot;
+    command: [&quot;npm&quot;, &quot;run&quot;, &quot;dev&quot;]
+    ports:
+      - &quot;5858:5858&quot;
+      - &quot;3000:3000&quot;
+    volumes:
+      - /Users/xxx/xxx/nodeapp:/app
+      - node_modules:/app/node_modules
+    depends_on:
+      - fe
+      - db
+      - redis
+  fe:
+    image: &quot;dev-fe&quot;
+    command: [&quot;npm&quot;, &quot;run&quot;, &quot;dev:fe&quot;]
+    volumes:
+      - /Users/xxx/xxx/nodeapp:/app
+      - node_modules:/app/node_modules
+  redis:
+    image: &quot;redis:alpine&quot;
+    ports:
+      - &quot;6379:6379&quot;
+  db:
+    image: &quot;db&quot;
+    environment:
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test1234
+      MYSQL_ROOT_PASSWORD: test1234
+    ports: 
+      - &quot;3306:3306&quot;
+volumes:
+  node_modules:
+    external:
+      name: node_modules
+</code></pre>
+<p><code>version</code> 就是使用第 3 版本配置文件格式的意思，这个忽略吧，不重要。</p>
+<p>再看其他最外层的字段，首先看 <code>volumes</code>，这个字段定义了要用到的 <code>docker volumes</code>。上面的配置就定义了一个叫 <code>node_modules</code> 的 volume，通过 volume 下的 <code>external</code> 设置它外接一个已有的叫 <code>node_modules</code> 的 volume。可以把 volume 看作移动硬盘，以后的 node 模块都会安装到里面，安装了之后，就可以即插即用了。</p>
+<p>另外一个重要的字段是 <code>services</code>。在这个字段的下一级，定义了四个字段，看字面意思应该都知道其作用。值得注意的是 <code>volumes</code> 和 <code>depends_on</code> 字段。</p>
+<p>volumes 字段的值是上上段文字里提到的最外层的 <code>volumes</code> 下定义好的 <code>node_modules</code> 和<code>/Users/xxx/xxx/nodeapp:/app</code>。后者是直接把本机目录映射成容器里面的一个目录，可以达到在容器里直接访问代码目录的效果。</p>
+<p><code>depends_on</code> 是把这一切串联起来的关键，标注好依赖后，只要运行 <code>docker-compose up</code> 就可以把 <code>web</code> 以及其依赖容器 <code>fe</code>, <code>db</code>, <code>redis</code> 一起启动起来。</p>
+<p>这个但是如何互相访问这些串联在一起的容器呢？这已经被 <code>docker-compose</code> 考虑得很周到。docker 会给上面的 service 名字设置 host。比如，上面的配置有一个 service 叫 db，里面运行的是 mysql，那就可以这样访问：<code>mysql://db:3306</code>。</p>
+<blockquote>
+<p>参考：<a href="https://docs.docker.com/compose/networking/" target="_blank" rel="external">Networking in Compose</a></p>
+</blockquote>
+<h2 id="vscode-debug"><a href="#vscode-debug" class="headerlink" title="vscode debug"></a>vscode debug</h2><p>node 程序跑在 docker 里面之后，只能用 <code>attach</code> 的方式去 debug 了。配置如下：</p>
+<pre><code class="json">{
+    &quot;version&quot;: &quot;0.2.0&quot;,
+    &quot;configurations&quot;: [
+        {
+            &quot;type&quot;: &quot;node&quot;,
+            &quot;request&quot;: &quot;attach&quot;,
+            &quot;name&quot;: &quot;Attach&quot;,
+            &quot;address&quot;: &quot;localhost&quot;,
+            &quot;localRoot&quot;: &quot;${workspaceRoot}/src/app&quot;,
+            &quot;remoteRoot&quot;: &quot;/app/src/app&quot;,
+            &quot;sourceMaps&quot;: true,
+            &quot;restart&quot;: true,
+            &quot;port&quot;: 5858
+        }
+    ]
+}
+</code></pre>
+<p>启动 node 程序的 <code>npm script</code> 里面这样写：</p>
+<pre><code class="shell">nodemon --watch ./src/app --delay 1.5 ./src/app --exec babel-node --inspect=0.0.0.0:5858 --out-dir ./dist/app
+</code></pre>
+<p>注意 <code>--insepect</code> 参数的值 <code>0.0.0.0:5858</code>，必须是 <code>0.0.0.0</code> 加上端口，原因位置，也许和容器以及宿主的网络连接方式有关。</p>
+<blockquote>
+<p>参考：<a href="https://github.com/docker/labs/issues/282" target="_blank" rel="external">这个 GitHub Issue</a></p>
+</blockquote>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>容器如何划分的思路来源于慕课网的这篇<a href="http://www.imooc.com/article/19840" target="_blank" rel="external">利用Docker容器搭建高效的Node.js开发环境</a>。</p>
+<p>总结来说，前端构建、node 代码检测编译和重启、db、redis 分别在四个不同的容器。之间的链接都走 <code>docker-compose</code> 自动配置的 host。debug 就走 attach 模式。</p>
+</div></article></div></main><footer><div class="paginator"><a href="/2017/05/18/应对亲密关系的困境和冲突/" class="next">NEXT</a></div><div class="copyright"><p>© 2015 - 2017 <a href="http://sunaiwen.github.io">sunaiwen</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-51163552-1",'auto');ga('send','pageview');</script></body></html>
